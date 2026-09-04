@@ -1,0 +1,22 @@
+2026-08-29T22:11:31+08:00
+contest/openvela-ai-2026-v1
+9a3a65c6e92bc5434d638c08704a078aa0e4414b
+bd288162857c64b4ece1632382850a74ecfdbdc8d4e0f0becffda23f43b7cbf6 *AGENTS.md
+2895 AGENTS.md
+71841792 output/Gemini-S1-MoonCat-AI-QuickApp-autostart-20260829-candidate-02.img
+68855808 E:/GeminiFlash/mooncat-ai-20260829-01.img
+68699136 E:/GeminiFlash/fps48-sparse-lcdstridefixed.img
+8feed521bde963b34c02a94cf446a87dbebeccaeb0e2b1cf4ad529ec42a6a1a3 *output/Gemini-S1-MoonCat-AI-QuickApp-autostart-20260829-candidate-02.img
+2a11f0e4fa94a622286ebeb7bf1108f9a7e9e41e6b1e23c424ad12da95e6b1da *E:/GeminiFlash/mooncat-ai-20260829-01.img
+f42ac571713fd35fd04722de01dfc3e60af96d4c80daa8709e81a214436c2bbc *E:/GeminiFlash/fps48-sparse-lcdstridefixed.img
+.............s......                                                     [100%]
+19 passed, 1 skipped in 0.39s
+all_local_validation_gates=PASS
+## contest/openvela-ai-2026-v1
+ M README.md
+ M scripts/apply_overlay.sh
+?? AGENTS.md
+?? docs/evidence/milestone-3-quickapp-autostart-image-20260829-02/
+?? firmware/board/rcS
+?? scripts/build_gemini_s1_firmware.sh
+?? tests/test_firmware_build_contract.py

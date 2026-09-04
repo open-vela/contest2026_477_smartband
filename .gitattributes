@@ -1,0 +1,10 @@
+* text=auto
+.gitattributes text eol=lf
+*.c text eol=lf
+*.h text eol=lf
+*.sh text eol=lf
+*.md text eol=lf
+*.json text eol=lf
+*.jsonl text eol=lf
+*.patch whitespace=-trailing-space,-space-before-tab
+docs/evidence/** whitespace=-trailing-space,-blank-at-eof,-space-before-tab

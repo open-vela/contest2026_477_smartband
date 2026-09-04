@@ -1,0 +1,33 @@
+Milestone: 6 - final pre-flash validation
+Date: 2026-08-30 Asia/Shanghai
+
+[PASS] Repository regression suite
+command: python -X utf8 -m pytest -q
+result: 22 passed, 1 skipped
+
+[PASS] Shell syntax and whitespace
+commands:
+  bash -n scripts/apply_local_router_overlay.sh
+  bash -n scripts/build_gemini_s1_local_router.sh
+  git diff --check
+result: exit 0 (existing Git CRLF conversion warnings only)
+
+[PASS] Protected pre-milestone repository state
+branch: contest/openvela-ai-2026-v1
+HEAD: 9a3a65c6e92bc5434d638c08704a078aa0e4414b
+baseline porcelain-v2 SHA-256: 9a284bc5355d3140b6f1abb47a8350fd958a849bcca90c294939f35ddce55b36
+final protected-state porcelain-v2 SHA-256 after excluding only milestone-6 paths:
+9a284bc5355d3140b6f1abb47a8350fd958a849bcca90c294939f35ddce55b36
+result: exact match; the original 12 modified paths and pre-existing untracked state remain protected
+
+[PASS] Release artifacts
+model SHA-256: 8d9fa3a06fd9f0aef417cf92c72fad21a90efe74961077792f82e72ab6eb85d8
+vela.bin SHA-256: 52dd5e195ce057b7bed1b18514e8eced9ed26aaa71988575ff51d1cb78963260
+candidate04 SHA-256: da8f82def499f297a5369c04dd4b6f040d70f340935b510883b4e5f1f9c92d6b
+candidate04 bytes: 71915520
+candidate04 static audit: 16/16 PASS
+
+[NOT_TESTED] Gemini S1 boot, model latency, tensor-arena runtime peak,
+Tool-to-native-UI behavior and QuickApp physical-button interaction.
+
+[NOT_PERFORMED] PhoenixSuit, FEL, boot0, partition writes, flash, commit and push.

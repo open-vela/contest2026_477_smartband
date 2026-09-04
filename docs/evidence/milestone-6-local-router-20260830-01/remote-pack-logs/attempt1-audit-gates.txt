@@ -1,0 +1,16 @@
+imagewty_magic=PASS
+imagewty_files=PASS
+all_item_boundaries_padding_alignment=PASS
+vfile_checks=PASS
+candidate03_reference_lock=PASS
+rollback_reference_lock=PASS
+candidate_dump_bound_to_image=PASS
+candidate03_dump_bound_to_image=PASS
+rollback_dump_bound_to_image=PASS
+payload_diff_only_nsh_and_Vnsh=PASS
+candidate_nsh_matches_vela_bin=PASS
+binary_anchor_and_banned_string_scan=PASS
+elf_defined_symbol_scan=FAIL
+model_operators_and_32k_arena_static=PASS
+final_config=PASS
+generated_rcS=PASS

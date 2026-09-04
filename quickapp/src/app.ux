@@ -1,0 +1,10 @@
+<script>
+export default {
+  onCreate() {
+    console.info("mooncat-coach-demo: app created (simulated data only)")
+  },
+  onDestroy() {
+    console.info("mooncat-coach-demo: app destroyed")
+  }
+}
+</script>

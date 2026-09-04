@@ -1,0 +1,10 @@
+baseline_fex_count=22
+candidate_fex_count=22
+diff_items=nsh.fex Vnsh.fex
+imagewty_magic=IMAGEWTY
+imagewty_files=22
+payload_diff_only_nsh_and_Vnsh=PASS
+vfile_checks=PASS
+all_item_boundaries=PASS
+banned_display_strings=PASS
+candidate_nsh_matches_vela_bin=PASS

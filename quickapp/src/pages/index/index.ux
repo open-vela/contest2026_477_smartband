@@ -1,0 +1,283 @@
+<template>
+  <div class="page">
+    <div class="header">
+      <div class="demo-badge">
+        <text class="demo-badge-text">[DEMO] 模拟数据</text>
+      </div>
+      <text class="title">月薪喵主动恢复教练</text>
+      <text class="boundary">一键现场演示</text>
+    </div>
+
+    <div class="metrics">
+      <div class="metric">
+        <text class="metric-value">75</text>
+        <text class="metric-label">久坐分钟</text>
+      </div>
+      <div class="metric">
+        <text class="metric-value">40</text>
+        <text class="metric-label">睡眠欠账</text>
+      </div>
+      <div class="metric">
+        <text class="metric-value">72</text>
+        <text class="metric-label">压力 / 100</text>
+      </div>
+      <div class="metric">
+        <text class="metric-value">68%</text>
+        <text class="metric-label">电量</text>
+      </div>
+    </div>
+
+    <div class="result-card">
+      <text class="status">{{ statusText }}</text>
+      <text class="reply">{{ replyText }}</text>
+    </div>
+
+    <div class="actions">
+      <div class="ask-button" onclick="requestCoach">
+        <text class="ask-button-text">{{ actionLabel }}</text>
+      </div>
+      <div class="schedule-button" onclick="requestScheduledCoach">
+        <text class="schedule-button-text">{{ scheduleLabel }}</text>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+import { askCoach } from "../../common/mooncat-active-coach"
+import {
+  proactiveDelaySeconds,
+  scheduleCoach
+} from "../../common/mooncat-active-coach"
+
+const SIMULATED_OBSERVATION = {
+  valid: true,
+  workoutActive: false,
+  doNotDisturb: false,
+  inactivityMinutes: 75,
+  sleepDebtMinutes: 40,
+  stressScore: 72,
+  batteryPercent: 68
+}
+
+function failureCode(failure) {
+  if (!failure || typeof failure.code === "undefined") return "未知"
+  return String(failure.code)
+}
+
+export default {
+  data: {
+    loading: false,
+    actionLabel: "立即提醒",
+    scheduleLabel: proactiveDelaySeconds + " 秒后主动提醒",
+    statusText: "待演示 · [DEMO] 模拟输入",
+    replyText: "两条演示路径二选一；主动演示请先点橙色按钮，避免 Tool cooldown。"
+  },
+
+  requestCoach() {
+    if (this.loading) return
+
+    const page = this
+    page.loading = true
+    page.actionLabel = "请求中…"
+    page.statusText = "正在执行 Skill → Tool → native UI"
+    page.replyText = "等待端侧 AI 回复…"
+
+    try {
+      askCoach(SIMULATED_OBSERVATION, "execute", {
+        success(reply) {
+          const text = typeof reply === "string" ? reply.trim() : ""
+          page.statusText = text ? "AI 已回复 · 查看 native UI 提醒" : "AI 回复为空"
+          page.replyText = text || "端侧 AI 没有返回可显示文本。"
+        },
+        fail(failure) {
+          page.statusText = "现场演示暂不可用"
+          page.replyText =
+            "请确认 velaclaw 与 ai_agent 已启动（错误码 " +
+            failureCode(failure) +
+            "）。"
+        },
+        complete() {
+          page.loading = false
+          page.actionLabel = "立即提醒"
+          page.scheduleLabel = proactiveDelaySeconds + " 秒后主动提醒"
+        }
+      })
+    } catch (error) {
+      page.loading = false
+      page.actionLabel = "立即提醒"
+      page.scheduleLabel = proactiveDelaySeconds + " 秒后主动提醒"
+      page.statusText = "现场演示暂不可用"
+      page.replyText = "当前运行环境未提供可用的端侧 AI 接口。"
+    }
+  },
+
+  requestScheduledCoach() {
+    if (this.loading) return
+
+    const page = this
+    page.loading = true
+    page.actionLabel = "请稍候"
+    page.scheduleLabel = "正在设置…"
+    page.statusText = "Agent 正在创建一次性主动任务"
+    page.replyText = "读取当前时间并检查同名任务，避免重复创建。"
+
+    try {
+      scheduleCoach(SIMULATED_OBSERVATION, {
+        success(reply) {
+          const text = typeof reply === "string" ? reply.trim() : ""
+          page.statusText = text ? "Agent 已回复 · 请核对任务状态" : "Agent 回复为空"
+          page.replyText = text || "端侧 AI 没有返回可显示的任务结果。"
+        },
+        fail(failure) {
+          page.statusText = "主动任务设置失败"
+          page.replyText =
+            "请确认 velaclaw、ai_agent 与 cron 已启动（错误码 " +
+            failureCode(failure) +
+            "）。"
+        },
+        complete() {
+          page.loading = false
+          page.actionLabel = "立即提醒"
+          page.scheduleLabel = proactiveDelaySeconds + " 秒后主动提醒"
+        }
+      })
+    } catch (error) {
+      page.loading = false
+      page.actionLabel = "立即提醒"
+      page.scheduleLabel = proactiveDelaySeconds + " 秒后主动提醒"
+      page.statusText = "主动任务设置失败"
+      page.replyText = "当前运行环境未提供可用的端侧 AI 接口。"
+    }
+  }
+}
+</script>
+
+<style>
+.page {
+  width: 100%;
+  height: 100%;
+  padding: 6px 8px;
+  flex-direction: column;
+  background-color: #08111f;
+}
+
+.header {
+  width: 100%;
+  height: 32px;
+  flex-direction: row;
+  align-items: center;
+}
+
+.demo-badge {
+  height: 20px;
+  padding-left: 6px;
+  padding-right: 6px;
+  border-radius: 10px;
+  justify-content: center;
+  background-color: #19372f;
+}
+
+.demo-badge-text {
+  color: #67e8b6;
+  font-size: 9px;
+}
+
+.title {
+  margin-left: 7px;
+  color: #f7fbff;
+  font-size: 13px;
+  font-weight: bold;
+}
+
+.boundary {
+  margin-left: auto;
+  color: #ffbd7a;
+  font-size: 9px;
+}
+
+.metrics {
+  width: 100%;
+  height: 45px;
+  margin-top: 4px;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.metric {
+  width: 23%;
+  height: 45px;
+  border-radius: 10px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: #11243b;
+}
+
+.metric-value {
+  color: #f7fbff;
+  font-size: 15px;
+  font-weight: bold;
+}
+
+.metric-label {
+  margin-top: 2px;
+  color: #9fb5cc;
+  font-size: 9px;
+}
+
+.result-card {
+  width: 100%;
+  height: 66px;
+  margin-top: 5px;
+  padding: 6px 8px;
+  border-radius: 10px;
+  flex-direction: column;
+  background-color: #0d1c30;
+}
+
+.status {
+  color: #67e8b6;
+  font-size: 11px;
+  font-weight: bold;
+}
+
+.reply {
+  margin-top: 3px;
+  color: #d8e5f2;
+  font-size: 10px;
+  line-height: 13px;
+}
+
+.actions {
+  width: 100%;
+  height: 30px;
+  margin-top: 5px;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.ask-button,
+.schedule-button {
+  width: 49%;
+  height: 30px;
+  border-radius: 15px;
+  justify-content: center;
+  align-items: center;
+}
+
+.ask-button {
+  background-color: #67e8b6;
+}
+
+.schedule-button {
+  background-color: #ffbd7a;
+}
+
+.ask-button-text,
+.schedule-button-text {
+  color: #08111f;
+  font-size: 10px;
+  font-weight: bold;
+}
+</style>

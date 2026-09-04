@@ -1,0 +1,27 @@
+Repository safety baseline captured before milestone edits
+
+branch: contest/openvela-ai-2026-v1
+HEAD: 9a3a65c6e92bc5434d638c08704a078aa0e4414b
+git status --branch --porcelain=v2 -uall SHA-256:
+3F68371404EF994AD9EAED62F00BF3EA116CD74A969274F08026119A952D9028
+tracked changes: 6
+untracked files: 75
+
+Pre-existing tracked changes preserved:
+- README.md
+- firmware/board/nsh_minidisplay-ai-contest.fragment
+- quickapp/src/manifest.json
+- quickapp/verify.mjs
+- scripts/apply_overlay.sh
+- tests/test_contest_config.py
+
+Pre-existing untracked material included AGENTS.md, milestone 3/4 evidence trees,
+firmware/board/rcS, scripts/build_gemini_s1_firmware.sh,
+tests/test_firmware_build_contract.py and the existing QuickApp cache file.
+
+After implementation, filtering only the milestone-owned paths from current porcelain-v2
+status reproduced the exact baseline SHA-256 above: PASS.
+
+No reset, checkout, clean, broad removal, commit or push was performed. Existing
+QuickApp build output was not used as the build target; the build ran under D:/CodexCaches.
+

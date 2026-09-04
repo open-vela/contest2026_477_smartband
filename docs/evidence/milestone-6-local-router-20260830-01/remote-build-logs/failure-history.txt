@@ -1,0 +1,50 @@
+status=THREE_FAILURES_PRESERVED_THEN_SUCCESS
+source=/data/openvela-contest-2026-gemini-s1-v1-milestone6-overlay-20260830-01
+
+ATTEMPT 0: hushen-build
+result=FAIL
+exit=2
+log_bytes=313818
+log_sha256=54f0ca17d1b727a48dda753a87f0fba38e76825e5b21a996f64c70be4b7c946b
+exit_bytes=2
+exit_sha256=53c234e5e8472b6ac51c1ae1cab3fe06fad053beb8ebfd8977b010655bfdd3c3
+failure_anchor=CXX: followed by arm-none-eabi-g++: fatal error: no input files
+failing_target=src/tools/mooncat_intent_model.cc...packages.ai_agent.o
+cause=.cc was listed in CXXSRCS without declaring CXXEXT=.cc
+minimal_fix=CXXEXT = .cc
+
+ATTEMPT 1: hushen-build-retry1
+result=FAIL
+exit=2
+log_bytes=16812
+log_sha256=347e581557b6b5b798379f33471a372351e01f32953727fe8513da1484532afd
+exit_bytes=2
+exit_sha256=53c234e5e8472b6ac51c1ae1cab3fe06fad053beb8ebfd8977b010655bfdd3c3
+failure_anchor=tensorflow/lite/kernels/internal/common.h:32:10: fatal error: fixedpoint/fixedpoint.h: No such file or directory
+failing_target=src/tools/mooncat_intent_model.cc...packages.ai_agent.o
+cause=ai_agent C++ compile flags lacked the dependency include roots and TFLM defines used by the existing offline source tree
+minimal_fix=add TFLM, gemmlowp, kissfft, and ruy include roots; add TFLITE_EMULATE_FLOAT, TF_LITE_DISABLE_X86_NEON, and TF_LITE_STRIP_ERROR_STRINGS
+
+ATTEMPT 2: hushen-build-retry2
+result=FAIL
+exit=2
+log_bytes=12610
+log_sha256=84f749ca00d015f1a9c014957dc92fefe75a24ef230408a02edbc988624bf076
+exit_bytes=2
+exit_sha256=53c234e5e8472b6ac51c1ae1cab3fe06fad053beb8ebfd8977b010655bfdd3c3
+failure_anchor=agent_compat.h:73:36: error: invalid conversion from void* to _agent_task_args_t*
+failing_target=src/tools/mooncat_intent_model.cc...packages.ai_agent.o
+cause=agent_compat.h is not C++ safe and was unnecessary in the model translation unit
+minimal_fix=remove agent_compat.h from mooncat_intent_model.cc and use local kSuccess=0 / kFailure=-1 constants
+
+ATTEMPT 3: hushen-build-retry3
+result=PASS
+exit=0
+log_bytes=19961
+log_sha256=0dbcd02551cc9c7d0ba8092f1467926c0974a19ea6e75c7d556e1685539a4252
+exit_bytes=2
+exit_sha256=9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa
+success_anchors=LD: nuttx; CP: nuttx.bin; objcopy vela.bin; savedefconfig; final overlay/config gates
+
+Evidence boundary: the failure logs are retained as engineering history. retry3 proves a successful host build after the listed minimal fixes; it does not convert any earlier attempt into PASS and does not prove board runtime.
+

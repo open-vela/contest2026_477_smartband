@@ -1,0 +1,35 @@
+{
+  "package": "com.ov.mooncat",
+  "name": "月薪喵主动恢复教练",
+  "versionName": "0.1.0",
+  "versionCode": 1,
+  "minPlatformVersion": 1000,
+  "icon": "/common/icon.svg",
+  "deviceTypeList": [
+    "watch"
+  ],
+  "features": [
+    {
+      "name": "system.velaclaw"
+    }
+  ],
+  "config": {
+    "logLevel": "log",
+    "designWidth": "device-width"
+  },
+  "display": {
+    "backgroundColor": "#08111f",
+    "textColor": "#f7fbff",
+    "fullScreen": true,
+    "titleBar": false,
+    "orientation": "landscape"
+  },
+  "router": {
+    "entry": "pages/index",
+    "pages": {
+      "pages/index": {
+        "component": "index"
+      }
+    }
+  }
+}

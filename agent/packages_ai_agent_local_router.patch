@@ -1,0 +1,109 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -70,6 +70,13 @@ if(CONFIG_EXAMPLES_AI_AGENT_VELA)
+     src/ui/qrcode_display.c
+   )
+ 
++  if(CONFIG_AI_AGENT_LOCAL_TOOL_ROUTER)
++    list(APPEND AGENT_SRCS
++      src/tools/mooncat_local_router.c
++      src/tools/mooncat_intent_model.cc
++    )
++  endif()
++
+   # Optional modules
+   if(CONFIG_AI_AGENT_FEISHU)
+     list(APPEND AGENT_SRCS
+@@ -199,6 +206,11 @@ if(CONFIG_EXAMPLES_AI_AGENT_VELA)
+     list(APPEND AGENT_INCDIRS ${ALSA_DIRECT_INC})
+   endif()
+ 
++  set(AGENT_DEPENDS mqttc)
++  if(CONFIG_AI_AGENT_LOCAL_TOOL_ROUTER)
++    list(APPEND AGENT_DEPENDS tflite_micro)
++  endif()
++
+   nuttx_add_application(
+     NAME
+       ${CONFIG_EXAMPLES_AI_AGENT_VELA_PROGNAME}
+@@ -207,7 +219,7 @@ if(CONFIG_EXAMPLES_AI_AGENT_VELA)
+     INCLUDE_DIRECTORIES
+       ${AGENT_INCDIRS}
+     DEPENDS
+-      mqttc
++      ${AGENT_DEPENDS}
+     STACKSIZE
+       ${CONFIG_EXAMPLES_AI_AGENT_VELA_STACKSIZE}
+     PRIORITY
+diff --git a/Kconfig b/Kconfig
+--- a/Kconfig
++++ b/Kconfig
+@@ -49,6 +49,16 @@ config EXAMPLES_AI_AGENT_VELA_DATA_DIR
+ 		Base directory for config, memory and session files.
+ 		Must be on a writable filesystem (e.g. littlefs, romfs+ramdisk).
+ 
++config AI_AGENT_LOCAL_TOOL_ROUTER
++	bool "Enable offline MoonCat tool router"
++	default n
++	depends on TFLITEMICRO
++	---help---
++		Run the small int8 MoonCat intent model after the prompt-injection
++		guard and established keyword paths, but before the cloud LLM.
++		Accepted intents call the existing MoonCat and cron tools;
++		low-confidence and out-of-domain input continues to the LLM.
++
+ config EXAMPLES_AI_AGENT_VELA_NODE_ID
+ 	string "Node client ID"
+ 	default "watch-01"
+diff --git a/Makefile b/Makefile
+--- a/Makefile
++++ b/Makefile
+@@ -85,6 +85,21 @@ endif
+ CSRCS += src/tools/skill_loader.c
+ CSRCS += src/tools/tool_guard.c
+ 
++ifeq ($(CONFIG_AI_AGENT_LOCAL_TOOL_ROUTER),y)
++CSRCS += src/tools/mooncat_local_router.c
++CXXEXT = .cc
++CXXSRCS += src/tools/mooncat_intent_model.cc
++CXXFLAGS += ${INCDIR_PREFIX}$(CURDIR)/include
++CXXFLAGS += ${INCDIR_PREFIX}$(CURDIR)/src
++CXXFLAGS += ${INCDIR_PREFIX}$(APPDIR)/mlearning/tflite-micro/tflite-micro
++CXXFLAGS += ${INCDIR_PREFIX}$(APPDIR)/math/gemmlowp/gemmlowp
++CXXFLAGS += ${INCDIR_PREFIX}$(APPDIR)/math/kissfft/kissfft
++CXXFLAGS += ${INCDIR_PREFIX}$(APPDIR)/math/ruy/ruy
++CXXFLAGS += -DTFLITE_EMULATE_FLOAT
++CXXFLAGS += -DTF_LITE_DISABLE_X86_NEON
++CXXFLAGS += -DTF_LITE_STRIP_ERROR_STRINGS
++endif
++
+ ifeq ($(CONFIG_AI_AGENT_SKILL_SYNC),y)
+ CSRCS += src/tools/skill_sync.c
+ endif
+diff --git a/src/core/agent_loop.c b/src/core/agent_loop.c
+--- a/src/core/agent_loop.c
++++ b/src/core/agent_loop.c
+@@ -32,6 +32,9 @@
+ #include "llm/llm_proxy.h"
+ #include "llm/llm_router.h"
+ #include "tools/skill_loader.h"
++#ifdef CONFIG_AI_AGENT_LOCAL_TOOL_ROUTER
++#include "tools/mooncat_local_router.h"
++#endif
+ #include "tools/tool_guard.h"
+ #include "tools/tool_registry.h"
+ #include "agent_compat.h"
+@@ -488,7 +491,12 @@ static char* handle_nl_fast_path(const char* text)
+         }
+     }
+ 
++#ifdef CONFIG_AI_AGENT_LOCAL_TOOL_ROUTER
++    /* Preserve all established keyword routes; NULL continues to cloud LLM. */
++    return mooncat_local_router_handle(text);
++#else
+     return NULL;
++#endif
+ }
+ 
+ /* ── Handle slash commands + NL fast path (bypass LLM) ─── */

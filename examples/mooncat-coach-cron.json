@@ -1,0 +1,10 @@
+{
+  "name": "mooncat-demo-check",
+  "schedule_type": "every",
+  "interval_s": 2700,
+  "message": "[DEMO] MoonCat scheduled policy check",
+  "channel": "system",
+  "chat_id": "mooncat-coach",
+  "action": "mooncat_coach_tick",
+  "action_args": "{\"mode\":\"execute\",\"source\":\"simulated\",\"valid\":true,\"workout_active\":false,\"do_not_disturb\":false,\"inactivity_minutes\":45,\"sleep_debt_minutes\":0,\"stress_score\":20,\"battery_percent\":80}"
+}

@@ -1,0 +1,3 @@
+80b5f1d92f5925f6f081641d36d072a012c771681572b412668efad1c225ae02  /data/openvela-contest-2026-gemini-s1-v1-build-20260829-02/nuttx/vela.bin
+80b5f1d92f5925f6f081641d36d072a012c771681572b412668efad1c225ae02  /data/openvela-contest-2026-gemini-s1-v1-pack-20260829-02/input/Gemini-S1-MoonCat-AI-QuickApp-autostart-20260829.vela.bin
+80b5f1d92f5925f6f081641d36d072a012c771681572b412668efad1c225ae02  /data/openvela-contest-2026-gemini-s1-v1-pack-20260829-02/lichee/board/r528s3/gemini-s1_nand/configs/nsh.fex

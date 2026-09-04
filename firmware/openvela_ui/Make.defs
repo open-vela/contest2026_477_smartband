@@ -1,0 +1,3 @@
+ifneq ($(CONFIG_LVX_USE_DEMO_OPENVELA_UI),)
+CONFIGURED_APPS += $(APPDIR)/packages/demos/openvela_ui
+endif

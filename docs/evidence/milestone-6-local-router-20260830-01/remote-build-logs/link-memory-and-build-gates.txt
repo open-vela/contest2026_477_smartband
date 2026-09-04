@@ -1,0 +1,25 @@
+build_exit=0
+status=PASS
+
+hushen-build-retry3.log lines 108-144:
+lto-wrapper: warning: using serial compilation of 102 LTRANS jobs
+lto-wrapper: note: see the '-flto' option documentation for more information
+Memory region         Used Size  Region Size  %age Used
+           sdram:    14112308 B  961943040 B      1.47%
+    reserve_dram:          36 B       100 KB      0.04%
+CP: nuttx.bin
+cp nuttx nuttx.elf
+Generating: nuttx.bin
+arm-none-eabi-objcopy -v -O binary nuttx vela.bin
+copy from `nuttx' [elf32-littlearm] to `vela.bin' [binary]
+Minimal configuration saved to 'defconfig.tmp'
+contest config verified: /data/openvela-contest-2026-gemini-s1-v1-build-20260830-04/vendor/allwinnertech/boards/r528/r528s3-gemini-s1/configs/nsh_minidisplay/defconfig
+overlay content verified: /data/openvela-contest-2026-gemini-s1-v1-build-20260830-04
+local-router order verified: guard -> existing fast paths -> model -> LLM
+local-router overlay content verified: /data/openvela-contest-2026-gemini-s1-v1-build-20260830-04
+Gemini S1 local-router firmware built and config-gated: /data/openvela-contest-2026-gemini-s1-v1-build-20260830-04
+
+The log's error scan for `error:`, `fatal:`, `undefined reference`, `no input files`, `failed`, and `make: ***` returned no matches. The retained warning is not hidden or rewritten.
+
+Boundary: the linker region report is a link-time allocation report. It is not runtime heap, stack, TFLM arena peak, inference-latency, boot, or device-stability evidence.
+

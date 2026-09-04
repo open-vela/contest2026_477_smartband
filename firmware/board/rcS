@@ -1,0 +1,77 @@
+/****************************************************************************
+ *
+ * Licensed to the Apache Software Foundation (ASF) under one or more
+ * contributor license agreements.  See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.  The
+ * ASF licenses this file to you under the Apache License, Version 2.0 (the
+ * "License"); you may not use this file except in compliance with the
+ * License.  You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.  See the
+ * License for the specific language governing permissions and limitations
+ * under the License.
+ *
+ ****************************************************************************/
+
+#include <nuttx/config.h>
+
+set +e
+
+/* The RTC and NTP client keep UTC.  Present UI and system logs in China
+ * Standard Time after automatic synchronization. */
+export TZ CST-8
+
+#ifdef CONFIG_GEMINI_S1_NSH
+#include "rcS.nsh"
+#endif
+
+/* Load per-board credentials from the writable data image.  The helper
+ * starts NTP only after DHCP succeeds and a usable route exists. */
+#ifdef CONFIG_IEEE80211_REALTEK_WIFI
+if [ -f /data/etc/wifi/wapi.conf ]
+then
+  echo "wifi already started"
+fi
+#endif
+
+/* The native UI drives pcm0p through NxPlayer directly.  Keep mediad for
+ * other Gemini configurations, but avoid a second audio owner beside the
+ * openvela_ui process. */
+#if defined(CONFIG_MEDIA_SERVER) && !defined(CONFIG_LVX_USE_DEMO_OPENVELA_UI)
+mediad &
+sleep 1
+#endif
+
+#ifdef CONFIG_LVX_USE_DEMO_OPENVELA_UI
+openvela_ui &
+#endif
+
+/* The agent owns long-lived cron, Tool, Skill and QuickApp bridge services.
+ * Detach stdin so its optional interactive CLI cannot consume the NSH console. */
+#ifdef CONFIG_EXAMPLES_AI_AGENT_VELA
+ai_agent < /dev/null &
+#endif
+
+#ifdef CONFIG_X4B_BL
+#include "rcS.bl"
+#endif
+
+#ifdef CONFIG_X4B_OTA
+#include "rcS.ota"
+#endif
+
+#ifdef CONFIG_X4B_TEE
+#include "rcS.tee"
+#endif
+
+#ifdef CONFIG_X4B_AP
+#include "rcS.ap"
+#endif
+
+#ifdef CONFIG_X4B_FACTEST
+#include "rcS.factest"
+#endif

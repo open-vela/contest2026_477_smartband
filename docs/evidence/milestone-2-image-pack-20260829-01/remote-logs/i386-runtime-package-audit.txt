@@ -1,0 +1,12 @@
+Package: libc6
+Version: 2.39-0ubuntu8.8
+Architecture: i386
+a23dff90f87abb0b2d5830c4adbf35403e058b0485521b51a3dbb34a153b2ab3  /data/openvela-contest-2026-gemini-s1-v1-pack-20260829-01/i386-packages/libc6_2.39-0ubuntu8.8_i386.deb
+Package: libgcc-s1
+Version: 14.2.0-4ubuntu2~24.04.1
+Architecture: i386
+40879f5dae85f90837ce882527bb85e388fa0e57f7ec4fba2060f1d24ce3dbb7  /data/openvela-contest-2026-gemini-s1-v1-pack-20260829-01/i386-packages/libgcc-s1_14.2.0-4ubuntu2~24.04.1_i386.deb
+Package: libstdc++6
+Version: 14.2.0-4ubuntu2~24.04.1
+Architecture: i386
+899d77d8b4876f545bd362f60cb4aa0263a8033777e9ecca4742c890c4c54a68  /data/openvela-contest-2026-gemini-s1-v1-pack-20260829-01/i386-packages/libstdc++6_14.2.0-4ubuntu2~24.04.1_i386.deb

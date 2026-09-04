@@ -1,0 +1,5 @@
+7a146a6d011981e850f8c8eaece8e61dcab8b4e5f92aaa3d44db945ba877bd12  /data/openvela-contest-2026-gemini-s1-v1-build-20260829-03/nuttx/.config
+8f597690ffb1449e5153a999bb561216b608f656804708ff2984bbd63a4f2f14  /data/openvela-contest-2026-gemini-s1-v1-build-20260829-03/nuttx/nuttx.elf
+54e39f1f84c524c506134aca1b01bcb3c446f058110c216483b7b7efde50ab96  /data/openvela-contest-2026-gemini-s1-v1-build-20260829-03/nuttx/nuttx
+229e9b0723070de160074fa5fa810bf39f8be19787adeb321b29d500d4f3e8e0  /data/openvela-contest-2026-gemini-s1-v1-build-20260829-03/nuttx/vela.bin
+0f73a95c1bc28d6db12adcc4757acb536be776f600056c0de267940c406f0bb3  /data/openvela-contest-2026-gemini-s1-v1-build-20260829-03/nuttx/arch/arm/src/board/etctmp/etc/init.d/rcS

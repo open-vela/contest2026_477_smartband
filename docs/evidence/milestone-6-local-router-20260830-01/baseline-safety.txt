@@ -1,0 +1,17 @@
+Repository protection snapshot captured before milestone-6 generated files
+
+branch: contest/openvela-ai-2026-v1
+HEAD: 9a3a65c6e92bc5434d638c08704a078aa0e4414b
+git status --porcelain=v2 --branch -uall SHA-256:
+9A284BC5355D3140B6F1ABB47A8350FD958A849BCCA90C294939F35DDCE55B36
+
+Pre-existing modified files were treated as immutable, including README.md,
+the AI contest board fragment, all existing QuickApp milestone files,
+scripts/apply_overlay.sh, tests/test_contest_config.py and
+tests/test_quickapp_demo.py. Pre-existing untracked AGENTS.md, milestone 3/4/5
+evidence trees, firmware/board/rcS, QuickApp cache/verifier and firmware build
+script/test were also preserved.
+
+This integration track only added the separately named milestone-6 patch,
+fragment, scripts and evidence files. No reset, checkout, clean, broad removal,
+commit, push or hardware write was performed.

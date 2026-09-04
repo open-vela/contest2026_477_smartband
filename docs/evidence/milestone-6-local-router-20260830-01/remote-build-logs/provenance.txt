@@ -1,0 +1,7 @@
+host=ubuntu24-hushen
+captured_at=2026-08-30T04:56:58+00:00
+kernel=Linux ubuntu24-hushen 6.8.0-136-generic #136-Ubuntu SMP PREEMPT_DYNAMIC Wed Jul  1 21:53:05 UTC 2026 x86_64 x86_64 x86_64 GNU/Linux
+build_tree=/data/openvela-contest-2026-gemini-s1-v1-build-20260830-04
+overlay_tree=/data/openvela-contest-2026-gemini-s1-v1-milestone6-overlay-20260830-01
+collection_mode=read-only SSH; no remote download; no rebuild; no packaging; no hardware action
+

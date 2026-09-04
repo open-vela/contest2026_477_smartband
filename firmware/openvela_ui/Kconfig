@@ -1,0 +1,24 @@
+config LVX_USE_DEMO_OPENVELA_UI
+	bool "openvela UI native smart-band demo"
+	depends on GRAPHICS_LVGL && LV_USE_LIBPNG && LV_USE_FREETYPE && LV_USE_ANIMIMG
+	default n
+	help
+		Enable the native LVGL smart-band UI used by the 2026 contest project.
+
+if LVX_USE_DEMO_OPENVELA_UI
+
+config OPENVELA_UI_DATA_ROOT
+	string "openvela UI runtime asset path"
+	default "/data/openvela_ui"
+
+config OPENVELA_UI_HTTP_TIMESYNC
+	bool "HTTP Date clock synchronization fallback"
+	depends on NET_TCP && LIBC_NETDB && !DISABLE_PTHREAD
+	default n
+	help
+		Start a small background worker which uses the Date header from
+		plain HTTP servers when the normal NTP client cannot obtain a
+		sample.  The worker exits without making a request when the system
+		clock already contains a valid date.
+
+endif

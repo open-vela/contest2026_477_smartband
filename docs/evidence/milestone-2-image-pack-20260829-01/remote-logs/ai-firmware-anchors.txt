@@ -1,0 +1,5 @@
+action=mooncat_coach_tick
+mooncat-active-coach
+MOONCAT ACTIVE COACH
+ mooncat_coach_tick
+mooncat_coach_tick

@@ -1,0 +1,44 @@
+Milestone: 6 - offline local router integration
+Date: 2026-08-30 Asia/Shanghai
+
+[PASS] Patch composition against old MoonCat overlay
+method: copy the audited packages_ai_agent source to D:/CodexCaches, apply
+        agent/packages_ai_agent_overlay.patch, then strict-check/apply/reverse-check
+        agent/packages_ai_agent_local_router.patch
+result: all git apply gates exited 0
+
+[PASS] Route-order contract
+required runtime order:
+  prompt-injection guard
+  -> established keyword/time/weather/music fast paths
+  -> mooncat_local_router_handle
+  -> NULL continues to the existing LLM path
+result: scripts/apply_local_router_overlay.sh --verify enforced and passed this order
+
+[PASS] Overlay idempotence on an isolated openVela-shaped target
+commands:
+  scripts/apply_local_router_overlay.sh --check TARGET
+  scripts/apply_local_router_overlay.sh --apply TARGET
+  scripts/apply_local_router_overlay.sh --apply TARGET
+  scripts/apply_local_router_overlay.sh --verify TARGET
+result: check, both apply calls and verify exited 0
+
+[PASS] Script and patch whitespace checks
+commands:
+  bash -n scripts/apply_local_router_overlay.sh
+  bash -n scripts/build_gemini_s1_local_router.sh
+  git diff --check -- agent/packages_ai_agent_local_router.patch \
+    firmware/board/nsh_minidisplay-local-router.fragment \
+    scripts/apply_local_router_overlay.sh \
+    scripts/build_gemini_s1_local_router.sh
+result: exit 0
+
+[PASS] Subsequent final acceptance
+model and host behavior: see model-validation.txt
+real openVela build and vela.bin static audit: see remote-build-logs/
+IMAGEWTY packaging and 16/16 static image audit: see remote-pack-logs/
+
+[NOT_TESTED] Gemini S1 boot/runtime/UI, inference latency, tensor-arena runtime
+peak and QuickApp physical-button interaction.
+
+[NOT_PERFORMED] PhoenixSuit, FEL, boot0, partition writes, flash, commit and push.

@@ -1,0 +1,7 @@
+bytes	sha256	path
+7699888	52dd5e195ce057b7bed1b18514e8eced9ed26aaa71988575ff51d1cb78963260	/data/openvela-contest-2026-gemini-s1-v1-build-20260830-04/nuttx/vela.bin
+71837696	b5cc555a66247affe85399a6ffafa5e5c70b2ee442aa94da233a8dde1cd73500	/data/openvela-contest-2026-gemini-s1-v1-pack-20260829-03/output/Gemini-S1-MoonCat-AI-QuickApp-autostart-no-launcher-20260829-candidate-03.img
+68699136	f42ac571713fd35fd04722de01dfc3e60af96d4c80daa8709e81a214436c2bbc	/data/openvela-contest-2026-gemini-s1-v1-pack-20260829-01/lichee/out/r528s3/gemini-s1_nand/image-fps48-sparse-lcdstridefixed-20260815-r8/rtos_nuttx_r528s3-gemini-s1_uart0_128Mnand.img
+50795	f95e3773a112aa2a2af8511583372443960ee7893c67af8f5b879efaab0506bf	/data/openvela-contest-2026-gemini-s1-v1-pack-20260829-03/lichee/tools/scripts/pack_img.sh
+137891	c8cf1b86d28be549b741007dad1ba83ac60cd3f932d0f13f02767f1b57d06132	/data/openvela-contest-2026-gemini-s1-v1-pack-20260829-03/lichee/tools/tool/dragon
+213348	eccfafa93226e52e32aff3f97f5f779e7d02306cda017eae6d9c358142d4278d	/data/openvela-contest-2026-gemini-s1-v1-pack-20260829-03/i386-runtime/usr/lib/i386-linux-gnu/ld-linux.so.2

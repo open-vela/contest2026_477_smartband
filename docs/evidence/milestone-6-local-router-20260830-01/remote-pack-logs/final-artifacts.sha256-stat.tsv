@@ -1,0 +1,7 @@
+bytes	sha256	path
+150852	2373499bfb79859e210d6d22171bfc6f6d59e359ae09f7d57f794307615b39e7	/data/openvela-contest-2026-gemini-s1-v1-build-20260830-04/nuttx/.config
+163254500	2e670dcd6d778ae7c7afb319e6a1a346ab0306ebf3ef22b6503f52e1e2a28eb3	/data/openvela-contest-2026-gemini-s1-v1-build-20260830-04/nuttx/nuttx.elf
+7699888	52dd5e195ce057b7bed1b18514e8eced9ed26aaa71988575ff51d1cb78963260	/data/openvela-contest-2026-gemini-s1-v1-build-20260830-04/nuttx/vela.bin
+2266	187d59110fc247f8ba84d0ac6c46d03bfd0a2c5dc41927e983e46a2bca40f44b	/data/openvela-contest-2026-gemini-s1-v1-build-20260830-04/vendor/allwinnertech/boards/r528/r528s3-gemini-s1/src/etc/init.d/rcS
+656	0f73a95c1bc28d6db12adcc4757acb536be776f600056c0de267940c406f0bb3	/data/openvela-contest-2026-gemini-s1-v1-build-20260830-04/nuttx/arch/arm/src/board/etctmp/etc/init.d/rcS
+71915520	da8f82def499f297a5369c04dd4b6f040d70f340935b510883b4e5f1f9c92d6b	/data/openvela-contest-2026-gemini-s1-v1-pack-20260830-04/output/Gemini-S1-MoonCat-AI-Local-Router-20260830-candidate-04.img

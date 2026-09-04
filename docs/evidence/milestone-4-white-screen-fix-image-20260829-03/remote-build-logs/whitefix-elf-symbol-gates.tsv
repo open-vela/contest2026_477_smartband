@@ -1,0 +1,7 @@
+symbol	type	status
+vapp_main	T	PRESENT
+ai_agent_main	T	PRESENT
+quickapp_mq_listener_task	t	PRESENT
+tool_mooncat_coach_execute	T	PRESENT
+openvela_ui_main	T	PRESENT
+luncher_mini_main	-	ABSENT

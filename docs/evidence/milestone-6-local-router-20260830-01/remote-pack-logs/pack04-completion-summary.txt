@@ -1,0 +1,15 @@
+pack04_path=/data/openvela-contest-2026-gemini-s1-v1-pack-20260830-04
+candidate_path=/data/openvela-contest-2026-gemini-s1-v1-pack-20260830-04/output/Gemini-S1-MoonCat-AI-Local-Router-20260830-candidate-04.img
+candidate_bytes=71915520
+candidate_sha256=da8f82def499f297a5369c04dd4b6f040d70f340935b510883b4e5f1f9c92d6b
+legacy_lowercase_copy_path=/data/openvela-contest-2026-gemini-s1-v1-pack-20260830-04/output/Gemini-S1-MoonCat-AI-local-router-20260830-candidate-04.img
+legacy_lowercase_copy_same_bytes_and_hash=PASS
+official_pack_img_exit=1_EXPECTED_MISSING_SYSTEM_I386_LOADER
+official_dragon_private_i386_runtime_exit=0_PASS
+imagewty_info_extract_22_items=PASS
+candidate04_audit_attempt1=FAIL_PRESERVED_LTO_UNAWARE_GATE
+candidate04_audit_attempt2=PASS
+reference_immutability_before_after_final=PASS
+payload_diff_vs_candidate03_and_rollback=nsh.fex Vnsh.fex
+evidence_boundary=STATIC_PACKAGE_ONLY_NOT_BOOT_LATENCY_ARENA_PEAK_OR_PHYSICAL_BUTTON
+phoenixsuit_fel_boot0_partition_write_flash=NOT_PERFORMED

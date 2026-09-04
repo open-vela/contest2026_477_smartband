@@ -1,148 +1,110 @@
-# contest2026_477_smartband
+# 月薪喵 Gemini S1 主动恢复教练
 
-👋 欢迎参加 **2026 首届 openvela AI 硬件开发者大赛**！
+## 一、作品简介
 
-这是组委会为你的队伍创建的**专属参赛仓库**（本仓为样例/模板，队伍编号 `477`；你看到的将是你自己的 `contest2026_<编号>_<队伍名>`）。比赛期间，你的全部参赛代码、打包产物与 AI Coding 日志都提交到这里。
+月薪喵是一套运行在 Gemini S1 + openvela 上的腕上主动恢复教练。它把 Native
+LVGL 产品界面、`ai_agent`、自定义 Skill/Tool、cron 主动任务和 QuickApp 入口串成
+同一条可演示闭环：用户可以立即获取恢复建议，也可以创建一次性延时提醒；确定性快捷
+路径未命中时，端侧 INT8 小模型先完成五分类工具路由，低置信度请求再回退到云端 LLM。
 
-> 本仓既是「代码仓」，又内置了一键拉取整套 openvela 工程的 `repo` 清单（manifest）。你只需跟它打交道，**自始至终只动一个文件夹**。
+演示输入中仍有明确标记的模拟观测值。仓库不会把模拟输入、静态二进制检查或历史固件
+结果描述成新固件的实机传感器、延迟、内存或触摸证据。
 
----
+## 二、选题方向
 
-## 一、先读这些官方文档
+本作品以“AI 硬件产品创新”为主，同时结合“手表应用创新”方向：
 
-**通用（所有赛道必读）：**
+- openvela Native UI 提供腕上信息与主动提醒卡；
+- `ai_agent` + MoonCat Skill/Tool 负责解释请求并执行动作；
+- QuickApp 通过 `@system.velaclaw` 提供现场演示入口；
+- TFLite Micro INT8 路由器在端侧识别立即执行、预览、定时、列表和 fallback 五类意图。
 
-| 文档                                                                                                                                     | 用途                                           |
-| ---------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------- |
-| [《大赛总览》](https://github.com/open-vela/docs/blob/dev-ai-contest-2026/zh-cn/contest_2026/contest_overview.md)                        | 赛道、流程、评分、资源，建议先通读             |
-| [《参赛代码提交指南》](https://github.com/open-vela/docs/blob/dev-ai-contest-2026/zh-cn/contest_2026/code_submission_guide.md)           | 仓库获取、提交流程、时间与权限（**以此为准**） |
-| [《AI Coding 日志归集与提交手册》](https://github.com/open-vela/docs/blob/dev-ai-contest-2026/zh-cn/contest_2026/ai_coding_log_guide.md) | 如何导出 AI 对话日志并提交到 `logs/`           |
+## 三、核心亮点
 
-**按你的赛道选读（三选一）：**
+1. **主动任务闭环**：支持“20 秒后主动提醒”，按
+   `get_current_time → cron_list → cron_add` 创建一次性任务，到期后再调用
+   `mooncat_coach_tick`，而不是在创建任务时提前执行。
+2. **端侧小模型路由**：发布模型为 52,008 bytes；冻结验收记录为 INT8 macro-F1
+   `0.991879`、长 QuickApp 协议提示 `30/30`。模型只接管既有快捷路径未命中的请求。
+3. **可审计固件构建**：overlay、板级配置、构建和 IMAGEWTY 打包证据均保留输入、
+   失败历史与最终门槛，避免把“能编译”混同于“已上板运行”。
+4. **显示基线继承**：Native UI 源码继承已实机测量的 sparse refresh 与 stride 修复；
+   最新本地路由候选仍保持 pre-flash 状态，未声称沿用历史约 58 FPS 的实机结果。
 
-| 赛道                  | 教程导航                                                                                                                                                 |
-| --------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| 快应用 / 手表应用创新 | [快应用教程导航](https://github.com/open-vela/docs/blob/dev-ai-contest-2026/zh-cn/contest_2026/quickapp/quickapp_guide_index.md)                         |
-| AI 硬件产品创新       | [AI 硬件赛道教程导航](https://github.com/open-vela/docs/blob/dev-ai-contest-2026/zh-cn/contest_2026/ai_hardware/ai_hardware_guide_index.md)              |
-| 新硬件适配            | [新硬件适配赛道教程导航](https://github.com/open-vela/docs/blob/dev-ai-contest-2026/zh-cn/contest_2026/hardware_porting/hardware_porting_guide_index.md) |
+## 四、目录结构
 
----
+- `firmware/openvela_ui/`：Gemini S1 Native LVGL 产品 UI；
+- `firmware/lvgl/`、`firmware/board/`：LCD stride 修复、板级配置和启动脚本；
+- `agent/`、`common/`：MoonCat Tool、主动策略与本地模型接入；
+- `skills/`：部署到端侧的 MoonCat 主动恢复教练 Skill；
+- `local_router/`：训练脚本、冻结数据结果与 INT8 模型；
+- `quickapp/`：通过 `@system.velaclaw` 联动端侧 Agent 的 QuickApp；
+- `scripts/`：受控 overlay、构建和配置合并脚本；
+- `tests/`：主机行为、构建契约和本地路由测试；
+- `docs/evidence/`：各里程碑的构建、打包与证据边界；
+- `logs/`：经组委会采集器导出并脱敏的 AI Coding 日志；
+- `contest2026_477_smartband.xml`：组委会 `repo` manifest 入口。
 
-## 二、第一步：拉取完整工程
+## 五、拉取、核验与构建
 
-用组委会提供的命令一键拉取「openvela 全量源码 + 你的专属仓」：
+### 1. 拉取官方工作区
 
-```bash
+```sh
 repo init -u https://github.com/open-vela/contest2026_477_smartband \
   -b dev-ai-contest-2026 -m contest2026_477_smartband.xml
 repo sync -c -j8
+cd contest2026_477_smartband
 ```
 
-同步后，你的整个仓库位于工作区的 `contest2026_477_smartband/`，openvela 全量源码在外层（`nuttx/`、`apps/`、`packages/`、`vendor/` 等）。
+### 2. 仓内测试
 
----
-
-## 三、第二步：在哪里写代码
-
-**只在自己的仓目录 `contest2026_477_smartband/` 里开发。** 不同作品形态放在对应子目录，manifest 会通过 `<linkfile>` 把它们**软链**到 openvela 编译树该在的位置——你不用手动 copy：
-
-| 作品形态 | 你的代码放这里             | 系统自动映射到                                 |
-| -------- | -------------------------- | ---------------------------------------------- |
-| 应用     | `app/hello_app/`           | `packages/demos/contest2026_477_hello_app`     |
-| 快应用   | `quickapp/hello_quickapp/` | `packages/apps/contest2026_477_hello_quickapp` |
-| 板级适配 | `board/contest_board/`     | `vendor/openvela/boards/contest2026_477_board` |
-
-> 用不到的形态目录可以删掉；新增作品时按同样规则加子目录，并在 `contest2026_477_smartband.xml` 里补一条 `<linkfile>` 映射即可。**生产仓库（packages/nuttx/vendor 等）零改动。**
-
-建议仓库目录约定（便于评委定位）：
-
-```text
-app/ | quickapp/ | board/   # 你的作品代码
-logs/                       # AI Coding 日志（主动导出后提交，格式见 logs/README.md）
-README.md                   # 作品说明（提交前请改成你自己的，见第六节）
+```sh
+python -X utf8 -m pytest -q
+bash -n scripts/apply_overlay.sh
+bash -n scripts/apply_local_router_overlay.sh
+bash -n scripts/build_gemini_s1_firmware.sh
+bash -n scripts/build_gemini_s1_local_router.sh
 ```
 
-> 仓内附带了一个 `.gitignore.example`，给出了**编译产物**等不需要进仓的文件示例。如需启用，`cp .gitignore.example .gitignore` 后按需增删即可。**注意 `logs/` 下最终导出的 AI Coding 日志必须提交，不要忽略。**
->
-> `logs/` 的目录结构与提交格式见 [logs/README.md](logs/README.md)。
+### 3. 应用 overlay 并构建 Gemini S1 固件
 
----
+以下命令在参赛仓目录内执行，`..` 是 `repo sync` 生成的 openvela 工作区根目录：
 
-## 四、第三步：编译与运行
-
-编译/运行步骤随作品形态不同而不同，请参考你所在赛道的教程导航：
-
-- 快应用 / 手表应用：[快应用教程导航](https://github.com/open-vela/docs/blob/dev-ai-contest-2026/zh-cn/contest_2026/quickapp/quickapp_guide_index.md)（含模拟器与开发板部署）。
-- AI 硬件产品创新：[AI 硬件赛道教程导航](https://github.com/open-vela/docs/blob/dev-ai-contest-2026/zh-cn/contest_2026/ai_hardware/ai_hardware_guide_index.md)（环境搭建、编译烧录、Skill 开发）。
-- 新硬件适配：[新硬件适配赛道教程导航](https://github.com/open-vela/docs/blob/dev-ai-contest-2026/zh-cn/contest_2026/hardware_porting/hardware_porting_guide_index.md)（BSP 移植、最小 NSH 基线）。
-
-子目录已通过 manifest 中的 `<linkfile>` 软链进 openvela 编译树，因此构建在 openvela 工作区**根目录**（即你这个仓的上一级）进行。openvela 使用 `build.sh` 作为统一入口，接收一个 **board config 路径**作为参数：
-
-```bash
-# 进入 openvela 工作区根目录（你的仓的上一级）
-cd ..
-
-# 通用语法：第一个参数是 board config 路径，第二个参数可以是 menuconfig / distclean 等
-./build.sh <board-config-path> [menuconfig|distclean] [-j8]
+```sh
+./scripts/apply_overlay.sh --check ..
+./scripts/apply_overlay.sh --apply ..
+./scripts/apply_local_router_overlay.sh --check ..
+./scripts/build_gemini_s1_local_router.sh .. 16
 ```
 
-> 具体的 board config 路径、目标产物、模拟器/真机部署方式请以你所在赛道的教程导航为准。本仓 `app/` `quickapp/` `board/` 三个示例骨架对应的 Kconfig 选项可通过 `menuconfig` 启用。
+`--check` 只检查目标布局和 patch 可应用性；`--apply` 只覆盖 allowlist 文件并合并
+赛事配置；`--verify` 可逐项复核应用结果。脚本不会执行 `git clean`、删除其他源码、
+打包镜像或烧录。构建脚本显式选择 Gemini S1 `nsh_minidisplay` 配置并检查最终
+TFLite Micro、QuickApp/VAPP、`ai_agent` 和 `velaclaw` 开关。
 
----
+QuickApp 的验证与构建方式见 `quickapp/README.md`。完整源码闭包和证据口径见
+`docs/58fps-source-closure.md`、`docs/contest-config.md` 与 `docs/verification.md`。
 
-## 五、第四步：提交作品
+## 六、验证状态
 
-1. **fork** 你的专属仓 → 开发 → `git commit` 并推送 → 向专属仓发起 **Pull Request**，可**自行 review 并合入**（无需等组委会）。
-2. **AI Coding 日志**：与 AI 工具的对话会自动记录到本机 staging（不会自动上传），需你**主动导出/打包**选定会话到仓内 `logs/` 目录后一并提交。详见[《AI Coding 日志归集与提交手册》](https://github.com/open-vela/docs/blob/dev-ai-contest-2026/zh-cn/contest_2026/ai_coding_log_guide.md)。
-3. 若需改动 **nuttx 等公共仓库**，不在本仓改，而是 fork 对应公共仓、以 PR 提交到 `dev-ai-contest-2026` 分支，由组委会 review 后合入。
+| 项目 | 状态 | 证据 |
+| --- | --- | --- |
+| Python/C 主机回归 | PASS | `22 passed, 1 skipped` |
+| QuickApp 静态验证与隔离构建 | PASS | `docs/evidence/milestone-5-proactive-cron-demo-20260830-01/` |
+| INT8 模型与主机路由行为 | PASS | `docs/evidence/milestone-6-local-router-20260830-01/model-validation.txt` |
+| openvela Build04 与 `vela.bin` 静态门槛 | PASS | `docs/evidence/milestone-6-local-router-20260830-01/remote-build-logs/` |
+| candidate-04 IMAGEWTY 静态审计 | PASS | `16/16`，见 `remote-pack-logs/` |
+| 最新本地路由固件实机启动、延迟与 arena 峰值 | NOT_TESTED | pre-flash 边界 |
+| 最新 Tool→Native UI、实体触摸与传感器输入 | NOT_TESTED | 未把模拟输入当实测 |
+| PhoenixSuit/FEL/boot0/分区写入 | NOT_PERFORMED | 本次提交未执行硬件写入 |
 
-> ⏰ **提交作品截止：9 月 20 日**。截止后统一收回 push 权限，仍可查看 / clone。
->
-> 获奖后再按要求将作品 PR 至 openvela 上游对应仓库（走标准 PR + CI 流程）。
+## 七、AI Coding 使用说明
 
-### 关于 PR 与 CLA
+Codex 用于需求拆解、源码审计、最小功能实现、测试设计、远端构建失败定位、镜像静态
+审计和证据文档整理。仓库保留真实失败与修复链，不只保留成功结论。可复用的端侧 Skill
+见 `skills/mooncat-active-coach.md`；选定会话由组委会工具导出到 `logs/QinXi-ai/`，
+自动脱敏后通过官方 `validate-log.py` 校验，未手工修改 JSONL 事件。
 
-- 本仓所有改动通过 **Pull Request** 合入（分支保护强制，可自行合入自己的 PR）。
-- 首次贡献需在[**官网签署 CLA**](https://openvela.com/#/community/cla)；PR 上会自动跑 `cla/signature` 检查，在官网签署成功后，在 PR 评论 `/check-cla` 复检即可通过。
+## 八、许可证
 
----
-
-## 六、提交前：把本 README 改成你的作品说明
-
-本文件目前是组委会给的**使用说明书**。**作品提交前，请把它替换成你自己作品的说明**，方便评委快速了解你做了什么、怎么跑起来。建议至少包含以下内容：
-
-```markdown
-# <你的作品名>
-
-## 一、作品简介
-<一句话/一段话说明这个作品是什么、解决什么问题、亮点在哪>
-
-## 二、选题方向
-<快应用 / 手表应用创新 ｜ AI 硬件产品创新 ｜ 新硬件适配 ｜ 自定方向，并简述理由>
-
-## 三、目录结构
-<列出你这个仓里各目录/文件的作用，例如：>
-- `app/xxx/`        — <说明>
-- `board/xxx/`      — <说明>
-- `quickapp/xxx/`   — <说明>
-- `logs/`           — AI Coding 日志
-- `docs/` 或其他    — <说明>
-
-## 四、运行方式
-<拉取工程后，如何编译、烧录/部署、运行的完整步骤；最好能让评委照着一步步复现>
-
-## 五、AI Coding 使用说明
-<说明本作品如何借助 AI 辅助开发：
-- 在需求拆解 / 方案设计 / 编码 / 调试 / 文档等环节如何与 AI 协作；
-- AI 对开发效率或质量带来的实际帮助。
-完整对话日志见 logs/ 目录>
-```
-
-> 提示：将会根据「作品本身 + 你的 README 说明 + `logs/` 里的 AI Coding 日志」来理解和评估你的作品，README 写清楚很重要。
-
----
-
-## 附：仓库命名规范
-
-`contest2026_<编号>_<队伍名>` — 编号三位零填充；队名 slug（全小写、英文/拼音、连字符）。例：`contest2026_477_smartband`。
-（仓库由组委会统一创建，**每队仅一个仓**，无需自行命名。）
+本作品按大赛要求采用 [Apache License 2.0](LICENSE)。

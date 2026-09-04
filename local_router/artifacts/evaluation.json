@@ -1,0 +1,714 @@
+{
+  "seed": 20260830,
+  "feature_count": 2048,
+  "hidden_units": 24,
+  "labels": [
+    "coach_now",
+    "coach_preview",
+    "coach_schedule",
+    "coach_list",
+    "fallback"
+  ],
+  "train_samples": 7013,
+  "test_samples": 624,
+  "acceptance_samples": 468,
+  "train_class_counts": {
+    "coach_preview": 995,
+    "fallback": 3223,
+    "coach_list": 632,
+    "coach_now": 904,
+    "coach_schedule": 1259
+  },
+  "test_class_counts": {
+    "coach_now": 64,
+    "coach_preview": 64,
+    "fallback": 368,
+    "coach_list": 64,
+    "coach_schedule": 64
+  },
+  "split_policy": {
+    "strategy": "named TRAIN_STEMS/TEST_STEMS/ACCEPTANCE_STEMS and distinct prefix/suffix families; generated variants remain inside their source split",
+    "quickapp_contract_exception": "exact product prompts are a separate frozen golden family; training uses only paraphrased long-prompt families",
+    "exact_text_overlap_counts": {
+      "train_test": 0,
+      "train_acceptance": 0,
+      "test_acceptance": 0,
+      "train_quickapp_contract": 0
+    }
+  },
+  "float_accuracy": 0.9935897435897436,
+  "float_macro_f1": 0.9887270791917789,
+  "float_per_class": {
+    "coach_now": {
+      "precision": 0.9846153846153847,
+      "recall": 1.0,
+      "f1": 0.9922480620155039,
+      "support": 64
+    },
+    "coach_preview": {
+      "precision": 1.0,
+      "recall": 0.953125,
+      "f1": 0.976,
+      "support": 64
+    },
+    "coach_schedule": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "support": 64
+    },
+    "coach_list": {
+      "precision": 0.9692307692307692,
+      "recall": 0.984375,
+      "f1": 0.9767441860465116,
+      "support": 64
+    },
+    "fallback": {
+      "precision": 0.997289972899729,
+      "recall": 1.0,
+      "f1": 0.9986431478968792,
+      "support": 368
+    }
+  },
+  "int8_accuracy": 0.9951923076923077,
+  "int8_macro_f1": 0.9918786388078734,
+  "int8_per_class": {
+    "coach_now": {
+      "precision": 0.9846153846153847,
+      "recall": 1.0,
+      "f1": 0.9922480620155039,
+      "support": 64
+    },
+    "coach_preview": {
+      "precision": 1.0,
+      "recall": 0.96875,
+      "f1": 0.9841269841269841,
+      "support": 64
+    },
+    "coach_schedule": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "support": 64
+    },
+    "coach_list": {
+      "precision": 0.984375,
+      "recall": 0.984375,
+      "f1": 0.984375,
+      "support": 64
+    },
+    "fallback": {
+      "precision": 0.997289972899729,
+      "recall": 1.0,
+      "f1": 0.9986431478968792,
+      "support": 368
+    }
+  },
+  "int8_confusion_matrix": [
+    [
+      64,
+      0,
+      0,
+      0,
+      0
+    ],
+    [
+      1,
+      62,
+      0,
+      1,
+      0
+    ],
+    [
+      0,
+      0,
+      64,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      0,
+      63,
+      1
+    ],
+    [
+      0,
+      0,
+      0,
+      0,
+      368
+    ]
+  ],
+  "float_int8_prediction_agreement": 0.9983974358974359,
+  "confidence_threshold": 0.5,
+  "margin_threshold": 0.05,
+  "gate": {
+    "accepted_precision": 0.9921259842519685,
+    "supported_coverage": 0.9921875,
+    "fallback_false_accept_rate": 0.0,
+    "minimum_positive_precision": 0.984375,
+    "plan_exact_match": 0.9935897435897436,
+    "macro_f1": 0.9899826069830466,
+    "confusion_matrix": [
+      [
+        64,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        1,
+        61,
+        0,
+        1,
+        1
+      ],
+      [
+        0,
+        0,
+        64,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        63,
+        1
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        368
+      ]
+    ],
+    "per_class": {
+      "coach_now": {
+        "precision": 0.9846153846153847,
+        "recall": 1.0,
+        "f1": 0.9922480620155039,
+        "support": 64
+      },
+      "coach_preview": {
+        "precision": 1.0,
+        "recall": 0.953125,
+        "f1": 0.976,
+        "support": 64
+      },
+      "coach_schedule": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "support": 64
+      },
+      "coach_list": {
+        "precision": 0.984375,
+        "recall": 0.984375,
+        "f1": 0.984375,
+        "support": 64
+      },
+      "fallback": {
+        "precision": 0.9945945945945946,
+        "recall": 1.0,
+        "f1": 0.997289972899729,
+        "support": 368
+      }
+    }
+  },
+  "acceptance": {
+    "samples": 468,
+    "raw_accuracy": 0.9871794871794872,
+    "raw_macro_f1": 0.9863170405586095,
+    "plan_exact_match": 0.9871794871794872,
+    "supported_recall_after_gate": 0.9768518518518519,
+    "fallback_false_activation_rate": 0.003968253968253968,
+    "confusion_matrix": [
+      [
+        54,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        54,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        51,
+        0,
+        3
+      ],
+      [
+        0,
+        0,
+        0,
+        52,
+        2
+      ],
+      [
+        0,
+        0,
+        1,
+        0,
+        251
+      ]
+    ],
+    "per_class": {
+      "coach_now": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "support": 54
+      },
+      "coach_preview": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "support": 54
+      },
+      "coach_schedule": {
+        "precision": 0.9807692307692307,
+        "recall": 0.9444444444444444,
+        "f1": 0.9622641509433962,
+        "support": 54
+      },
+      "coach_list": {
+        "precision": 1.0,
+        "recall": 0.9629629629629629,
+        "f1": 0.9811320754716981,
+        "support": 54
+      },
+      "fallback": {
+        "precision": 0.98046875,
+        "recall": 0.996031746031746,
+        "f1": 0.9881889763779528,
+        "support": 252
+      }
+    },
+    "failures": [
+      {
+        "index": 129,
+        "text": "劳驾请过45秒做月薪喵检查",
+        "text_sha256": "aca19aac98a9118dfc04a0a7545a4c847d83c5754e7f2582a4c7e14dfba1ce66",
+        "expected": "coach_schedule",
+        "top1": "fallback",
+        "routed": "fallback",
+        "confidence": 0.93359375,
+        "margin": 0.87109375
+      },
+      {
+        "index": 130,
+        "text": "劳驾请过45秒做月薪喵检查。",
+        "text_sha256": "31af6d59f65b74b4f6c0a27ccefc1b6f3e2db6d1095785e40470707f33949660",
+        "expected": "coach_schedule",
+        "top1": "fallback",
+        "routed": "fallback",
+        "confidence": 0.9375,
+        "margin": 0.8828125
+      },
+      {
+        "index": 131,
+        "text": "劳驾请过45秒做月薪喵检查好吗",
+        "text_sha256": "4fce01ee2c97357e26b045b108af561899e0cc21330f65c1a6fae4ac9005e436",
+        "expected": "coach_schedule",
+        "top1": "fallback",
+        "routed": "fallback",
+        "confidence": 0.69921875,
+        "margin": 0.3984375
+      },
+      {
+        "index": 183,
+        "text": "劳驾月薪喵目前排了什么任务",
+        "text_sha256": "d388013df53f728187c338ddfb756af85b4759e6d214873240cc921e666bfa29",
+        "expected": "coach_list",
+        "top1": "fallback",
+        "routed": "fallback",
+        "confidence": 0.53515625,
+        "margin": 0.0703125
+      },
+      {
+        "index": 210,
+        "text": "劳驾把恢复日程列出来",
+        "text_sha256": "81a96f69b1e1b4433153432185058740ae50386fd9020e87d4b21e1697c0a4c6",
+        "expected": "coach_list",
+        "top1": "fallback",
+        "routed": "fallback",
+        "confidence": 0.53515625,
+        "margin": 0.0703125
+      },
+      {
+        "index": 260,
+        "text": "我希望你查一下剩余电量好吗",
+        "text_sha256": "2434db37e6ac19fbde85eca8ae72dd8b1e6e02c6c1c7fe86dee79c269b84e183",
+        "expected": "fallback",
+        "top1": "coach_schedule",
+        "routed": "coach_schedule",
+        "confidence": 0.71484375,
+        "margin": 0.44921875
+      }
+    ]
+  },
+  "test_failures_after_gate": [
+    {
+      "index": 146,
+      "text": "现在请把待运行的恢复任务展示出来，这是演示",
+      "text_sha256": "90c5606fe142b2d0dfb03de6cf7ab8343045d067afbdbde78fd2a72824e92cf5",
+      "expected": "coach_list",
+      "top1": "fallback",
+      "routed": "fallback",
+      "confidence": 0.6171875,
+      "margin": 0.38671875
+    },
+    {
+      "index": 400,
+      "text": "请帮忙只预览久坐恢复计划吧",
+      "text_sha256": "08859b627850ebc30d2ae2db780b0d6650b9919893487b3cca391f931c92e76b",
+      "expected": "coach_preview",
+      "top1": "coach_list",
+      "routed": "fallback",
+      "confidence": 0.49609375,
+      "margin": 0.0
+    },
+    {
+      "index": 562,
+      "text": "现在请只预览久坐恢复计划，这是演示",
+      "text_sha256": "0a1f8f079109db632aace0c34549547e40c2e74873a3d0f36a64f4079d45d38b",
+      "expected": "coach_preview",
+      "top1": "coach_now",
+      "routed": "coach_now",
+      "confidence": 0.89453125,
+      "margin": 0.80078125
+    },
+    {
+      "index": 593,
+      "text": "请帮忙只预览久坐恢复计划呀",
+      "text_sha256": "e2e0b32c85ffef89802e2dcbb7815cc42e18fe9aae692f71a9693d68a0bba136",
+      "expected": "coach_preview",
+      "top1": "coach_list",
+      "routed": "coach_list",
+      "confidence": 0.6640625,
+      "margin": 0.3359375
+    }
+  ],
+  "quickapp_contract": {
+    "contract_family": "exact QuickApp product prompts; never copied into training",
+    "samples": 30,
+    "passed": 30,
+    "accuracy": 1.0,
+    "failures": [],
+    "results": [
+      {
+        "text": "请使用“月薪喵主动恢复教练”Skill，并务必调用 mooncat_coach_tick 一次，不要只生成文字建议。\n输入 JSON：{\"mode\":\"execute\",\"source\":\"simulated\",\"valid\":true,\"workout_active\":false,\"do_not_disturb\":false,\"inactivity_minutes\":40,\"sleep_debt_minutes\":20,\"stress_score\":55,\"battery_percent\":90}\n证据边界：simulated demo data; not Gemini S1 physical sensor evidence。\n请在最终回复中简短说明工具返回的 status，并保留 [DEMO] 标识。",
+        "text_sha256": "8e87be11e6a1b1272340f4760337fc5a29b9591e83684fd87d8b808148402b78",
+        "expected": "coach_now",
+        "top1": "coach_now",
+        "routed": "coach_now",
+        "confidence": 0.99609375,
+        "margin": 0.99609375
+      },
+      {
+        "text": "请使用“月薪喵主动恢复教练”Skill，并务必调用 mooncat_coach_tick 一次，不要只生成文字建议。\n输入 JSON：{\"mode\":\"preview\",\"source\":\"simulated\",\"valid\":true,\"workout_active\":false,\"do_not_disturb\":false,\"inactivity_minutes\":40,\"sleep_debt_minutes\":20,\"stress_score\":55,\"battery_percent\":90}\n证据边界：simulated demo data; not Gemini S1 physical sensor evidence。\n请在最终回复中简短说明工具返回的 status，并保留 [DEMO] 标识。",
+        "text_sha256": "bce9110a6b7ee728109f462f9b90a2caca5e6964ccf4f73b5b314014b8036891",
+        "expected": "coach_preview",
+        "top1": "coach_preview",
+        "routed": "coach_preview",
+        "confidence": 0.99609375,
+        "margin": 0.99609375
+      },
+      {
+        "text": "请使用“月薪喵主动恢复教练”Skill，设置一次现场主动提醒演示。\n先调用 get_current_time 获取当前 epoch，再调用 cron_list 检查同名任务。\n若已有未到期的 mooncat-demo-once，不要重复创建，直接报告现有任务。\n否则调用 cron_add，并把 at_epoch 设为当前 epoch + 20（必须是数字）。\n任务模板：{\"name\":\"mooncat-demo-once\",\"schedule_type\":\"at\",\"at_epoch\":\"CURRENT_EPOCH_PLUS_20\",\"message\":\"[DEMO] MoonCat proactive check completed\",\"channel\":\"system\",\"chat_id\":\"mooncat-coach\",\"action\":\"mooncat_coach_tick\",\"action_args\":\"{\\\"mode\\\":\\\"execute\\\",\\\"source\\\":\\\"simulated\\\",\\\"valid\\\":true,\\\"workout_active\\\":false,\\\"do_not_disturb\\\":false,\\\"inactivity_minutes\\\":40,\\\"sleep_debt_minutes\\\":20,\\\"stress_score\\\":55,\\\"battery_percent\\\":90}\"}\n不要立即调用 mooncat_coach_tick；到期后只让 cron action 调用一次。\n证据边界：simulated demo data; not Gemini S1 physical sensor evidence。\n最终回复只说明任务是否创建、预计触发窗口和 [DEMO] 边界。",
+        "text_sha256": "3f410a191561909274cbb5b92a220bbd6d6e3f0eda9f84c42d72ea7d1bf4d17b",
+        "expected": "coach_schedule",
+        "top1": "coach_schedule",
+        "routed": "coach_schedule",
+        "confidence": 0.98046875,
+        "margin": 0.9609375
+      },
+      {
+        "text": "请使用“月薪喵主动恢复教练”Skill，并务必调用 mooncat_coach_tick 一次，不要只生成文字建议。\n输入 JSON：{\"mode\":\"execute\",\"source\":\"simulated\",\"valid\":true,\"workout_active\":false,\"do_not_disturb\":false,\"inactivity_minutes\":47,\"sleep_debt_minutes\":25,\"stress_score\":59,\"battery_percent\":84}\n证据边界：simulated demo data; not Gemini S1 physical sensor evidence。\n请在最终回复中简短说明工具返回的 status，并保留 [DEMO] 标识。",
+        "text_sha256": "16f0dd858bc161864fbbd089755d9588e50997f9b0a4e278a5169139e1765e6e",
+        "expected": "coach_now",
+        "top1": "coach_now",
+        "routed": "coach_now",
+        "confidence": 0.99609375,
+        "margin": 0.99609375
+      },
+      {
+        "text": "请使用“月薪喵主动恢复教练”Skill，并务必调用 mooncat_coach_tick 一次，不要只生成文字建议。\n输入 JSON：{\"mode\":\"preview\",\"source\":\"simulated\",\"valid\":true,\"workout_active\":false,\"do_not_disturb\":false,\"inactivity_minutes\":47,\"sleep_debt_minutes\":25,\"stress_score\":59,\"battery_percent\":84}\n证据边界：simulated demo data; not Gemini S1 physical sensor evidence。\n请在最终回复中简短说明工具返回的 status，并保留 [DEMO] 标识。",
+        "text_sha256": "404c002265434c40b9de31c6d426a730fd0d8ff492e7cf16ef029e9058f3a56c",
+        "expected": "coach_preview",
+        "top1": "coach_preview",
+        "routed": "coach_preview",
+        "confidence": 0.99609375,
+        "margin": 0.99609375
+      },
+      {
+        "text": "请使用“月薪喵主动恢复教练”Skill，设置一次现场主动提醒演示。\n先调用 get_current_time 获取当前 epoch，再调用 cron_list 检查同名任务。\n若已有未到期的 mooncat-demo-once，不要重复创建，直接报告现有任务。\n否则调用 cron_add，并把 at_epoch 设为当前 epoch + 20（必须是数字）。\n任务模板：{\"name\":\"mooncat-demo-once\",\"schedule_type\":\"at\",\"at_epoch\":\"CURRENT_EPOCH_PLUS_20\",\"message\":\"[DEMO] MoonCat proactive check completed\",\"channel\":\"system\",\"chat_id\":\"mooncat-coach\",\"action\":\"mooncat_coach_tick\",\"action_args\":\"{\\\"mode\\\":\\\"execute\\\",\\\"source\\\":\\\"simulated\\\",\\\"valid\\\":true,\\\"workout_active\\\":false,\\\"do_not_disturb\\\":false,\\\"inactivity_minutes\\\":47,\\\"sleep_debt_minutes\\\":25,\\\"stress_score\\\":59,\\\"battery_percent\\\":84}\"}\n不要立即调用 mooncat_coach_tick；到期后只让 cron action 调用一次。\n证据边界：simulated demo data; not Gemini S1 physical sensor evidence。\n最终回复只说明任务是否创建、预计触发窗口和 [DEMO] 边界。",
+        "text_sha256": "73504e6f7cf401b21e11126e5262fd318659086468ceb6c3f8693826751edbd1",
+        "expected": "coach_schedule",
+        "top1": "coach_schedule",
+        "routed": "coach_schedule",
+        "confidence": 0.98046875,
+        "margin": 0.9609375
+      },
+      {
+        "text": "请使用“月薪喵主动恢复教练”Skill，并务必调用 mooncat_coach_tick 一次，不要只生成文字建议。\n输入 JSON：{\"mode\":\"execute\",\"source\":\"simulated\",\"valid\":true,\"workout_active\":false,\"do_not_disturb\":false,\"inactivity_minutes\":54,\"sleep_debt_minutes\":30,\"stress_score\":63,\"battery_percent\":78}\n证据边界：simulated demo data; not Gemini S1 physical sensor evidence。\n请在最终回复中简短说明工具返回的 status，并保留 [DEMO] 标识。",
+        "text_sha256": "725997fcad01be9219795733dc6b2c61524cb509ba848b46f7ded3e39ab7040c",
+        "expected": "coach_now",
+        "top1": "coach_now",
+        "routed": "coach_now",
+        "confidence": 0.99609375,
+        "margin": 0.99609375
+      },
+      {
+        "text": "请使用“月薪喵主动恢复教练”Skill，并务必调用 mooncat_coach_tick 一次，不要只生成文字建议。\n输入 JSON：{\"mode\":\"preview\",\"source\":\"simulated\",\"valid\":true,\"workout_active\":false,\"do_not_disturb\":false,\"inactivity_minutes\":54,\"sleep_debt_minutes\":30,\"stress_score\":63,\"battery_percent\":78}\n证据边界：simulated demo data; not Gemini S1 physical sensor evidence。\n请在最终回复中简短说明工具返回的 status，并保留 [DEMO] 标识。",
+        "text_sha256": "eb96c3a23b03edd9e49f285e826303bd9293f84092ecc6cb8d0244436dd55738",
+        "expected": "coach_preview",
+        "top1": "coach_preview",
+        "routed": "coach_preview",
+        "confidence": 0.99609375,
+        "margin": 0.99609375
+      },
+      {
+        "text": "请使用“月薪喵主动恢复教练”Skill，设置一次现场主动提醒演示。\n先调用 get_current_time 获取当前 epoch，再调用 cron_list 检查同名任务。\n若已有未到期的 mooncat-demo-once，不要重复创建，直接报告现有任务。\n否则调用 cron_add，并把 at_epoch 设为当前 epoch + 20（必须是数字）。\n任务模板：{\"name\":\"mooncat-demo-once\",\"schedule_type\":\"at\",\"at_epoch\":\"CURRENT_EPOCH_PLUS_20\",\"message\":\"[DEMO] MoonCat proactive check completed\",\"channel\":\"system\",\"chat_id\":\"mooncat-coach\",\"action\":\"mooncat_coach_tick\",\"action_args\":\"{\\\"mode\\\":\\\"execute\\\",\\\"source\\\":\\\"simulated\\\",\\\"valid\\\":true,\\\"workout_active\\\":false,\\\"do_not_disturb\\\":false,\\\"inactivity_minutes\\\":54,\\\"sleep_debt_minutes\\\":30,\\\"stress_score\\\":63,\\\"battery_percent\\\":78}\"}\n不要立即调用 mooncat_coach_tick；到期后只让 cron action 调用一次。\n证据边界：simulated demo data; not Gemini S1 physical sensor evidence。\n最终回复只说明任务是否创建、预计触发窗口和 [DEMO] 边界。",
+        "text_sha256": "a85d5dddc2cc2c2569d3356d5fe219b83cf2dece7793924dd3c2da34905ec7da",
+        "expected": "coach_schedule",
+        "top1": "coach_schedule",
+        "routed": "coach_schedule",
+        "confidence": 0.98046875,
+        "margin": 0.9609375
+      },
+      {
+        "text": "请使用“月薪喵主动恢复教练”Skill，并务必调用 mooncat_coach_tick 一次，不要只生成文字建议。\n输入 JSON：{\"mode\":\"execute\",\"source\":\"simulated\",\"valid\":true,\"workout_active\":false,\"do_not_disturb\":false,\"inactivity_minutes\":61,\"sleep_debt_minutes\":35,\"stress_score\":67,\"battery_percent\":72}\n证据边界：simulated demo data; not Gemini S1 physical sensor evidence。\n请在最终回复中简短说明工具返回的 status，并保留 [DEMO] 标识。",
+        "text_sha256": "9eb13ad1573b4d16c56866a3e02c533c154b099afeba3c9b8ab5e258526be6d2",
+        "expected": "coach_now",
+        "top1": "coach_now",
+        "routed": "coach_now",
+        "confidence": 0.99609375,
+        "margin": 0.99609375
+      },
+      {
+        "text": "请使用“月薪喵主动恢复教练”Skill，并务必调用 mooncat_coach_tick 一次，不要只生成文字建议。\n输入 JSON：{\"mode\":\"preview\",\"source\":\"simulated\",\"valid\":true,\"workout_active\":false,\"do_not_disturb\":false,\"inactivity_minutes\":61,\"sleep_debt_minutes\":35,\"stress_score\":67,\"battery_percent\":72}\n证据边界：simulated demo data; not Gemini S1 physical sensor evidence。\n请在最终回复中简短说明工具返回的 status，并保留 [DEMO] 标识。",
+        "text_sha256": "12b31b84bfe48f7f44634102c8bae2f11612400b51a9a4936e0f1b84bdfc1a74",
+        "expected": "coach_preview",
+        "top1": "coach_preview",
+        "routed": "coach_preview",
+        "confidence": 0.99609375,
+        "margin": 0.99609375
+      },
+      {
+        "text": "请使用“月薪喵主动恢复教练”Skill，设置一次现场主动提醒演示。\n先调用 get_current_time 获取当前 epoch，再调用 cron_list 检查同名任务。\n若已有未到期的 mooncat-demo-once，不要重复创建，直接报告现有任务。\n否则调用 cron_add，并把 at_epoch 设为当前 epoch + 20（必须是数字）。\n任务模板：{\"name\":\"mooncat-demo-once\",\"schedule_type\":\"at\",\"at_epoch\":\"CURRENT_EPOCH_PLUS_20\",\"message\":\"[DEMO] MoonCat proactive check completed\",\"channel\":\"system\",\"chat_id\":\"mooncat-coach\",\"action\":\"mooncat_coach_tick\",\"action_args\":\"{\\\"mode\\\":\\\"execute\\\",\\\"source\\\":\\\"simulated\\\",\\\"valid\\\":true,\\\"workout_active\\\":false,\\\"do_not_disturb\\\":false,\\\"inactivity_minutes\\\":61,\\\"sleep_debt_minutes\\\":35,\\\"stress_score\\\":67,\\\"battery_percent\\\":72}\"}\n不要立即调用 mooncat_coach_tick；到期后只让 cron action 调用一次。\n证据边界：simulated demo data; not Gemini S1 physical sensor evidence。\n最终回复只说明任务是否创建、预计触发窗口和 [DEMO] 边界。",
+        "text_sha256": "1d5c15dd42f900c6bdfc3eead1a6c26ad3d3778c14e69fd5dcf362b130d8ef17",
+        "expected": "coach_schedule",
+        "top1": "coach_schedule",
+        "routed": "coach_schedule",
+        "confidence": 0.98046875,
+        "margin": 0.9609375
+      },
+      {
+        "text": "请使用“月薪喵主动恢复教练”Skill，并务必调用 mooncat_coach_tick 一次，不要只生成文字建议。\n输入 JSON：{\"mode\":\"execute\",\"source\":\"simulated\",\"valid\":true,\"workout_active\":false,\"do_not_disturb\":false,\"inactivity_minutes\":68,\"sleep_debt_minutes\":40,\"stress_score\":71,\"battery_percent\":66}\n证据边界：simulated demo data; not Gemini S1 physical sensor evidence。\n请在最终回复中简短说明工具返回的 status，并保留 [DEMO] 标识。",
+        "text_sha256": "be149cb24c79114d89cfecdf18f81f9fced198a18cd09e8166b5953767829923",
+        "expected": "coach_now",
+        "top1": "coach_now",
+        "routed": "coach_now",
+        "confidence": 0.99609375,
+        "margin": 0.99609375
+      },
+      {
+        "text": "请使用“月薪喵主动恢复教练”Skill，并务必调用 mooncat_coach_tick 一次，不要只生成文字建议。\n输入 JSON：{\"mode\":\"preview\",\"source\":\"simulated\",\"valid\":true,\"workout_active\":false,\"do_not_disturb\":false,\"inactivity_minutes\":68,\"sleep_debt_minutes\":40,\"stress_score\":71,\"battery_percent\":66}\n证据边界：simulated demo data; not Gemini S1 physical sensor evidence。\n请在最终回复中简短说明工具返回的 status，并保留 [DEMO] 标识。",
+        "text_sha256": "27d1ef9cae53ee6d371caf64642c84aa450b7a5b08234013e4918f409dd07f46",
+        "expected": "coach_preview",
+        "top1": "coach_preview",
+        "routed": "coach_preview",
+        "confidence": 0.99609375,
+        "margin": 0.99609375
+      },
+      {
+        "text": "请使用“月薪喵主动恢复教练”Skill，设置一次现场主动提醒演示。\n先调用 get_current_time 获取当前 epoch，再调用 cron_list 检查同名任务。\n若已有未到期的 mooncat-demo-once，不要重复创建，直接报告现有任务。\n否则调用 cron_add，并把 at_epoch 设为当前 epoch + 20（必须是数字）。\n任务模板：{\"name\":\"mooncat-demo-once\",\"schedule_type\":\"at\",\"at_epoch\":\"CURRENT_EPOCH_PLUS_20\",\"message\":\"[DEMO] MoonCat proactive check completed\",\"channel\":\"system\",\"chat_id\":\"mooncat-coach\",\"action\":\"mooncat_coach_tick\",\"action_args\":\"{\\\"mode\\\":\\\"execute\\\",\\\"source\\\":\\\"simulated\\\",\\\"valid\\\":true,\\\"workout_active\\\":false,\\\"do_not_disturb\\\":false,\\\"inactivity_minutes\\\":68,\\\"sleep_debt_minutes\\\":40,\\\"stress_score\\\":71,\\\"battery_percent\\\":66}\"}\n不要立即调用 mooncat_coach_tick；到期后只让 cron action 调用一次。\n证据边界：simulated demo data; not Gemini S1 physical sensor evidence。\n最终回复只说明任务是否创建、预计触发窗口和 [DEMO] 边界。",
+        "text_sha256": "d699c35d36588e8e5502709713e110aef432f2151285c4be73ef5e8c3a19bf94",
+        "expected": "coach_schedule",
+        "top1": "coach_schedule",
+        "routed": "coach_schedule",
+        "confidence": 0.98046875,
+        "margin": 0.9609375
+      },
+      {
+        "text": "请使用“月薪喵主动恢复教练”Skill，并务必调用 mooncat_coach_tick 一次，不要只生成文字建议。\n输入 JSON：{\"mode\":\"execute\",\"source\":\"simulated\",\"valid\":true,\"workout_active\":false,\"do_not_disturb\":false,\"inactivity_minutes\":75,\"sleep_debt_minutes\":45,\"stress_score\":75,\"battery_percent\":60}\n证据边界：simulated demo data; not Gemini S1 physical sensor evidence。\n请在最终回复中简短说明工具返回的 status，并保留 [DEMO] 标识。",
+        "text_sha256": "1ccb72c34c126d47f5dced06fcd76ca98e67d42b407ae826fa4b00af801b1ad5",
+        "expected": "coach_now",
+        "top1": "coach_now",
+        "routed": "coach_now",
+        "confidence": 0.99609375,
+        "margin": 0.99609375
+      },
+      {
+        "text": "请使用“月薪喵主动恢复教练”Skill，并务必调用 mooncat_coach_tick 一次，不要只生成文字建议。\n输入 JSON：{\"mode\":\"preview\",\"source\":\"simulated\",\"valid\":true,\"workout_active\":false,\"do_not_disturb\":false,\"inactivity_minutes\":75,\"sleep_debt_minutes\":45,\"stress_score\":75,\"battery_percent\":60}\n证据边界：simulated demo data; not Gemini S1 physical sensor evidence。\n请在最终回复中简短说明工具返回的 status，并保留 [DEMO] 标识。",
+        "text_sha256": "bd1779d8d60556c7dc5cdf2154a7837f7508f9e6bb9dc3af637f377b281f34d1",
+        "expected": "coach_preview",
+        "top1": "coach_preview",
+        "routed": "coach_preview",
+        "confidence": 0.99609375,
+        "margin": 0.99609375
+      },
+      {
+        "text": "请使用“月薪喵主动恢复教练”Skill，设置一次现场主动提醒演示。\n先调用 get_current_time 获取当前 epoch，再调用 cron_list 检查同名任务。\n若已有未到期的 mooncat-demo-once，不要重复创建，直接报告现有任务。\n否则调用 cron_add，并把 at_epoch 设为当前 epoch + 20（必须是数字）。\n任务模板：{\"name\":\"mooncat-demo-once\",\"schedule_type\":\"at\",\"at_epoch\":\"CURRENT_EPOCH_PLUS_20\",\"message\":\"[DEMO] MoonCat proactive check completed\",\"channel\":\"system\",\"chat_id\":\"mooncat-coach\",\"action\":\"mooncat_coach_tick\",\"action_args\":\"{\\\"mode\\\":\\\"execute\\\",\\\"source\\\":\\\"simulated\\\",\\\"valid\\\":true,\\\"workout_active\\\":false,\\\"do_not_disturb\\\":false,\\\"inactivity_minutes\\\":75,\\\"sleep_debt_minutes\\\":45,\\\"stress_score\\\":75,\\\"battery_percent\\\":60}\"}\n不要立即调用 mooncat_coach_tick；到期后只让 cron action 调用一次。\n证据边界：simulated demo data; not Gemini S1 physical sensor evidence。\n最终回复只说明任务是否创建、预计触发窗口和 [DEMO] 边界。",
+        "text_sha256": "6b4537559f3757036af8cb77ccd87a0a9de8bac62a108804e5e5785e26a39b6d",
+        "expected": "coach_schedule",
+        "top1": "coach_schedule",
+        "routed": "coach_schedule",
+        "confidence": 0.98046875,
+        "margin": 0.9609375
+      },
+      {
+        "text": "请使用“月薪喵主动恢复教练”Skill，并务必调用 mooncat_coach_tick 一次，不要只生成文字建议。\n输入 JSON：{\"mode\":\"execute\",\"source\":\"simulated\",\"valid\":true,\"workout_active\":false,\"do_not_disturb\":false,\"inactivity_minutes\":82,\"sleep_debt_minutes\":50,\"stress_score\":79,\"battery_percent\":54}\n证据边界：simulated demo data; not Gemini S1 physical sensor evidence。\n请在最终回复中简短说明工具返回的 status，并保留 [DEMO] 标识。",
+        "text_sha256": "9540518b64945c6000cea11cfc073c8ea2d8bd4b981ddf713f37998b3c52d6e4",
+        "expected": "coach_now",
+        "top1": "coach_now",
+        "routed": "coach_now",
+        "confidence": 0.99609375,
+        "margin": 0.99609375
+      },
+      {
+        "text": "请使用“月薪喵主动恢复教练”Skill，并务必调用 mooncat_coach_tick 一次，不要只生成文字建议。\n输入 JSON：{\"mode\":\"preview\",\"source\":\"simulated\",\"valid\":true,\"workout_active\":false,\"do_not_disturb\":false,\"inactivity_minutes\":82,\"sleep_debt_minutes\":50,\"stress_score\":79,\"battery_percent\":54}\n证据边界：simulated demo data; not Gemini S1 physical sensor evidence。\n请在最终回复中简短说明工具返回的 status，并保留 [DEMO] 标识。",
+        "text_sha256": "e565bd5c8db2c0661636bbad25a699e89f793379a89b9a57fdfab1eed2c70727",
+        "expected": "coach_preview",
+        "top1": "coach_preview",
+        "routed": "coach_preview",
+        "confidence": 0.99609375,
+        "margin": 0.99609375
+      },
+      {
+        "text": "请使用“月薪喵主动恢复教练”Skill，设置一次现场主动提醒演示。\n先调用 get_current_time 获取当前 epoch，再调用 cron_list 检查同名任务。\n若已有未到期的 mooncat-demo-once，不要重复创建，直接报告现有任务。\n否则调用 cron_add，并把 at_epoch 设为当前 epoch + 20（必须是数字）。\n任务模板：{\"name\":\"mooncat-demo-once\",\"schedule_type\":\"at\",\"at_epoch\":\"CURRENT_EPOCH_PLUS_20\",\"message\":\"[DEMO] MoonCat proactive check completed\",\"channel\":\"system\",\"chat_id\":\"mooncat-coach\",\"action\":\"mooncat_coach_tick\",\"action_args\":\"{\\\"mode\\\":\\\"execute\\\",\\\"source\\\":\\\"simulated\\\",\\\"valid\\\":true,\\\"workout_active\\\":false,\\\"do_not_disturb\\\":false,\\\"inactivity_minutes\\\":82,\\\"sleep_debt_minutes\\\":50,\\\"stress_score\\\":79,\\\"battery_percent\\\":54}\"}\n不要立即调用 mooncat_coach_tick；到期后只让 cron action 调用一次。\n证据边界：simulated demo data; not Gemini S1 physical sensor evidence。\n最终回复只说明任务是否创建、预计触发窗口和 [DEMO] 边界。",
+        "text_sha256": "bafb371ac270a6aabcc56067ecf15fe12bf78bc50a661985e8a45fabd1082475",
+        "expected": "coach_schedule",
+        "top1": "coach_schedule",
+        "routed": "coach_schedule",
+        "confidence": 0.98046875,
+        "margin": 0.9609375
+      },
+      {
+        "text": "请使用“月薪喵主动恢复教练”Skill，并务必调用 mooncat_coach_tick 一次，不要只生成文字建议。\n输入 JSON：{\"mode\":\"execute\",\"source\":\"simulated\",\"valid\":true,\"workout_active\":false,\"do_not_disturb\":false,\"inactivity_minutes\":89,\"sleep_debt_minutes\":55,\"stress_score\":83,\"battery_percent\":48}\n证据边界：simulated demo data; not Gemini S1 physical sensor evidence。\n请在最终回复中简短说明工具返回的 status，并保留 [DEMO] 标识。",
+        "text_sha256": "612189896450f5a157d0d9e2c5b20b19b015d8fdfe7f431007e515d728751fa9",
+        "expected": "coach_now",
+        "top1": "coach_now",
+        "routed": "coach_now",
+        "confidence": 0.99609375,
+        "margin": 0.99609375
+      },
+      {
+        "text": "请使用“月薪喵主动恢复教练”Skill，并务必调用 mooncat_coach_tick 一次，不要只生成文字建议。\n输入 JSON：{\"mode\":\"preview\",\"source\":\"simulated\",\"valid\":true,\"workout_active\":false,\"do_not_disturb\":false,\"inactivity_minutes\":89,\"sleep_debt_minutes\":55,\"stress_score\":83,\"battery_percent\":48}\n证据边界：simulated demo data; not Gemini S1 physical sensor evidence。\n请在最终回复中简短说明工具返回的 status，并保留 [DEMO] 标识。",
+        "text_sha256": "c4354f702c2c5534a9f8ed6b9134156ae71956a456331191e2652c3d9a934054",
+        "expected": "coach_preview",
+        "top1": "coach_preview",
+        "routed": "coach_preview",
+        "confidence": 0.99609375,
+        "margin": 0.99609375
+      },
+      {
+        "text": "请使用“月薪喵主动恢复教练”Skill，设置一次现场主动提醒演示。\n先调用 get_current_time 获取当前 epoch，再调用 cron_list 检查同名任务。\n若已有未到期的 mooncat-demo-once，不要重复创建，直接报告现有任务。\n否则调用 cron_add，并把 at_epoch 设为当前 epoch + 20（必须是数字）。\n任务模板：{\"name\":\"mooncat-demo-once\",\"schedule_type\":\"at\",\"at_epoch\":\"CURRENT_EPOCH_PLUS_20\",\"message\":\"[DEMO] MoonCat proactive check completed\",\"channel\":\"system\",\"chat_id\":\"mooncat-coach\",\"action\":\"mooncat_coach_tick\",\"action_args\":\"{\\\"mode\\\":\\\"execute\\\",\\\"source\\\":\\\"simulated\\\",\\\"valid\\\":true,\\\"workout_active\\\":false,\\\"do_not_disturb\\\":false,\\\"inactivity_minutes\\\":89,\\\"sleep_debt_minutes\\\":55,\\\"stress_score\\\":83,\\\"battery_percent\\\":48}\"}\n不要立即调用 mooncat_coach_tick；到期后只让 cron action 调用一次。\n证据边界：simulated demo data; not Gemini S1 physical sensor evidence。\n最终回复只说明任务是否创建、预计触发窗口和 [DEMO] 边界。",
+        "text_sha256": "e34b099ea32c3aa8952fa038e057195d17e734a1e4e3a03da8bbeaf2a2a2ed9b",
+        "expected": "coach_schedule",
+        "top1": "coach_schedule",
+        "routed": "coach_schedule",
+        "confidence": 0.98046875,
+        "margin": 0.9609375
+      },
+      {
+        "text": "请使用“月薪喵主动恢复教练”Skill，并务必调用 mooncat_coach_tick 一次，不要只生成文字建议。\n输入 JSON：{\"mode\":\"execute\",\"source\":\"simulated\",\"valid\":true,\"workout_active\":false,\"do_not_disturb\":true,\"inactivity_minutes\":96,\"sleep_debt_minutes\":60,\"stress_score\":87,\"battery_percent\":42}\n证据边界：simulated demo data; not Gemini S1 physical sensor evidence。\n请在最终回复中简短说明工具返回的 status，并保留 [DEMO] 标识。",
+        "text_sha256": "ab9adeefed4fe7274103c1649f77c80f80f4132ec34f0b46c060afee9981564f",
+        "expected": "coach_now",
+        "top1": "coach_now",
+        "routed": "coach_now",
+        "confidence": 0.99609375,
+        "margin": 0.99609375
+      },
+      {
+        "text": "请使用“月薪喵主动恢复教练”Skill，并务必调用 mooncat_coach_tick 一次，不要只生成文字建议。\n输入 JSON：{\"mode\":\"preview\",\"source\":\"simulated\",\"valid\":true,\"workout_active\":false,\"do_not_disturb\":true,\"inactivity_minutes\":96,\"sleep_debt_minutes\":60,\"stress_score\":87,\"battery_percent\":42}\n证据边界：simulated demo data; not Gemini S1 physical sensor evidence。\n请在最终回复中简短说明工具返回的 status，并保留 [DEMO] 标识。",
+        "text_sha256": "79f4bcd868121e0c4c99dbf61cffa2660e10b79e8f718775e560fd36a23437ac",
+        "expected": "coach_preview",
+        "top1": "coach_preview",
+        "routed": "coach_preview",
+        "confidence": 0.99609375,
+        "margin": 0.99609375
+      },
+      {
+        "text": "请使用“月薪喵主动恢复教练”Skill，设置一次现场主动提醒演示。\n先调用 get_current_time 获取当前 epoch，再调用 cron_list 检查同名任务。\n若已有未到期的 mooncat-demo-once，不要重复创建，直接报告现有任务。\n否则调用 cron_add，并把 at_epoch 设为当前 epoch + 20（必须是数字）。\n任务模板：{\"name\":\"mooncat-demo-once\",\"schedule_type\":\"at\",\"at_epoch\":\"CURRENT_EPOCH_PLUS_20\",\"message\":\"[DEMO] MoonCat proactive check completed\",\"channel\":\"system\",\"chat_id\":\"mooncat-coach\",\"action\":\"mooncat_coach_tick\",\"action_args\":\"{\\\"mode\\\":\\\"execute\\\",\\\"source\\\":\\\"simulated\\\",\\\"valid\\\":true,\\\"workout_active\\\":false,\\\"do_not_disturb\\\":true,\\\"inactivity_minutes\\\":96,\\\"sleep_debt_minutes\\\":60,\\\"stress_score\\\":87,\\\"battery_percent\\\":42}\"}\n不要立即调用 mooncat_coach_tick；到期后只让 cron action 调用一次。\n证据边界：simulated demo data; not Gemini S1 physical sensor evidence。\n最终回复只说明任务是否创建、预计触发窗口和 [DEMO] 边界。",
+        "text_sha256": "06558b6d193e144b81621bb0a20891c8394a8f38f742e3751d5fd95128bfdde6",
+        "expected": "coach_schedule",
+        "top1": "coach_schedule",
+        "routed": "coach_schedule",
+        "confidence": 0.98046875,
+        "margin": 0.9609375
+      },
+      {
+        "text": "请使用“月薪喵主动恢复教练”Skill，并务必调用 mooncat_coach_tick 一次，不要只生成文字建议。\n输入 JSON：{\"mode\":\"execute\",\"source\":\"simulated\",\"valid\":true,\"workout_active\":true,\"do_not_disturb\":false,\"inactivity_minutes\":103,\"sleep_debt_minutes\":65,\"stress_score\":91,\"battery_percent\":36}\n证据边界：simulated demo data; not Gemini S1 physical sensor evidence。\n请在最终回复中简短说明工具返回的 status，并保留 [DEMO] 标识。",
+        "text_sha256": "cfa7fac50f3bc2400065f41612b6cc71fd1cdf3ba3581d7ea0686bddf272eb22",
+        "expected": "coach_now",
+        "top1": "coach_now",
+        "routed": "coach_now",
+        "confidence": 0.99609375,
+        "margin": 0.99609375
+      },
+      {
+        "text": "请使用“月薪喵主动恢复教练”Skill，并务必调用 mooncat_coach_tick 一次，不要只生成文字建议。\n输入 JSON：{\"mode\":\"preview\",\"source\":\"simulated\",\"valid\":true,\"workout_active\":true,\"do_not_disturb\":false,\"inactivity_minutes\":103,\"sleep_debt_minutes\":65,\"stress_score\":91,\"battery_percent\":36}\n证据边界：simulated demo data; not Gemini S1 physical sensor evidence。\n请在最终回复中简短说明工具返回的 status，并保留 [DEMO] 标识。",
+        "text_sha256": "021daa8977aa4ece11493d3b330e5ce6e8d8bc6cda4d7eb89a7b7d8b9abfa9c2",
+        "expected": "coach_preview",
+        "top1": "coach_preview",
+        "routed": "coach_preview",
+        "confidence": 0.99609375,
+        "margin": 0.99609375
+      },
+      {
+        "text": "请使用“月薪喵主动恢复教练”Skill，设置一次现场主动提醒演示。\n先调用 get_current_time 获取当前 epoch，再调用 cron_list 检查同名任务。\n若已有未到期的 mooncat-demo-once，不要重复创建，直接报告现有任务。\n否则调用 cron_add，并把 at_epoch 设为当前 epoch + 20（必须是数字）。\n任务模板：{\"name\":\"mooncat-demo-once\",\"schedule_type\":\"at\",\"at_epoch\":\"CURRENT_EPOCH_PLUS_20\",\"message\":\"[DEMO] MoonCat proactive check completed\",\"channel\":\"system\",\"chat_id\":\"mooncat-coach\",\"action\":\"mooncat_coach_tick\",\"action_args\":\"{\\\"mode\\\":\\\"execute\\\",\\\"source\\\":\\\"simulated\\\",\\\"valid\\\":true,\\\"workout_active\\\":true,\\\"do_not_disturb\\\":false,\\\"inactivity_minutes\\\":103,\\\"sleep_debt_minutes\\\":65,\\\"stress_score\\\":91,\\\"battery_percent\\\":36}\"}\n不要立即调用 mooncat_coach_tick；到期后只让 cron action 调用一次。\n证据边界：simulated demo data; not Gemini S1 physical sensor evidence。\n最终回复只说明任务是否创建、预计触发窗口和 [DEMO] 边界。",
+        "text_sha256": "b2b521821cc29e25d346184295564f13cac30a23cf0ecaffa40a8120d9f04e07",
+        "expected": "coach_schedule",
+        "top1": "coach_schedule",
+        "routed": "coach_schedule",
+        "confidence": 0.98046875,
+        "margin": 0.9609375
+      }
+    ]
+  },
+  "tflite_input_dtype": "<class 'numpy.int8'>",
+  "tflite_output_dtype": "<class 'numpy.int8'>",
+  "tflite_input_quantization": [
+    0.003921568859368563,
+    -128
+  ],
+  "tflite_output_quantization": [
+    0.00390625,
+    -128
+  ],
+  "tflite_operators": [
+    "FULLY_CONNECTED",
+    "FULLY_CONNECTED",
+    "SOFTMAX",
+    "DELEGATE"
+  ],
+  "model_bytes": 52008,
+  "model_sha256": "8d9fa3a06fd9f0aef417cf92c72fad21a90efe74961077792f82e72ab6eb85d8",
+  "tensorflow_version": "2.20.0",
+  "evidence_boundary": "host_training_and_tflite_inference_only_not_gemini_s1_runtime",
+  "targets": {
+    "int8_macro_f1_at_least_0_96": true,
+    "each_positive_precision_after_gate_at_least_0_98": true,
+    "test_fallback_false_activation_at_most_0_01": true,
+    "acceptance_exact_match_at_least_0_95": true,
+    "acceptance_fallback_false_activation_at_most_0_01": true,
+    "quickapp_contract_accuracy_1_0": true,
+    "float_int8_agreement_at_least_0_99": true
+  },
+  "all_targets_passed": true
+}

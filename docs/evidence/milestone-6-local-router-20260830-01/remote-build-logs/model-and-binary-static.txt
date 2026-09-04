@@ -1,0 +1,48 @@
+status=PASS
+
+BUILD-SOURCE HASH MATCHES
+da0fbe7ed454f4481d16d0b12865ac87650aec27a72e9126831c2de123918bf9  mooncat_intent_model.cc
+824f8bbb140ab287c0dd32e6437b4807afd3261700f73424a9878b2f68e7b442  mooncat_intent_model_data.h
+54f9b6f0cbcd4608836729dbe88859016f55ab3125c87e73c4a12a5c01d77a3e  mooncat_local_router.c
+47e08b5b71f717f7b550a5114d1adcc3d0c6872353488a8e3a2621ed4acc8251  mooncat_local_router.h
+
+Each hash is identical in the milestone6 overlay and build04 packages/ai_agent/src/tools destination.
+
+MODEL PARSED FROM BUILD SOURCE HEADER
+model_bytes=52008
+model_sha256=8d9fa3a06fd9f0aef417cf92c72fad21a90efe74961077792f82e72ab6eb85d8
+model_prefix=2000000054464c33
+TFL3_offset=4
+
+MODEL EXTRACTED DIRECTLY FROM FINAL vela.bin
+embedded_model_offset=6632000
+embedded_model_bytes=52008
+embedded_model_sha256=8d9fa3a06fd9f0aef417cf92c72fad21a90efe74961077792f82e72ab6eb85d8
+embedded_model_unique=True
+
+FINAL vela.bin ANCHORS
+local_ai_prefix_count=1 offset=7311627
+format_string=[LOCAL AI %u%% %s] %s
+TFL3 count=1
+mooncat-demo-once count=3 offset=7292855
+CURRENT_EPOCH_PLUS_ count=1 offset=7292590
+mooncat_coach_tick count=5 offset=7293096
+cron_add count=7 offset=7276067
+cron_list count=6 offset=7292806
+
+SOURCE REGISTRATION AND ARENA
+mooncat_intent_model.cc:32 constexpr size_t kTensorArenaBytes = 32 * 1024;
+mooncat_intent_model.cc:33 alignas(16) uint8_t g_tensor_arena[kTensorArenaBytes];
+mooncat_intent_model.cc:67 static tflite::MicroMutableOpResolver<2> resolver;
+mooncat_intent_model.cc:70 resolver.AddFullyConnected(tflite::Register_FULLY_CONNECTED_INT8())
+mooncat_intent_model.cc:72 resolver.AddSoftmax(tflite::Register_SOFTMAX_INT8())
+
+FINAL ELF SIZE SYMBOLS
+420cbf40 00000004 B _ZN12_GLOBAL__N_113g_interpreterE.lto_priv.0
+4163726c 0000058c T _ZN6tflite12_GLOBAL__N_111SoftmaxEvalEP13TfLiteContextP10TfLiteNode.lto_priv.0
+420cb740 00000800 b _ZN12_GLOBAL__N_110g_featuresE
+41634da0 00000830 T _ZN6tflite12_GLOBAL__N_118FullyConnectedEvalEP13TfLiteContextP10TfLiteNode.lto_priv.0
+420d5890 00008000 b _ZN12_GLOBAL__N_114g_tensor_arenaE
+41a53240 0000cb28 t _ZL22g_mooncat_router_model
+
+Boundary: 0x8000 is the statically allocated arena capacity. It is not a measurement of runtime peak arena usage. The anchors and symbols prove static linkage, not successful on-board invocation or latency.

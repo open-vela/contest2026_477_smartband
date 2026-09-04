@@ -1,0 +1,8 @@
+# MoonCat offline int8 tool router. Kept separate from the contest fragment so
+# the previously verified AI/UI configuration remains independently auditable.
+CONFIG_SYSTEM_FLATBUFFERS=y
+CONFIG_MATH_GEMMLOWP=y
+CONFIG_MATH_KISSFFT=y
+CONFIG_MATH_RUY=y
+CONFIG_TFLITEMICRO=y
+CONFIG_AI_AGENT_LOCAL_TOOL_ROUTER=y

@@ -1,0 +1,9 @@
+imagewty_magic=PASS
+imagewty_files=PASS
+all_item_boundaries_padding_alignment=PASS
+vfile_checks=PASS
+payload_diff_only_nsh_and_Vnsh=PASS
+candidate_nsh_matches_vela_bin=PASS
+quickapp_autostart_and_banned_string_scan=PASS
+final_config=PASS
+generated_rcS=PASS

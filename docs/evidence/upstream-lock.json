@@ -1,0 +1,34 @@
+{
+  "recorded_at": "2026-08-29T15:35:00+08:00",
+  "contest_branch": "dev-ai-contest-2026",
+  "upstreams": {
+    "open-vela/vendor_allwinnertech": "1676386193f0e710121e710935f1757c0f34b662",
+    "open-vela/packages_ai_agent": "31faed70f683a6f5e690437c5507891360f0814a",
+    "open-vela/frameworks_runtimes_feature": "fa5e43636ed38e9cefdca37d91cd655902b6cefa"
+  },
+  "locked_build_evidence": {
+    "remote_source_tree": "/data/openvela-ui-gemini-s1-fps48-lcdstridefix-20260815-r8",
+    "vela_bin_sha256": "92fd8ef173e9661ca3430083533c39a97c1fbfba6821960a18e14853c86670c1",
+    "image_size_bytes": 68699136,
+    "image_sha256": "f42ac571713fd35fd04722de01dfc3e60af96d4c80daa8709e81a214436c2bbc"
+  },
+  "r8_origin_files": {
+    "packages/demos/openvela_ui/CMakeLists.txt": "9842574ba9578d9b309feb2d0e7c3a573b3ce831fb2bf09e991117d7f7bfb46c",
+    "packages/demos/openvela_ui/Kconfig": "4dfe1efb3f7601ad88c5904d844a2bb45a1d843ebf07ca06b8f2fbd2c5883f3f",
+    "packages/demos/openvela_ui/Make.defs": "5c07f754f37168baeaab1372a756c942ca05400672ca1d249dcd61b0a71623c7",
+    "packages/demos/openvela_ui/Makefile": "930383c6f232d0b91faebe1b70bced277d41bbdb5f914f18925af3f692ac15c8",
+    "packages/demos/openvela_ui/openvela_ui.c": "f13bec3b9005b9dcd0f5de325a675ee3848c2b364722f93ab7175ebc2448eb69",
+    "packages/demos/openvela_ui/openvela_ui.h": "ece8663ef705d0087cbe5db3c1cf1367b1bdd35ad137ea20f5d4115d7f073160",
+    "packages/demos/openvela_ui/openvela_ui_main.c": "91c04782812751f963e769f8bf92eb79b37c1abbf92b648b5d82020f9da90db4",
+    "packages/demos/openvela_ui/openvela_ui_sport.c": "9a44f6c4027413588ef7537fc545b8eaa94e70ae4b8caeff0b7eb599ba7b95b6",
+    "packages/demos/openvela_ui/openvela_ui_sport.h": "8ce07046fe834ca6404a298faa760233866acc0b5cf57a1c4b3eeb9fb4e2840c",
+    "packages/demos/openvela_ui/openvela_ui_sync.c": "2d04b005000ee74b5b0284a80cc5c938cc208791f0c2cc704d25ff1e4f1ed097",
+    "packages/demos/openvela_ui/openvela_ui_sync.h": "00e05137a8c29ef5c89eee0e7aa8303cecb8de2e4cb0c4f8d866f5ee938dd32b",
+    "packages/demos/openvela_ui/openvela_ui_timesync.c": "a632135d556294491f8c0bc7b76945dc02abe003560caaeba17e521e5e24ed49",
+    "packages/demos/openvela_ui/openvela_ui_timesync.h": "4f4e92571bcf37d07782c7a6cfc29db640b28bac659af4bc407a43201bd270b5",
+    "packages/demos/openvela_ui/openvela_ui_weather.c": "556ebf454770f44fd630ceb98143000a2bc435dbccf938726a95285ba8fd8522",
+    "packages/demos/openvela_ui/openvela_ui_weather.h": "10d0e0fc3629b0a94a81a1bb72eb779d5fedccd0632287b9a0b83a6be3b2ef45",
+    "apps/graphics/lvgl/lvgl/src/drivers/nuttx/lv_nuttx_lcd.c": "a5a1d4cfc9ac23f61b64184d493b493514b1d9acc37a80dd9e952f1776f4c201",
+    "vendor/allwinnertech/boards/r528/r528s3-gemini-s1/configs/nsh_minidisplay/defconfig": "fbfe347b5fdf4be67dd1f2d0542e88b6c52cb70b81778975000b93c7c0080989"
+  }
+}

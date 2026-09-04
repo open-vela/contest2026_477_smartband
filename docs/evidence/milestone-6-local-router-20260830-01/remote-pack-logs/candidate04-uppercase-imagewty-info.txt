@@ -1,0 +1,87 @@
+=== ImageWTY Header ===
+Magic                : IMAGEWTY
+Header Version       : 0x00000300
+Header Size          : 96 bytes (0x60)
+Base RAM             : 0x04D00000
+
+--- Image Info ---
+Format Version       : 0x00100234
+Total Size           : 71915520 bytes (68.58 MB)
+Header + Align       : 0 bytes
+File Header Length   : 1024 bytes
+
+--- USB & IDs ---
+USB Product ID       : 0x00001234
+USB Vendor ID        : 0x00008743
+Hardware ID          : 0x00000100
+Firmware ID          : 0x00000100
+
+--- Files ---
+Number of Files      : 22
+
+=== File Headers (22 files) ===
+No   Filename                       Maintype   Subtype          Size (pad)   Size       Offset    
+---------------------------------------------------------------------------------------------------
+1    sys_config.fex                 COMMON     SYS_CONFIG100000 19648        19640      0x5C00    
+      -> Text configuration from which DTB is generated.
+---------------------------------------------------------------------------------------------------
+2    config.fex                     COMMON     SYS_CONFIG_BIN00 26624        26624      0xAC00    
+      -> Binary version of sys_config.fex.
+---------------------------------------------------------------------------------------------------
+3    split_xxxx.fex                 COMMON     SPLIT_0000000000 512          512        0x11400   
+      -> Signature block (magic.bin) used by the bootloader.
+---------------------------------------------------------------------------------------------------
+4    sys_partition.fex              COMMON     SYS_CONFIG000000 3680         3673       0x11800   
+      -> Text partition layout (not flashed directly).
+---------------------------------------------------------------------------------------------------
+5    sunxi.fex                      COMMON     DTB_CONFIG000000 80           66         0x12800   
+      -> Device tree blob (DTB), not flashed directly.
+---------------------------------------------------------------------------------------------------
+6    boot0_nand.fex                 BOOT       BOOT0_0000000000 45056        45056      0x12C00   
+      -> Bootloader for NAND flash devices.
+---------------------------------------------------------------------------------------------------
+7    u-boot.fex                     12345678   UBOOT_0000000000 638976       638976     0x1DC00   
+      -> U-Boot loader inside boot_package.fex.
+---------------------------------------------------------------------------------------------------
+8    toc1.fex                       12345678   TOC1_00000000000 96           83         0xB9C00   
+      -> Empty stub file for TOC1 (sunxi-secure package).
+---------------------------------------------------------------------------------------------------
+9    toc0.fex                       12345678   TOC0_00000000000 96           83         0xBA000   
+      -> Empty stub file for TOC0 format secondary bootloader.
+---------------------------------------------------------------------------------------------------
+10   fes1.fex                       FES        FES_1-0000000000 20640        20640      0xBA400   
+      -> Auxiliary loader for FES mode.
+---------------------------------------------------------------------------------------------------
+11   boot_package.fex               12345678   BOOTPKG-00000000 655360       655360     0xBF800   
+      -> Binary package for the bootloader
+written at offset 32800 blocks.
+---------------------------------------------------------------------------------------------------
+12   usbtool.fex                    PXTOOLSB   XXXXXXXXXXXXXXXX 154112       154112     0x15F800  
+      -> Used by PhoenixSuite USB programming tools.
+---------------------------------------------------------------------------------------------------
+13   aultools.fex                   UPFLYTLS   XXXXXXXXXXXXXXXX 165008       165006     0x185400  
+      -> Compiled Lua script for USB tools.
+---------------------------------------------------------------------------------------------------
+14   aultls32.fex                   UPFLTL32   XXXXXXXXXXXXXXXX 150848       150834     0x1ADC00  
+      -> Compiled Lua script for USB tools (32-bit).
+---------------------------------------------------------------------------------------------------
+15   sunxi_mbr.fex                  12345678   1234567890___MBR 65536        65536      0x1D2C00  
+      -> Binary file for the flasher,
+contains partition info.
+---------------------------------------------------------------------------------------------------
+16   dlinfo.fex                     12345678   1234567890DLINFO 16384        16384      0x1E2C00  
+      -> Binary file for the flasher,
+contains file-to-partition mapping.
+---------------------------------------------------------------------------------------------------
+17   nsh.fex                        RFSFAT16   NSH_FEX000000000 7699888      7699888    0x1E6C00  
+---------------------------------------------------------------------------------------------------
+18   Vnsh.fex                       RFSFAT16   VNSH_FEX00000000 16           4          0x93EC00  
+---------------------------------------------------------------------------------------------------
+19   res.fex                        RFSFAT16   RES_FEX000000000 8851456      8851456    0x93F000  
+---------------------------------------------------------------------------------------------------
+20   Vres.fex                       RFSFAT16   VRES_FEX00000000 16           4          0x11B0000 
+---------------------------------------------------------------------------------------------------
+21   usrdata.fex                    RFSFAT16   USRDATA_FEX00000 53366784     53366784   0x11B0400 
+---------------------------------------------------------------------------------------------------
+22   Vusrdata.fex                   RFSFAT16   VUSRDATA_FEX0000 16           4          0x4495400 
+---------------------------------------------------------------------------------------------------

@@ -1,0 +1,6 @@
+7699888\t/data/openvela-contest-2026-gemini-s1-v1-build-20260830-04/nuttx/vela.bin
+7699888\t/data/openvela-contest-2026-gemini-s1-v1-pack-20260830-04/input/Gemini-S1-MoonCat-AI-local-router-20260830.vela.bin
+7699888\t/data/openvela-contest-2026-gemini-s1-v1-pack-20260830-04/lichee/board/r528s3/gemini-s1_nand/configs/nsh.fex
+52dd5e195ce057b7bed1b18514e8eced9ed26aaa71988575ff51d1cb78963260  /data/openvela-contest-2026-gemini-s1-v1-build-20260830-04/nuttx/vela.bin
+52dd5e195ce057b7bed1b18514e8eced9ed26aaa71988575ff51d1cb78963260  /data/openvela-contest-2026-gemini-s1-v1-pack-20260830-04/input/Gemini-S1-MoonCat-AI-local-router-20260830.vela.bin
+52dd5e195ce057b7bed1b18514e8eced9ed26aaa71988575ff51d1cb78963260  /data/openvela-contest-2026-gemini-s1-v1-pack-20260830-04/lichee/board/r528s3/gemini-s1_nand/configs/nsh.fex

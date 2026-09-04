@@ -1,0 +1,78 @@
+contest config applied: /data/openvela-contest-2026-gemini-s1-v1-build-20260829-02/vendor/allwinnertech/boards/r528/r528s3-gemini-s1/configs/nsh_minidisplay/defconfig
+contest config verified: /data/openvela-contest-2026-gemini-s1-v1-build-20260829-02/vendor/allwinnertech/boards/r528/r528s3-gemini-s1/configs/nsh_minidisplay/defconfig
+overlay content verified: /data/openvela-contest-2026-gemini-s1-v1-build-20260829-02
+overlay applied without deleting unrelated target files: /data/openvela-contest-2026-gemini-s1-v1-build-20260829-02
+LIBCLANG_PATH set to: /data/openvela-contest-2026-gemini-s1-v1-build-20260829-02/prebuilts/rust/linux/extra_libs
+including vendor/infineon/boards/aurix/build/vendorsetup.sh
+including vendor/infineon/boards/aurix_tc3/build/vendorsetup.sh
+including vendor/openvela/boards/build/vendorsetup.sh
+Build command line:
+  /data/openvela-contest-2026-gemini-s1-v1-build-20260829-02/nuttx/tools/configure.sh -e /data/openvela-contest-2026-gemini-s1-v1-build-20260829-02/vendor/allwinnertech/boards/r528/r528s3-gemini-s1/configs/nsh_minidisplay
+  make -C /data/openvela-contest-2026-gemini-s1-v1-build-20260829-02/nuttx EXTRAFLAGS=-Wno-cpp -Wno-deprecated-declarations -j16
+  make -C /data/openvela-contest-2026-gemini-s1-v1-build-20260829-02/nuttx savedefconfig
+No configuration change.
+make: Entering directory '/data/openvela-contest-2026-gemini-s1-v1-build-20260829-02/nuttx'
+[1KCC:  misc/lib_utsname.c [1KCC:  feature/audio.c [1KCC:  feature/record.c [1KCC:  feature/session.c [1KCXX:  /data/openvela-contest-2026-gemini-s1-v1-build-20260829-02/apps/frameworks/runtimes/feature/modules/generated/jidl/battery.cpp [1KCXX:  /data/openvela-contest-2026-gemini-s1-v1-build-20260829-02/apps/frameworks/runtimes/feature/modules/generated/jidl/brightness.cpp [1KCXX:  /data/openvela-contest-2026-gemini-s1-v1-build-20260829-02/apps/frameworks/runtimes/feature/modules/generated/jidl/cipher.cpp [1KCXX:  /data/openvela-contest-2026-gemini-s1-v1-build-20260829-02/apps/frameworks/runtimes/feature/modules/generated/jidl/configuration.cpp [1KCC:  feature/volume.c [1KCXX:  /data/openvela-contest-2026-gemini-s1-v1-build-20260829-02/apps/frameworks/runtimes/feature/modules/generated/jidl/crypto.cpp [1KCXX:  /data/openvela-contest-2026-gemini-s1-v1-build-20260829-02/apps/frameworks/runtimes/feature/modules/generated/jidl/device.cpp [1KCXX:  /data/openvela-contest-2026-gemini-s1-v1-build-20260829-02/apps/frameworks/runtimes/feature/modules/generated/jidl/error.cpp [1KCXX:  /data/openvela-contest-2026-gemini-s1-v1-build-20260829-02/apps/frameworks/runtimes/feature/modules/generated/jidl/event.cpp [1KCXX:  /data/openvela-contest-2026-gemini-s1-v1-build-20260829-02/apps/frameworks/runtimes/feature/modules/generated/jidl/exchange.cpp [1KCXX:  /data/openvela-contest-2026-gemini-s1-v1-build-20260829-02/apps/frameworks/runtimes/feature/modules/generated/jidl/feature_locale.cpp [1K[1K[1KCXX:  /data/openvela-contest-2026-gemini-s1-v1-build-20260829-02/apps/frameworks/runtimes/feature/modules/generated/jidl/fetch.cpp [1K[1KCXX:  /data/openvela-contest-2026-gemini-s1-v1-build-20260829-02/apps/frameworks/runtimes/feature/modules/generated/jidl/file.cpp [1K[1K[1KCXX:  /data/openvela-contest-2026-gemini-s1-v1-build-20260829-02/apps/frameworks/runtimes/feature/modules/generated/jidl/geolocation.cpp [1KCXX:  /data/openvela-contest-2026-gemini-s1-v1-build-20260829-02/apps/frameworks/runtimes/feature/modules/generated/jidl/mqttmessage.cpp [1K[1KCXX:  /data/openvela-contest-2026-gemini-s1-v1-build-20260829-02/apps/frameworks/runtimes/feature/modules/generated/jidl/power.cpp [1K[1KCXX:  /data/openvela-contest-2026-gemini-s1-v1-build-20260829-02/apps/frameworks/runtimes/feature/modules/generated/jidl/prompt.cpp [1K[1KCXX:  /data/openvela-contest-2026-gemini-s1-v1-build-20260829-02/apps/frameworks/runtimes/feature/modules/generated/jidl/request.cpp [1K[1KCXX:  /data/openvela-contest-2026-gemini-s1-v1-build-20260829-02/apps/frameworks/runtimes/feature/modules/generated/jidl/sensor.cpp [1K[1K[1KCXX:  /data/openvela-contest-2026-gemini-s1-v1-build-20260829-02/apps/frameworks/runtimes/feature/modules/generated/jidl/storage.cpp [1K[1K[1KCXX:  /data/openvela-contest-2026-gemini-s1-v1-build-20260829-02/apps/frameworks/runtimes/feature/modules/generated/jidl/system_zlib.cpp [1K[1K[1K[1KCXX:  /data/openvela-contest-2026-gemini-s1-v1-build-20260829-02/apps/frameworks/runtimes/feature/modules/generated/jidl/velaclaw.cpp [1KCXX:  /data/openvela-contest-2026-gemini-s1-v1-build-20260829-02/apps/frameworks/runtimes/feature/modules/generated/jidl/zip.cpp [1KCC:  /data/openvela-contest-2026-gemini-s1-v1-build-20260829-02/apps/graphics/lvgl/lvgl/src/drivers/nuttx/lv_nuttx_lcd.c [1K[1KCC:  src/tools/mooncat_coach_policy.c [1K[1K[1K[1K[1K[1K[1KCC:  src/tools/tool_mooncat_coach.c [1K[1KCC:  openvela_ui.c [1K[1KCC:  openvela_ui_agent_bridge.c [1K[1K[1KCC:  openvela_ui_main_mooncat.c [1KCC:  openvela_ui_sport.c [1KCC:  openvela_ui_sync.c [1K[1KCC:  openvela_ui_timesync.c [1KCC:  openvela_ui_weather.c [1K[1K[1K[1K[1K[1K[1K[1KIN: libs/libc/libc.a -> staging/libc.a [1K[1K[1K[1KIN: /data/openvela-contest-2026-gemini-s1-v1-build-20260829-02/apps/libapps.a -> staging/libapps.a [1K[1KCPP:  /data/openvela-contest-2026-gemini-s1-v1-build-20260829-02/nuttx/../vendor/allwinnertech/boards/r528/r528s3-gemini-s1/scripts/sdram.ld.S-> /data/openvela-contest-2026-gemini-s1-v1-build-20260829-02/nuttx/../vendor/allwinnertech/boards/r528/r528s3-gemini-s1/scripts/sdram.ld.S.tmp [1K[1KCPP:  etc/init.d/rcS-> etctmp/etc/init.d/rcS [1Kcp: cannot stat '/data/openvela-contest-2026-gemini-s1-v1-build-20260829-02/nuttx/../vendor/allwinnertech/boards/r528/r528s3-gemini-s1/src/etc/ssh/ssh_known_hosts': No such file or directory
+[1KCC:  etctmp.c [1KLD: nuttx
+lto-wrapper: warning: Extra option to '-Xassembler': -mthumb, dropping all '-Xassembler' and '-Wa' options.
+../../../../external/zblue/zblue/port/kernel/mem_slab.c:125:15: warning: type of 'z_sched_wake' does not match original declaration [-Wlto-type-mismatch]
+  125 |         (void)z_sched_wake(&slab->wait_q, 0, NULL);
+      |               ^
+../../../../external/zblue/zblue/port/kernel/sched.c:99:6: note: return value type mismatch
+   99 | bool z_sched_wake(_wait_q_t *wait_q, int swap_retval, void *swap_data)
+      |      ^
+../../../../external/zblue/zblue/port/kernel/sched.c:99:6: note: type '_Bool' should match type 'int'
+../../../../external/zblue/zblue/port/kernel/sched.c:99:6: note: 'z_sched_wake' was previously declared here
+../../../../external/zblue/zblue/port/kernel/sched.c:99:6: note: code may be misoptimized unless '-fno-strict-aliasing' is used
+../../../../external/zblue/zblue/subsys/bluetooth/host/classic/l2cap_br.c:608:30: warning: type of 'bt_smp_ctkd_br_to_le_enabled' does not match original declaration [-Wlto-type-mismatch]
+  608 |                         if (!bt_smp_ctkd_br_to_le_enabled(hdev)) {
+      |                              ^
+../../../../external/zblue/zblue/subsys/bluetooth/host/smp.c:2957:6: note: return value type mismatch
+ 2957 | bool bt_smp_ctkd_br_to_le_enabled(struct bt_dev *hdev)
+      |      ^
+../../../../external/zblue/zblue/subsys/bluetooth/host/smp.c:2957:6: note: type '_Bool' should match type 'int'
+../../../../external/zblue/zblue/subsys/bluetooth/host/smp.c:2957:6: note: 'bt_smp_ctkd_br_to_le_enabled' was previously declared here
+../../../../external/zblue/zblue/subsys/bluetooth/host/smp.c:2957:6: note: code may be misoptimized unless '-fno-strict-aliasing' is used
+/data/openvela-contest-2026-gemini-s1-v1-build-20260829-02/apps/frameworks/runtimes/feature/modules/net_utils.h:33:14: warning: type 'ErrorCode' violates the C++ One Definition Rule [-Wodr]
+   33 | typedef enum ErrorCode {
+      |              ^
+/data/openvela-contest-2026-gemini-s1-v1-build-20260829-02/apps/frameworks/runtimes/feature/modules/feature_config.h:1:6: note: an enum with different value name is defined in another translation unit
+    1 | enum ErrorCode {
+      |      ^
+/data/openvela-contest-2026-gemini-s1-v1-build-20260829-02/apps/frameworks/runtimes/feature/modules/net_utils.h:36:5: note: name 'TIMEOUT' differs from name 'IOERROR' defined in another translation unit
+   36 |     TIMEOUT = 204,
+      |     ^
+/data/openvela-contest-2026-gemini-s1-v1-build-20260829-02/apps/frameworks/runtimes/feature/modules/feature_config.h:4:5: note: mismatching definition
+    4 |     IOERROR = 300,
+      |     ^
+lto-wrapper: warning: using serial compilation of 100 LTRANS jobs
+lto-wrapper: note: see the '-flto' option documentation for more information
+In function 'memcpy',
+    inlined from 'NAND_Memcpy' at chip/drivers/rtos-hal/hal/source/nand_flash/src/nand_osal_for_rtos.c:139:2,
+    inlined from 'build_nand_partition' at chip/drivers/rtos-hal/hal/source/nand_flash/src/build_nand_partition.c:218:2,
+    inlined from 'nand_init' at chip/drivers/rtos-hal/hal/source/nand_flash/nuttx_nand_init.c:1920:19:
+/data/openvela-contest-2026-gemini-s1-v1-build-20260829-02/nuttx/include/string.h:231:14: warning: '__builtin_memcpy' reading 31 bytes from a region of size 16 [-Wstringop-overread]
+  231 |       return __builtin_memcpy(dest, src, n);
+      |              ^
+Memory region         Used Size  Region Size  %age Used
+           sdram:    14003956 B  961943040 B      1.46%
+    reserve_dram:          36 B       100 KB      0.04%
+CP: nuttx.bin
+cp nuttx nuttx.elf
+Generating: nuttx.bin
+/data/openvela-contest-2026-gemini-s1-v1-build-20260829-02/nuttx/../prebuilts/gcc/linux-x86_64/arm-none-eabi/bin/arm-none-eabi-strip --remove-section=.note.gnu.build-id nuttx
+/data/openvela-contest-2026-gemini-s1-v1-build-20260829-02/nuttx/../prebuilts/gcc/linux-x86_64/arm-none-eabi/bin/arm-none-eabi-strip: nuttx: warning: empty loadable segment detected at vaddr=0x47fe7000, is this intentional?
+/data/openvela-contest-2026-gemini-s1-v1-build-20260829-02/nuttx/../prebuilts/gcc/linux-x86_64/arm-none-eabi/bin/arm-none-eabi-objcopy -v -O binary nuttx vela.bin
+copy from `nuttx' [elf32-littlearm] to `vela.bin' [binary]
+Firmware is being converted: vela.bin
+Copy nsh.fex to lichee board dir
+make: Leaving directory '/data/openvela-contest-2026-gemini-s1-v1-build-20260829-02/nuttx'
+make: Entering directory '/data/openvela-contest-2026-gemini-s1-v1-build-20260829-02/nuttx'
+Loaded configuration '.config'
+Minimal configuration saved to 'defconfig.tmp'
+make: Leaving directory '/data/openvela-contest-2026-gemini-s1-v1-build-20260829-02/nuttx'
+contest config applied: /data/openvela-contest-2026-gemini-s1-v1-build-20260829-02/vendor/allwinnertech/boards/r528/r528s3-gemini-s1/configs/nsh_minidisplay/defconfig
+contest config verified: /data/openvela-contest-2026-gemini-s1-v1-build-20260829-02/vendor/allwinnertech/boards/r528/r528s3-gemini-s1/configs/nsh_minidisplay/defconfig
+overlay content verified: /data/openvela-contest-2026-gemini-s1-v1-build-20260829-02
+overlay applied without deleting unrelated target files: /data/openvela-contest-2026-gemini-s1-v1-build-20260829-02
+Gemini S1 contest firmware built from nsh_minidisplay and verified: /data/openvela-contest-2026-gemini-s1-v1-build-20260829-02

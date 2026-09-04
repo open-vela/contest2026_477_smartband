@@ -1,0 +1,43 @@
+Milestone: 5 - proactive cron demo
+Date: 2026-08-30 Asia/Shanghai
+
+[PASS] Repository host suite
+command: PYTHONDONTWRITEBYTECODE=1 python -X utf8 -m pytest -q -p no:cacheprovider
+result: 20 passed, 1 skipped in 0.57s
+boundary: the skip is the existing local C-compiler availability skip
+
+[PASS] QuickApp verification
+command: npm --prefix quickapp run verify
+result: quickapp static verification: PASS
+result: quickapp proactive cron verification: PASS
+
+[PASS] Auxiliary static checks
+command: bash -n scripts/apply_overlay.sh
+result: exit 0
+command: PYTHONPYCACHEPREFIX=D:/CodexCaches/mooncat-m5-pycache python -X utf8 -m py_compile scripts/merge_defconfig.py
+result: exit 0
+command: git diff --check
+result: exit 0; only pre-existing Windows LF/CRLF advisory warnings were emitted
+
+[PASS] Isolated QuickApp build
+build directory: D:/CodexCaches/mooncat-m5-build.ydAryr
+node: v24.15.0
+toolkit: 2.0.5
+command: npm run build
+result: build success in 2370 ms
+artifact: dist/com.ov.mooncat.debug.0.1.0.rpk
+size: 14808 bytes
+sha256: D1F57FF66B1937EA4FEBB9333F6E6FF05FBA71309DFE826EACB5D1168D9FA408
+magic: 50 4B 03 04 (ZIP/RPK container)
+compiled anchors: mooncat-demo-once; cron_add; 秒后主动提醒
+repository quickapp/build: not written
+
+[NOT_TESTED] Device runtime
+QuickApp physical click, get_current_time response, cron_list/cron_add execution,
+20-30 second trigger timing, mooncat_coach_tick delivery, message-bus delivery and native UI
+card display were not exercised on Gemini S1.
+
+[NOT_PERFORMED] Hardware writes
+PhoenixSuit, FEL, boot0, partition writes, firmware image build/package, flash, commit and push
+were not performed.
+

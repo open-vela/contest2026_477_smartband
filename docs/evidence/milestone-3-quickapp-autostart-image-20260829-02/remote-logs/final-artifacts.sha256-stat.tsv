@@ -1,0 +1,6 @@
+bytes	sha256	path
+150800	148b4cf4868ac399331b41474f5d947e4a025a8d09db5c3d2d04789b4dcc7d31	/data/openvela-contest-2026-gemini-s1-v1-build-20260829-02/nuttx/.config
+157402700	e019555b1768a8ecb4726b9065496e6201ce36610ab793537b79a34abfda8d56	/data/openvela-contest-2026-gemini-s1-v1-build-20260829-02/nuttx/nuttx.elf
+7626064	80b5f1d92f5925f6f081641d36d072a012c771681572b412668efad1c225ae02	/data/openvela-contest-2026-gemini-s1-v1-build-20260829-02/nuttx/vela.bin
+2266	187d59110fc247f8ba84d0ac6c46d03bfd0a2c5dc41927e983e46a2bca40f44b	/data/openvela-contest-2026-gemini-s1-v1-build-20260829-02/vendor/allwinnertech/boards/r528/r528s3-gemini-s1/src/etc/init.d/rcS
+71841792	8feed521bde963b34c02a94cf446a87dbebeccaeb0e2b1cf4ad529ec42a6a1a3	/data/openvela-contest-2026-gemini-s1-v1-pack-20260829-02/output/Gemini-S1-MoonCat-AI-QuickApp-autostart-20260829-candidate-02.img

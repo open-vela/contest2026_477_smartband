@@ -1,0 +1,1 @@
+/data/openvela-contest-2026-gemini-s1-v1-pack-20260829-03/i386-runtime/usr/lib/i386-linux-gnu/ld-linux.so.2 --library-path /data/openvela-contest-2026-gemini-s1-v1-pack-20260829-03/i386-runtime/usr/lib/i386-linux-gnu /data/openvela-contest-2026-gemini-s1-v1-pack-20260829-03/lichee/tools/tool/dragon image.cfg sys_partition_for_dragon.fex

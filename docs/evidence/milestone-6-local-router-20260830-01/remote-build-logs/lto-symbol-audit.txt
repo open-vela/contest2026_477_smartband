@@ -1,0 +1,40 @@
+status=LTO_AWARE_PASS
+strict_final_elf_exported_symbol_gate=FAIL
+
+FINAL ELF ORDINARY SYMBOL TABLE
+Command:
+/data/openvela-contest-2026-gemini-s1-v1-build-20260830-04/prebuilts/gcc/linux-x86_64/arm-none-eabi/bin/arm-none-eabi-nm -a --defined-only /data/openvela-contest-2026-gemini-s1-v1-build-20260830-04/nuttx/nuttx.elf | grep -E 'mooncat_(local_router_handle|intent_model_predict)'
+
+Output: empty. Do not claim that either entry remains as an ordinary final-ELF symbol.
+
+LTO INPUT OBJECT DEFINITIONS
+Tool:
+/data/openvela-contest-2026-gemini-s1-v1-build-20260830-04/prebuilts/gcc/linux-x86_64/arm-none-eabi/bin/arm-none-eabi-gcc-nm
+
+Objects:
+/data/openvela-contest-2026-gemini-s1-v1-build-20260830-04/packages/ai_agent/src/tools/mooncat_local_router.c.data.openvela-contest-2026-gemini-s1-v1-build-20260830-04.packages.ai_agent.o
+/data/openvela-contest-2026-gemini-s1-v1-build-20260830-04/packages/ai_agent/src/tools/mooncat_local_router.c.data.openvela-contest-2026-gemini-s1-v1-build-20260830-04.packages.ai_agent_1.o
+/data/openvela-contest-2026-gemini-s1-v1-build-20260830-04/packages/ai_agent/src/tools/mooncat_intent_model.cc.data.openvela-contest-2026-gemini-s1-v1-build-20260830-04.packages.ai_agent.o
+/data/openvela-contest-2026-gemini-s1-v1-build-20260830-04/packages/ai_agent/src/tools/mooncat_intent_model.cc.data.openvela-contest-2026-gemini-s1-v1-build-20260830-04.packages.ai_agent_1.o
+
+Stable output (each pair repeats the same result):
+00000000 T mooncat_local_router_handle
+00000000 T mooncat_intent_model_predict
+00000000 W _ZN6tflite22MicroMutableOpResolverILj2EE10AddSoftmaxERK16TFLMRegistration
+00000000 W _ZN6tflite22MicroMutableOpResolverILj2EE17AddFullyConnectedERK16TFLMRegistration
+
+FINAL ELF DWARF SOURCE-DEFINITION RECORDS
+Command:
+readelf --debug-dump=info /data/openvela-contest-2026-gemini-s1-v1-build-20260830-04/nuttx/nuttx.elf
+
+Stable definition records (distinct from header declarations at lines 35 and 31):
+DW_TAG_subprogram
+DW_AT_name        : mooncat_local_router_handle
+DW_AT_decl_line   : 348
+
+DW_TAG_subprogram
+DW_AT_name        : mooncat_intent_model_predict
+DW_AT_decl_line   : 102
+
+Interpretation: the functions were compiled as LTO inputs and retain source-definition records in the final ELF, but the linker internalized/inlined them so the ordinary final ELF symbol table does not export their names. Static linkage is additionally evidenced by the final ELF model/arena/TFLM symbols and the final binary model/router anchors in model-and-binary-static.txt.
+

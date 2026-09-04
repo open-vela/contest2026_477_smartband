@@ -1,0 +1,38 @@
+status=LTO_AWARE_PASS
+exact_unmangled_name_gate=FAIL
+
+SOURCE
+/data/openvela-contest-2026-gemini-s1-v1-build-20260830-04/packages/ai_agent/src/agent_main.c
+line 225: static void *quickapp_mq_listener_task(void *arg)
+lines 625-633: CONFIG_FEATURE_SYSTEM_VELACLAW-gated agent_task_create call and boot log
+
+CONFIG
+CONFIG_FEATURE_SYSTEM_VELACLAW=y
+
+FINAL ELF ORDINARY SYMBOLS
+415f7820 T ai_agent_main
+415f6448 T quickapp_mq_listener_task.lto_priv.0
+
+The listener is present as an ordinary final-ELF text symbol with the honest LTO-internalized name `quickapp_mq_listener_task.lto_priv.0`. An exact-name lookup for `quickapp_mq_listener_task` alone will miss it.
+
+FINAL ELF DWARF
+DW_TAG_subprogram
+DW_AT_name        : quickapp_mq_listener_task
+DW_AT_decl_line   : 225
+
+FINAL vela.bin ANCHORS
+/velaclaw_qapp_in count=1 offset=7079340
+/velaclaw_qapp_out count=1 offset=7077759
+Quickapp mqueue listener started count=1 offset=7274353
+Failed to open quickapp inbound mqueue count=1 offset=7274392
+Failed to start quickapp mqueue listener count=1 offset=7279942
+quickapp mqueue listener started count=1 offset=7280007
+
+LTO INPUT OBJECTS
+/data/openvela-contest-2026-gemini-s1-v1-build-20260830-04/packages/ai_agent/src/agent_main.c.data.openvela-contest-2026-gemini-s1-v1-build-20260830-04.packages.ai_agent.o
+/data/openvela-contest-2026-gemini-s1-v1-build-20260830-04/packages/ai_agent/src/agent_main.c.data.openvela-contest-2026-gemini-s1-v1-build-20260830-04.packages.ai_agent_1.o
+
+Both objects are 328,072 bytes. `arm-none-eabi-gcc-nm -a --defined-only` lists `00000000 T ai_agent_main` but not the source-static listener, so the input-object symbol table is not used as the positive listener gate. The final `.lto_priv.0` text symbol, DWARF source definition, enabled config, creation call, and six final-binary anchors form the static evidence chain.
+
+Boundary: this proves static presence only. It does not prove that the listener thread starts or receives a QuickApp message on Gemini S1.
+

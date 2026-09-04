@@ -1,0 +1,1 @@
+./tools/scripts/pack_img.sh -c sun8iw20p1 -p rtos -b r528s3-gemini-s1 -o nuttx -d uart0 -s none -m normal -w none -v none -i none -t /data/openvela-contest-2026-gemini-s1-v1-pack-20260830-04/lichee -f r528s3/gemini-s1_nand -g r528s3/gemini-s1_nand

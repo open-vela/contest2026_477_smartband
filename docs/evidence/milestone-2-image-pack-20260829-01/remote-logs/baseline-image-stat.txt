@@ -1,0 +1,1 @@
+/data/openvela-ui-gemini-s1-fps48-lcdstridefix-20260815-r8/vendor/allwinnertech/lichee/out/r528s3/gemini-s1_nand/image-fps48-sparse-lcdstridefixed-20260815-r8/rtos_nuttx_r528s3-gemini-s1_uart0_128Mnand.img 68699136 2026-08-14 18:55:35.858057575 +0000

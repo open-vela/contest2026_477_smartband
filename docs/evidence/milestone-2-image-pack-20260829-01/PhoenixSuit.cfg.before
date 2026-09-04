@@ -1,0 +1,65 @@
+[system]
+ver=PhoenixSuit V2.0.0
+author=Sam
+copyright=AllWinner
+web=no
+
+[news]
+web=http://61.143.38.50/ps/index.html
+
+
+[driver]
+adb=1
+aw=0
+
+[config]
+key=livesuit.dat
+image=E:\GeminiFlash\fps60-displayfixed.img
+pronum=301
+killadb=0
+radioindex=1
+
+[id]
+;our usb disk
+vid=0x1f3a
+pid=0x1000
+
+
+[device]
+productID = GUID
+product = 1600
+company = AllWinner
+
+
+[history]
+default =10
+backup =backup.history
+update =update.history
+
+[firmware]
+index=0
+path_0=E:\GeminiFlash\fps60-displayfixed.img
+path_1=
+path_2=
+path_3=
+path_4=
+
+[dump]
+enable =0
+size = 10M
+
+[APK_PATH]
+
+[usbtool]
+fromImg = 1
+
+[erase]
+enable=0
+all=0
+
+[uiview]
+;0:hide,1:show
+partburn = 1
+keepdata = 1
+wipepart = 1
+wipeall = 1

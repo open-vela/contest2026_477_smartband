@@ -1,0 +1,54 @@
+== build exit ==
+0
+== artifacts ==
+nuttx/.config bytes=150800 mtime=2026-08-29 13:27:31.608734869 +0000
+nuttx/nuttx.elf bytes=157402700 mtime=2026-08-29 13:41:45.353449292 +0000
+nuttx/nuttx bytes=7631060 mtime=2026-08-29 13:41:45.576450784 +0000
+nuttx/vela.bin bytes=7626064 mtime=2026-08-29 13:41:45.609451005 +0000
+148b4cf4868ac399331b41474f5d947e4a025a8d09db5c3d2d04789b4dcc7d31  nuttx/.config
+e019555b1768a8ecb4726b9065496e6201ce36610ab793537b79a34abfda8d56  nuttx/nuttx.elf
+3b836ee94bc4138dec9ac7b69788113731154f6b8a54e393f8a5a0d7441593d8  nuttx/nuttx
+80b5f1d92f5925f6f081641d36d072a012c771681572b412668efad1c225ae02  nuttx/vela.bin
+== required final config ==
+26:CONFIG_BASE_DEFCONFIG="../vendor/allwinnertech/boards/r528/r528s3-gemini-s1/configs/nsh_minidisplay"
+4156:CONFIG_FEATURE_FRAMEWORK=y
+4198:CONFIG_FEATURE_SYSTEM_VELACLAW=y
+4204:CONFIG_QUICKAPP=y
+4206:CONFIG_QUICKAPP_VAPP=y
+4847:CONFIG_LV_NUTTX_LCD_CUSTOM_BUFFER=y
+4849:CONFIG_LV_NUTTX_LCD_BUFFER_SIZE=120
+5300:CONFIG_EXAMPLES_AI_AGENT_VELA=y
+5339:CONFIG_LVX_USE_DEMO_OPENVELA_UI=y
+== canonical target defconfig ==
+277:CONFIG_FEATURE_FRAMEWORK=y
+482:CONFIG_QUICKAPP=y
+485:CONFIG_QUICKAPP_VAPP=y
+626:CONFIG_EXAMPLES_AI_AGENT_VELA=y
+655:CONFIG_FEATURE_SYSTEM_VELACLAW=y
+== generated rcS ==
+31-then
+32-  echo "wifi already started"
+33-fi
+34:openvela_ui &
+35:ai_agent < /dev/null &
+== ELF defined symbols ==
+415d825d T ai_agent_main
+415d5d99 T openvela_ui_main
+01224e11 W openvela_ui_main_mooncat.c.42931df1
+415d78c5 t quickapp_mq_listener_task
+415e4919 T tool_exit_quickapp_execute
+415e48c9 T tool_launch_quickapp_execute
+41626f91 T tool_mooncat_coach_execute
+0124931e W tool_proxyquickapp.c.ed93c192
+416859a1 T vapp_main
+== vela.bin strings ==
+ai_agent < /dev/null &
+hap://app/
+vapp
+mooncat_coach_tick
+mooncat-active-coach
+ mooncat_coach_tick
+action=mooncat_coach_tick
+MOONCAT ACTIVE COACH
+== banned display strings ==
+PASS

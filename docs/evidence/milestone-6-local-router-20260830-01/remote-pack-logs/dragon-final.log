@@ -1,0 +1,14 @@
+/data/openvela-contest-2026-gemini-s1-v1-pack-20260830-04/i386-runtime/usr/lib/i386-linux-gnu/
+/data/openvela-contest-2026-gemini-s1-v1-pack-20260830-04/dragon-input-final
+Begin Parse sys_partion.fex
+Add partion nsh.fex NSH_FEX000000000
+Add partion very nsh.fex NSH_FEX000000000
+FilePath: nsh.fex
+FileLength=757db0Add partion res.fex RES_FEX000000000
+Add partion very res.fex RES_FEX000000000
+FilePath: res.fex
+FileLength=871000Add partion usrdata.fex USRDATA_FEX00000
+Add partion very usrdata.fex USRDATA_FEX00000
+FilePath: usrdata.fex
+FileLength=32e5000BuildImg 0
+Dragon execute image.cfg SUCCESS !

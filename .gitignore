@@ -1,0 +1,11 @@
+.pytest_cache/
+__pycache__/
+.test-tmp/
+.contest-staging/
+.repo/
+*.pyc
+build/
+output/
+dist/
+node_modules/
+*.log

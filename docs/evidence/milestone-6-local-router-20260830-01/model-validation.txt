@@ -1,0 +1,38 @@
+Milestone: 6 - offline local router model acceptance
+Date: 2026-08-30 Asia/Shanghai
+
+[PASS] Deterministic release training
+command: D:/CodexCaches/mooncat-local-router-venv/Scripts/python.exe -X utf8 local_router/train_router.py
+epochs: 80 (repository default)
+exit: 0
+all_targets_passed: true
+
+[PASS] Release model identity
+bytes: 52008
+sha256: 8d9fa3a06fd9f0aef417cf92c72fad21a90efe74961077792f82e72ab6eb85d8
+evaluation.json sha256: b9cd5a84ba23ca91646b5970c4c2da3dec5b28ef2dfc5b0464166a483d5c4583
+weights.npz sha256: 0ee484092675042e9a4d1b0eb61f67315add1c6235fb3d11514581a0e42b4382
+generated header sha256: 824f8bbb140ab287c0dd32e6437b4807afd3261700f73424a9878b2f68e7b442
+
+[PASS] Frozen acceptance gates
+int8 macro-F1: 0.991879
+minimum positive precision after gate: 0.984375
+test fallback false activation rate: 0
+acceptance plan exact match: 0.987179
+acceptance fallback false activation rate: 0.003968
+QuickApp long contract prompts: 30/30
+float/int8 top-1 agreement: 0.998397
+
+[PASS] Host C behavior and Python/C feature parity
+command: python -X utf8 -m pytest -q tests/test_local_router_contract.py
+result: 2 passed
+parity: six UTF-8, ASCII/full-width-number and whitespace cases matched by exact active feature index
+
+[REJECTED_INTERMEDIATE] A shortened --epochs 18 verification run produced model SHA-256
+51abb6ff081791e480992a57a183f86f0e7d29ed81e98ecfbaee01ecf96bd2c7.
+It was not accepted or packaged. The repository-default 80-epoch command was rerun
+immediately and restored the release hash above, matching the model already compiled in build04.
+
+[EVIDENCE_BOUNDARY] These are host training and host TFLite/C results. They do not
+prove Gemini S1 inference latency, runtime tensor-arena peak, boot, native UI behavior,
+physical-button behavior or sensor behavior.
