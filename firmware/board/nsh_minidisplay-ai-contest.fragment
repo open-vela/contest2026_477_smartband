@@ -2,6 +2,7 @@
 # Keep this file small: the unchanged product configuration remains in
 # nsh_minidisplay.defconfig and is hash-locked separately.
 CONFIG_LV_USE_ANIMIMG=y
+CONFIG_LV_USE_SNAPSHOT=y
 CONFIG_LVX_USE_DEMO_OPENVELA_UI=y
 # The stock mini launcher is a second LVGL owner of /dev/lcd0.  Starting it
 # beside openvela_ui corrupts SPI1 transfers and leaves the panel white.

@@ -1,0 +1,9 @@
+local_candidate=E:/GeminiFlash/closure-20260909/candidate08.img
+candidate_bytes=71915520
+candidate_sha256=42c510e49cf1c43d1805d050d2026dec2e1d0815ec1a7899d41e4203eb86b54d
+static_image_gates=16/16 PASS
+http_actual_source_cases=32 PASS
+skill_actual_source_dispatch_cases=25 PASS
+windows_tests=22 PASS, 3 SKIPPED
+device_candidate08=NOT_TESTED
+flash_performed=NO

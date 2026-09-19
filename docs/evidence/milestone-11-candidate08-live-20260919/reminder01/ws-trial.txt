@@ -1,0 +1,5 @@
+[   0.00s] INPUT 20秒后主动提醒我休息
+[   0.02s] OUTPUT {"type":"response","content":"[LOCAL AI 100% coach_schedule] OK: Added one-shot job 'mooncat-demo-once' (id=7c9701b3), fires at epoch 1789786356. Will be deleted after firing.","chat_id":"mooncat-closure"}
+[   6.11s] INPUT 20秒后主动提醒我休息
+[   6.12s] OUTPUT {"type":"response","content":"[LOCAL AI 100% coach_schedule] 已存在 mooncat-demo-once，未重复创建。","chat_id":"mooncat-closure"}
+[  60.39s] Trial observation ended; startup Agent was not restarted

@@ -16,11 +16,13 @@
 
 #define MOONCAT_AGENT_CHANNEL "mooncat"
 #define MOONCAT_NOTIFICATION_TIMEOUT_MS 8000
+#define MOONCAT_BRIDGE_POLL_MS 100
 
 static pthread_mutex_t g_bridge_lock = PTHREAD_MUTEX_INITIALIZER;
 static char *g_pending_message;
 static lv_obj_t *g_notification_card;
 static lv_timer_t *g_hide_timer;
+static lv_timer_t *g_pending_timer;
 
 static void mooncat_hide_notification(lv_timer_t *timer)
 {
@@ -87,11 +89,11 @@ static void mooncat_render_notification(const char *message)
                                    MOONCAT_NOTIFICATION_TIMEOUT_MS, NULL);
 }
 
-static void mooncat_show_pending_async(void *unused)
+static void mooncat_show_pending(lv_timer_t *timer)
 {
     char *message;
 
-    (void)unused;
+    (void)timer;
     pthread_mutex_lock(&g_bridge_lock);
     message = g_pending_message;
     g_pending_message = NULL;
@@ -104,7 +106,8 @@ static void mooncat_show_pending_async(void *unused)
 }
 
 #ifdef CONFIG_EXAMPLES_AI_AGENT_VELA
-/* Runs in the agent outbound-dispatch task.  It only copies and schedules. */
+/* Runs in the agent task: only publish data, never call LVGL here.
+ * lv_async_call() also allocates an LVGL timer and touches LVGL state. */
 static void mooncat_agent_tap(const agent_msg_t *message, void *cookie)
 {
     char *copy;
@@ -125,26 +128,25 @@ static void mooncat_agent_tap(const agent_msg_t *message, void *cookie)
     g_pending_message = copy;
     pthread_mutex_unlock(&g_bridge_lock);
 
-    /* LVGL object access happens only in mooncat_show_pending_async(). */
-    if (lv_async_call(mooncat_show_pending_async, NULL) != LV_RESULT_OK) {
-        pthread_mutex_lock(&g_bridge_lock);
-        if (g_pending_message == copy) {
-            g_pending_message = NULL;
-            free(copy);
-        }
-        pthread_mutex_unlock(&g_bridge_lock);
-        syslog(LOG_ERR, "[mooncat_bridge] LVGL async queue rejected message\n");
-    }
 }
 #endif
 
 int openvela_ui_agent_bridge_start(void)
 {
 #ifdef CONFIG_EXAMPLES_AI_AGENT_VELA
+    /* Start/stop are called by the Native UI task after LVGL initialization. */
+    g_pending_timer = lv_timer_create(mooncat_show_pending,
+                                      MOONCAT_BRIDGE_POLL_MS, NULL);
+    if (!g_pending_timer) {
+        return -ENOMEM;
+    }
+
     int result = mbus_tap_register(MOONCAT_AGENT_CHANNEL,
                                    mooncat_agent_tap, NULL);
 
     if (result != OK) {
+        lv_timer_delete(g_pending_timer);
+        g_pending_timer = NULL;
         syslog(LOG_ERR,
                "[mooncat_bridge] channel tap registration failed\n");
         return -EIO;
@@ -167,7 +169,10 @@ void openvela_ui_agent_bridge_stop(void)
     mbus_tap_unregister(MOONCAT_AGENT_CHANNEL);
 #endif
 
-    lv_async_call_cancel(mooncat_show_pending_async, NULL);
+    if (g_pending_timer) {
+        lv_timer_delete(g_pending_timer);
+        g_pending_timer = NULL;
+    }
     pthread_mutex_lock(&g_bridge_lock);
     free(g_pending_message);
     g_pending_message = NULL;

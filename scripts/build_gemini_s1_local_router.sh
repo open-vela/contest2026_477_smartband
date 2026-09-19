@@ -23,8 +23,8 @@ target_root=$(CDPATH= cd -- "$target_root" && pwd)
 board_config="vendor/allwinnertech/boards/r528/r528s3-gemini-s1/configs/nsh_minidisplay"
 final_config="$target_root/nuttx/.config"
 
-"$script_dir/apply_overlay.sh" --apply "$target_root"
-"$script_dir/apply_local_router_overlay.sh" --apply "$target_root"
+bash "$script_dir/apply_overlay.sh" --apply "$target_root"
+bash "$script_dir/apply_local_router_overlay.sh" --apply "$target_root"
 
 (
   cd "$target_root"
@@ -51,10 +51,11 @@ require_config 'CONFIG_MATH_KISSFFT=y'
 require_config 'CONFIG_MATH_RUY=y'
 require_config 'CONFIG_TFLITEMICRO=y'
 require_config 'CONFIG_AI_AGENT_LOCAL_TOOL_ROUTER=y'
+require_config 'CONFIG_LV_USE_SNAPSHOT=y'
 
 # build.sh may save a minimized defconfig back to the board directory. Restore
 # both auditable overlays after the final config has passed the build gates.
-"$script_dir/apply_overlay.sh" --apply "$target_root"
-"$script_dir/apply_local_router_overlay.sh" --apply "$target_root"
+bash "$script_dir/apply_overlay.sh" --apply "$target_root"
+bash "$script_dir/apply_local_router_overlay.sh" --apply "$target_root"
 
 echo "Gemini S1 local-router firmware built and config-gated: $target_root"

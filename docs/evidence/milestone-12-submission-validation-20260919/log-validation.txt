@@ -1,0 +1,6 @@
+=== contest-log-upload validation ===
+Logs dir:       E:\C_Moved_From_C\Users\Lenovo\Desktop\schoolwork\contest2026_477_smartband\logs\QinXi-ai
+Files checked:  2
+Events checked: 1588
+
+✅ ALL OK

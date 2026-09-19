@@ -1,0 +1,39 @@
+10:54:11 up  0:05, load average: 0.00, 0.00, 0.00
+  PID GROUP CPU(AFFINITY)   PRI POLICY   TYPE    NPX STATE    EVENT     SIGMASK          COMMAND
+    0     0 000(0x00000003)   0 FIFO     Kthread   - Assigned           0000000000000000 CPU0 IDLE
+    1     0 001(0x00000003)   0 FIFO     Kthread   - Assigned           0000000000000000 CPU1 IDLE
+    2     0 ---(0x00000003) 254 FIFO     Kthread   - Waiting  Semaphore 0000000000000000 hpwork 0x41b44d40 0x41b44d8c
+    3     0 ---(0x00000003) 100 FIFO     Kthread   - Waiting  Semaphore 0000000000000000 lpwork 0x41b44cc0 0x41b44d0c
+    5     0 ---(0x00000003) 100 FIFO     Kthread   - Waiting  Semaphore 0000000000000000 ltr553_thread
+    6     0 ---(0x00000001) 120 FIFO     Kthread   - Waiting  Semaphore 0000000000000000 nftld 1109325744
+    7     0 ---(0x00000001) 120 FIFO     Kthread   - Waiting  Semaphore 0000000000000000 nand_rcd 1109330128
+    8     0 ---(0x00000001) 120 FIFO     Kthread   - Waiting  MQ empty  0000000000000000 nand_proxy 1109335384
+    9     0 ---(0x00000003) 106 FIFO     Kthread   - Waiting  Semaphore 0000000000000000 realtek_txpool_thread
+   10     0 ---(0x00000003) 100 FIFO     Kthread   - Waiting  Semaphore 0000000000000000 bt_recv
+   11     0 ---(0x00000003) 100 FIFO     Kthread   - Waiting  Semaphore 0000000000000000 bt_fw
+   12     0 ---(0x00000003) 111 FIFO     Kthread   - Waiting  Semaphore 0000000000000000 TIMERWORKER 0x42285720 0x4228576c
+   13    13 ---(0x00000003) 100 FIFO     Task      - Waiting  Semaphore 0000000000000000 nsh_main
+   20    20 ---(0x00000003) 100 FIFO     Task      - Waiting  Semaphore 0000000000000000 adbd
+   30    30 ---(0x00000003) 100 FIFO     Task      - Waiting  Semaphore 0000000000000000 kvdbd
+   36    36 ---(0x00000003) 100 FIFO     Task      - Waiting  Signal    0000000000000000 NTP_daemon 0.pool.ntp.org;1.pool.ntp.org;2.pool.ntp.org
+   48    48 ---(0x00000003) 100 FIFO     Task      - Waiting  Semaphore 0000000000000000 openvela_ui
+   49    49 ---(0x00000003) 100 FIFO     Task      - Waiting  Signal    0000000000000000 ai_agent
+   51     0 ---(0x00000003) 108 FIFO     Kthread   - Waiting  Semaphore 0000000000000000 timer_thread 0x421755b8
+   53    49 ---(0x00000003)  50 FIFO     pthread   - Waiting  Semaphore 0000000000000000 ai_agent 0x415ee759 0x423ab8d8
+   54    49 ---(0x00000003)  50 FIFO     pthread   - Waiting  MQ empty  0000000000000000 ai_agent 0x415ee759 0x423ab8e8
+   55    49 ---(0x00000003)  40 FIFO     pthread   - Waiting  Semaphore 0000000000000000 ai_agent 0x415f3e79 0x423a5fa0
+   56    49 ---(0x00000003)   3 FIFO     pthread   - Waiting  Signal    0000000000000000 ai_agent 0x415f3e4d 0x423a5fb0
+   59    48 ---(0x00000003) 100 FIFO     pthread   - Waiting  Semaphore 0000000000000000 openvela_ui 0x41630b55 0
+   61    48 ---(0x00000003) 100 FIFO     pthread   - Waiting  Semaphore 0000000000000000 openvela_ui 0x41615181 0
+   63    49 ---(0x00000003)  60 FIFO     pthread   - Waiting  Semaphore 0000000000000000 ai_agent 0x41612cad 0x423adf78
+   79    49 ---(0x00000003)  50 FIFO     pthread   - Waiting  Semaphore 0000000000000000 ai_agent 0x415f5731 0
+   89     0 ---(0x00000003) 110 FIFO     Kthread   - Waiting  Semaphore 0000000000000000 WIFIWORKER 0x423aabc0 0x423aac0c
+   90     0 ---(0x00000003) 106 FIFO     Kthread   - Waiting  Semaphore 0000000000000000 realtek_sdio_thread 0x42248948
+   91     0 ---(0x00000003) 107 FIFO     Kthread   - Waiting  Semaphore 0000000000000000 xmit_thread 0x42394e94
+   92     0 ---(0x00000003) 105 FIFO     Kthread   - Waiting  Semaphore 0000000000000000 recv_task_thread 0x42394ec4
+   93     0 ---(0x00000003) 106 FIFO     Kthread   - Waiting  Semaphore 0000000000000000 cmd_thread 0x42394e7c
+  101   101 ---(0x00000003) 200 FIFO     Task      - Waiting  Semaphore 0000000000000000 sshd -u codex -a /tmp/gemini_s1_authorized_keys -k /tmp/gemini_s1_host_ecdsa_v2 -p 22 0.0.0.0
+  426   101 001(0x00000003) 200 FIFO     pthread   - Running            0000000000000000 sshd 0x415c3231 0x42578620
+  427   427 001(0x00000003) 100 FIFO     Task      - Running            0000000000000000 sh -c uptime
+      total       used       free    maxused    maxfree  nused  nfree name
+  947810212    6866476  940943736    8564568  940547712   3421     10 Umem

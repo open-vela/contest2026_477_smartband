@@ -39,6 +39,8 @@ ui_files=(
   openvela_ui.h
   openvela_ui_agent_bridge.c
   openvela_ui_agent_bridge.h
+  openvela_ui_remote.c
+  openvela_ui_remote.h
   openvela_ui_main.c
   openvela_ui_main_mooncat.c
   openvela_ui_sport.c
@@ -67,6 +69,8 @@ board_fragment="$repo_root/firmware/board/nsh_minidisplay-ai-contest.fragment"
 board_rcs_source="$repo_root/firmware/board/rcS"
 baseline_manifest="$repo_root/docs/evidence/baseline-source-sha256.txt"
 agent_patch="$repo_root/agent/packages_ai_agent_overlay.patch"
+transport_patch="$repo_root/agent/packages_ai_agent_http_chunked.patch"
+skill_route_patch="$repo_root/agent/packages_ai_agent_skill_route.patch"
 skill_source="$repo_root/skills/mooncat-active-coach.md"
 skill_target="$agent_target/agent_skills/mooncat-active-coach.md"
 
@@ -87,8 +91,8 @@ verify_same() {
 }
 
 check_layout() {
-  [ -d "$ui_target" ] || {
-    echo "missing UI destination: $ui_target" >&2
+  [ -d "$target_root/packages/demos" ] || {
+    echo "missing demos repository: $target_root/packages/demos" >&2
     exit 5
   }
   [ -d "$agent_tools_target" ] || {
@@ -115,26 +119,30 @@ check_layout() {
   require_file "$baseline_manifest"
   require_file "$script_dir/merge_defconfig.py"
   require_file "$agent_patch"
+  require_file "$transport_patch"
+  require_file "$skill_route_patch"
   require_file "$skill_source"
   (cd "$repo_root" && sha256sum -c "${baseline_manifest#"$repo_root"/}" >/dev/null)
 }
 
 patch_is_applied() {
-  git -C "$agent_target" apply --reverse --check "$agent_patch" >/dev/null 2>&1
+  git -C "$agent_target" apply --ignore-space-change --reverse --check "${1:-$agent_patch}" >/dev/null 2>&1
 }
 
 check_layout
 
 if [ "$mode" = "--check" ]; then
-  if patch_is_applied; then
+  for checked_patch in "$agent_patch" "$transport_patch" "$skill_route_patch"; do
+  if patch_is_applied "$checked_patch"; then
     patch_state=applied
-  elif git -C "$agent_target" apply --check "$agent_patch" >/dev/null 2>&1; then
+  elif git -C "$agent_target" apply --ignore-space-change --check "$checked_patch" >/dev/null 2>&1; then
     patch_state=ready
   else
-    echo "ai_agent patch neither applies nor matches target: $agent_target" >&2
+    echo "ai_agent patch neither applies nor matches target: $checked_patch" >&2
     exit 7
   fi
-  echo "overlay target layout verified: $target_root (ai_agent patch: $patch_state)"
+  echo "overlay target layout verified: $target_root ($(basename "$checked_patch"): $patch_state)"
+  done
   exit 0
 fi
 
@@ -156,10 +164,19 @@ if [ "$mode" = "--verify" ]; then
     echo "ai_agent source patch is not applied: $agent_target" >&2
     exit 21
   }
+  patch_is_applied "$transport_patch" || {
+    echo "ai_agent HTTP framing patch is not applied: $agent_target" >&2
+    exit 21
+  }
+  patch_is_applied "$skill_route_patch" || {
+    echo "ai_agent Skill context patch is not applied: $agent_target" >&2
+    exit 21
+  }
   echo "overlay content verified: $target_root"
   exit 0
 fi
 
+mkdir -p "$ui_target"
 for filename in "${ui_files[@]}"; do
   install -m 0644 "$repo_root/firmware/openvela_ui/$filename" "$ui_target/$filename"
 done
@@ -179,14 +196,16 @@ done
 mkdir -p "$agent_target/agent_skills"
 install -m 0644 "$skill_source" "$skill_target"
 
-if ! patch_is_applied; then
-  git -C "$agent_target" apply --check "$agent_patch"
-  git -C "$agent_target" apply "$agent_patch"
+for checked_patch in "$agent_patch" "$transport_patch" "$skill_route_patch"; do
+if ! patch_is_applied "$checked_patch"; then
+  git -C "$agent_target" apply --ignore-space-change --check "$checked_patch"
+  git -C "$agent_target" apply --ignore-space-change "$checked_patch"
 fi
+done
 
 install -m 0644 "$board_base" "$defconfig_target"
 python3 "$script_dir/merge_defconfig.py" apply "$defconfig_target" "$board_fragment"
 install -m 0644 "$board_rcs_source" "$board_rcs_target"
 
-"$0" --verify "$target_root"
+bash "$0" --verify "$target_root"
 echo "overlay applied without deleting unrelated target files: $target_root"

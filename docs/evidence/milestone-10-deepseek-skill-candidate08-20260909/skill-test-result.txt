@@ -1,0 +1,4 @@
+before exit= 1
+FAIL expected=CLOUD tool=get_battery router_calls=0 input=请读取 mooncat-active-coach Skill，并按其中说明用 mode=preview 分析一组明确标记为模拟的数据：valid=true、workout_active=false、do_not_disturb=false、inactivity_minutes=10、sleep_debt_minutes=150、stress_score=20、battery_percent=80。不要执行通知。
+after exit= 0
+PASS: 25 actual-source dispatch cases; supplied observations cause zero local tool/router calls

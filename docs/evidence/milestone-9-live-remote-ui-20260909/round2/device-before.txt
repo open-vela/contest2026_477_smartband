@@ -1,0 +1,41 @@
+NuttX  0.0.0  Sep  9 2026 12:05:31 arm nsh
+20:34:08 up  0:01, load average: 0.00, 0.00, 0.00
+      total       used       free    maxused    maxfree  nused  nfree name
+  947810204    6824268  940985936    8565144  940783392   3133      6 Umem
+  PID GROUP CPU(AFFINITY)   PRI POLICY   TYPE    NPX STATE    EVENT     SIGMASK          COMMAND
+    0     0 000(0x00000003)   0 FIFO     Kthread   - Running            0000000000000000 CPU0 IDLE
+    1     0 001(0x00000003)   0 FIFO     Kthread   - Assigned           0000000000000000 CPU1 IDLE
+    2     0 ---(0x00000003) 254 FIFO     Kthread   - Waiting  Semaphore 0000000000000000 hpwork 0x41b44d40 0x41b44d8c
+    3     0 ---(0x00000003) 100 FIFO     Kthread   - Waiting  Semaphore 0000000000000000 lpwork 0x41b44cc0 0x41b44d0c
+    5     0 ---(0x00000003) 100 FIFO     Kthread   - Waiting  Semaphore 0000000000000000 ltr553_thread
+    6     0 ---(0x00000001) 120 FIFO     Kthread   - Waiting  Semaphore 0000000000000000 nftld 1109326384
+    7     0 ---(0x00000001) 120 FIFO     Kthread   - Waiting  Semaphore 0000000000000000 nand_rcd 1109330768
+    8     0 ---(0x00000001) 120 FIFO     Kthread   - Waiting  MQ empty  0000000000000000 nand_proxy 1109336024
+    9     0 ---(0x00000003) 106 FIFO     Kthread   - Waiting  Semaphore 0000000000000000 realtek_txpool_thread
+   10     0 ---(0x00000003) 100 FIFO     Kthread   - Waiting  Semaphore 0000000000000000 bt_recv
+   11     0 ---(0x00000003) 100 FIFO     Kthread   - Waiting  Semaphore 0000000000000000 bt_fw
+   12     0 ---(0x00000003) 111 FIFO     Kthread   - Waiting  Semaphore 0000000000000000 TIMERWORKER 0x422859a0 0x422859ec
+   13    13 ---(0x00000003) 100 FIFO     Task      - Waiting  Semaphore 0000000000000000 nsh_main
+   20    20 ---(0x00000003) 100 FIFO     Task      - Waiting  Semaphore 0000000000000000 adbd
+   30    30 ---(0x00000003) 100 FIFO     Task      - Waiting  Semaphore 0000000000000000 kvdbd
+   36    36 ---(0x00000003) 100 FIFO     Task      - Waiting  Signal    0000000000000000 NTP_daemon 0.pool.ntp.org;1.pool.ntp.org;2.pool.ntp.org
+   47    47 ---(0x00000003) 100 FIFO     Task      - Ready              0000000000000000 openvela_ui
+   48    48 ---(0x00000003) 100 FIFO     Task      - Waiting  Signal    0000000000000000 ai_agent
+   51     0 ---(0x00000003) 108 FIFO     Kthread   - Waiting  Semaphore 0000000000000000 timer_thread 0x421755c0
+   53    48 ---(0x00000003)  50 FIFO     pthread   - Waiting  Semaphore 0000000000000000 ai_agent 0x415ee759 0x423a5ed0
+   54    48 ---(0x00000003)  50 FIFO     pthread   - Waiting  MQ empty  0000000000000000 ai_agent 0x415ee759 0x423a4bb0
+   55    48 ---(0x00000003)  40 FIFO     pthread   - Waiting  Semaphore 0000000000000000 ai_agent 0x415f98f9 0x423a4da8
+   56    48 ---(0x00000003)   3 FIFO     pthread   - Waiting  Signal    0000000000000000 ai_agent 0x415f9925 0x423a4a90
+   59    47 ---(0x00000003) 100 FIFO     pthread   - Waiting  Semaphore 0000000000000000 openvela_ui 0x4163586d 0
+   61    47 ---(0x00000003) 100 FIFO     pthread   - Waiting  Semaphore 0000000000000000 openvela_ui 0x4161aa61 0
+   63    48 ---(0x00000003)  60 FIFO     pthread   - Waiting  Semaphore 0000000000000000 ai_agent 0x415f3e4d 0x4239dbd8
+   81    48 ---(0x00000003)  50 FIFO     pthread   - Waiting  Semaphore 0000000000000000 ai_agent 0x415f8925 0
+   89     0 ---(0x00000003) 110 FIFO     Kthread   - Waiting  Semaphore 0000000000000000 WIFIWORKER 0x423ed540 0x423ed58c
+   90     0 ---(0x00000003) 106 FIFO     Kthread   - Waiting  Semaphore 0000000000000000 realtek_sdio_thread 0x42248bc8
+   91     0 ---(0x00000003) 107 FIFO     Kthread   - Waiting  Semaphore 0000000000000000 xmit_thread 0x4239366c
+   92     0 ---(0x00000003) 105 FIFO     Kthread   - Waiting  Semaphore 0000000000000000 recv_task_thread 0x4239369c
+   93     0 ---(0x00000003) 106 FIFO     Kthread   - Waiting  Semaphore 0000000000000000 cmd_thread 0x42393654
+  101   101 ---(0x00000003) 200 FIFO     Task      - Waiting  Semaphore 0000000000000000 sshd -u codex -a /tmp/gemini_s1_authorized_keys -k /tmp/gemini_s1_host_ecdsa_v2 -p 22 0.0.0.0
+  109    48 ---(0x00000003)  50 FIFO     pthread   - Waiting  Semaphore 0000000000000000 ai_agent 0x415f830d 0x42558ef0
+  166   101 001(0x00000003) 200 FIFO     pthread   - Running            0000000000000000 sshd 0x415c3231 0x42368250
+  167   167 000(0x00000003) 100 FIFO     Task      - Running            0000000000000000 sh -c uname

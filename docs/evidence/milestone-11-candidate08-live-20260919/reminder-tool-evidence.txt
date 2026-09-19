@@ -1,0 +1,61 @@
+[70/01/ 1 08:00:01] [CPU1] [49] [nsh] [tools] Registered tool: mooncat_coach_tick
+[70/01/ 1 08:00:01] [CPU0] [49] [nsh] [skills] Skill exists: /data/agent/skills/mooncat-active-coach.md
+[70/01/ 1 08:00:01] [CPU0] [49] [nsh] [cron] No cron file, starting fresh
+[70/01/ 1 08:00:01] [CPU1] [49] [nsh] [cron] Cron started (0 jobs, interval 10s)
+[70/01/ 1 08:00:01] [CPU0] [48] [nsh] [tap] registered tap for channel 'mooncat'
+[70/01/ 1 08:00:01] [CPU1] [48] [nsh] [mooncat_bridge] listening on outbound channel 'mooncat'
+[26/09/19 10:49:23] [CPU1] [102] [nsh] [ws] WS msg from sprint-cloud-01: 请只回复 MOONCAT_READY，不要调�
+[26/09/19 10:49:23] [CPU0] [63] [nsh] [trace:6aadf83300000000] BEGIN chat=sprint-cloud-01 chan=websocket
+[26/09/19 10:49:23] [CPU1] [63] [nsh] [trace:6aadf83300000000] iter=0 tool=(none) latency=803ms llm=ok backend=0
+[26/09/19 10:49:23] [CPU1] [63] [nsh] [trace:6aadf83300000000] END status=ok iters=1 tools=0 llm_ms=803 elapsed=0s backend=0
+[26/09/19 10:49:35] [CPU1] [103] [nsh] [ws] WS msg from sprint-skill-01: 请先读取 /data/agent/skills/mooncat-
+[26/09/19 10:49:35] [CPU0] [63] [nsh] [trace:6aadf83f35c3b13a] BEGIN chat=sprint-skill-01 chan=websocket
+[26/09/19 10:49:36] [CPU1] [63] [nsh] [trace:6aadf83f35c3b13a] iter=0 tool=read_file latency=1113ms llm=ok backend=0
+[26/09/19 10:49:36] [CPU1] [63] [nsh] [agent] Tool call: read_file args={"path": "/data/agent/skills/mooncat-active-coach.md"}
+[26/09/19 10:49:36] [CPU0] [63] [nsh] [tool_files] read_file: /data/agent/skills/mooncat-active-coach.md (873 bytes)
+[26/09/19 10:49:38] [CPU0] [63] [nsh] [trace:6aadf83f35c3b13a] iter=1 tool=mooncat_coach_tick latency=1481ms llm=ok backend=0
+[26/09/19 10:49:38] [CPU0] [63] [nsh] [agent] Tool call: mooncat_coach_tick args={"mode": "preview", "source": "simulated", "valid": true, "workout_active": false, "do_not_disturb": false, "inactivity_minutes": 10, "sleep_debt_minutes": 150, "stress_score": 20, "battery_percent": 80}
+[26/09/19 10:49:38] [CPU0] [63] [nsh] [tools] Executing tool: mooncat_coach_tick
+[26/09/19 10:49:38] [CPU0] [63] [nsh] [agent] Tool mooncat_coach_tick result: 426 bytes
+[26/09/19 10:49:39] [CPU1] [63] [nsh] [trace:6aadf83f35c3b13a] iter=2 tool=(none) latency=1725ms llm=ok backend=0
+[26/09/19 10:49:39] [CPU1] [63] [nsh] [trace:6aadf83f35c3b13a] END status=ok iters=3 tools=2 llm_ms=4319 elapsed=4s backend=0
+[26/09/19 10:52:16] [CPU1] [146] [nsh] [ws] WS msg from mooncat-closure: 20秒后主动提醒我休息
+[26/09/19 10:52:16] [CPU0] [63] [nsh] [agent] Processing message from websocket:mooncat-closure
+[26/09/19 10:52:16] [CPU0] [63] [nsh] [cron] Saved 1 cron jobs
+[26/09/19 10:52:16] [CPU0] [63] [nsh] [cron] Added job: mooncat-demo-once (7c9701b3) kind=at next=1789786356 ch=system:mooncat-coach
+[26/09/19 10:52:16] [CPU1] [55] [nsh] [cron] Check job[0] 'mooncat-demo-once': enabled=1 next_run=1789786356 now=1789786336
+[26/09/19 10:52:16] [CPU1] [63] [nsh] [tool_cron] cron_add: OK: Added one-shot job 'mooncat-demo-once' (id=7c9701b3), fires at epoch 1789786356. Will be deleted after firing.
+[26/09/19 10:52:16] [CPU0] [53] [nsh] [agent] Dispatching response → websocket:mooncat-closure
+[26/09/19 10:52:22] [CPU0] [146] [nsh] [ws] WS msg from mooncat-closure: 20秒后主动提醒我休息
+[26/09/19 10:52:22] [CPU0] [63] [nsh] [agent] Processing message from websocket:mooncat-closure
+[26/09/19 10:52:22] [CPU1] [53] [nsh] [agent] Dispatching response → websocket:mooncat-closure
+[26/09/19 10:52:26] [CPU0] [55] [nsh] [cron] Check job[0] 'mooncat-demo-once': enabled=1 next_run=1789786356 now=1789786346
+[26/09/19 10:52:36] [CPU0] [55] [nsh] [cron] Check job[0] 'mooncat-demo-once': enabled=1 next_run=1789786356 now=1789786356
+[26/09/19 10:52:36] [CPU0] [55] [nsh] [cron] Cron job firing: mooncat-demo-once (7c9701b3)
+[26/09/19 10:52:36] [CPU0] [55] [nsh] [cron] Executing action: mooncat_coach_tick args={"mode":"execute","source":"simulated","valid":true,"workout_active":false,"do_not_disturb":false,"inactivity_minutes":75,"sleep
+[26/09/19 10:52:36] [CPU0] [55] [nsh] [tools] Executing tool: mooncat_coach_tick
+[26/09/19 10:52:36] [CPU1] [53] [nsh] [agent] Dispatching response → mooncat:active-coach
+[26/09/19 10:52:36] [CPU0] [55] [nsh] [cron] Action mooncat_coach_tick OK: {"ok":true,"status":"delivered","source":"simulated","evidence_boundary":"demo_only_not_physical_sensor","mode":"execute","actio
+[26/09/19 10:52:36] [CPU0] [55] [nsh] [cron] Deleting one-shot: mooncat-demo-once
+[26/09/19 10:52:36] [CPU1] [53] [nsh] [agent] Dispatching response → system:mooncat-coach
+[26/09/19 10:52:36] [CPU1] [53] [nsh] [agent] System message [mooncat-coach]: [DEMO] MoonCat proactive check completed
+[26/09/19 10:52:36] [CPU0] [55] [nsh] [cron] Saved 0 cron jobs
+[26/09/19 10:53:16] [CPU0] [146] [nsh] [ws] Client disconnected: mooncat-closure
+[26/09/19 10:53:35] [CPU1] [402] [nsh] [ws] WS msg from sprint-cooldown-after: 20秒后主动提醒我休息
+[26/09/19 10:53:35] [CPU0] [63] [nsh] [agent] Processing message from websocket:sprint-cooldown-after
+[26/09/19 10:53:35] [CPU0] [63] [nsh] [cron] Saved 1 cron jobs
+[26/09/19 10:53:35] [CPU0] [63] [nsh] [cron] Added job: mooncat-demo-once (6a3059af) kind=at next=1789786435 ch=system:mooncat-coach
+[26/09/19 10:53:35] [CPU1] [55] [nsh] [cron] Check job[0] 'mooncat-demo-once': enabled=1 next_run=1789786435 now=1789786415
+[26/09/19 10:53:35] [CPU0] [63] [nsh] [tool_cron] cron_add: OK: Added one-shot job 'mooncat-demo-once' (id=6a3059af), fires at epoch 1789786435. Will be deleted after firing.
+[26/09/19 10:53:35] [CPU0] [53] [nsh] [agent] Dispatching response → websocket:sprint-cooldown-after
+[26/09/19 10:53:35] [CPU0] [402] [nsh] [ws] Client disconnected: sprint-cooldown-after
+[26/09/19 10:53:45] [CPU0] [55] [nsh] [cron] Check job[0] 'mooncat-demo-once': enabled=1 next_run=1789786435 now=1789786425
+[26/09/19 10:53:55] [CPU1] [55] [nsh] [cron] Check job[0] 'mooncat-demo-once': enabled=1 next_run=1789786435 now=1789786435
+[26/09/19 10:53:55] [CPU1] [55] [nsh] [cron] Cron job firing: mooncat-demo-once (6a3059af)
+[26/09/19 10:53:55] [CPU1] [55] [nsh] [cron] Executing action: mooncat_coach_tick args={"mode":"execute","source":"simulated","valid":true,"workout_active":false,"do_not_disturb":false,"inactivity_minutes":75,"sleep
+[26/09/19 10:53:55] [CPU0] [55] [nsh] [tools] Executing tool: mooncat_coach_tick
+[26/09/19 10:53:55] [CPU0] [55] [nsh] [cron] Action mooncat_coach_tick OK: {"ok":true,"status":"noop","source":"simulated","evidence_boundary":"demo_only_not_physical_sensor","mode":"execute","action":"s
+[26/09/19 10:53:55] [CPU1] [53] [nsh] [agent] Dispatching response → system:mooncat-coach
+[26/09/19 10:53:55] [CPU0] [55] [nsh] [cron] Deleting one-shot: mooncat-demo-once
+[26/09/19 10:53:55] [CPU0] [53] [nsh] [agent] System message [mooncat-coach]: [DEMO] MoonCat proactive check completed
+[26/09/19 10:53:55] [CPU1] [55] [nsh] [cron] Saved 0 cron jobs

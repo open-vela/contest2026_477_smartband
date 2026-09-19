@@ -1,0 +1,3 @@
+[   0.00s] INPUT 查看主动提醒任务列表
+[   0.00s] OUTPUT {"type":"response","content":"[LOCAL AI 100% coach_list] No cron jobs scheduled.","chat_id":"mooncat-closure"}
+[   2.03s] Trial observation ended; startup Agent was not restarted

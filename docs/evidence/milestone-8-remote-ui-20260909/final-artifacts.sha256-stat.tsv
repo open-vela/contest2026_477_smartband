@@ -1,0 +1,7 @@
+bytes	sha256	path
+150852	2373499bfb79859e210d6d22171bfc6f6d59e359ae09f7d57f794307615b39e7	/data/mooncat-closure-build05/nuttx/.config
+163312332	f4b8196ccf5bfc0c5f4195de556175b955f25480a2efcf7eca4e9c603eee6610	/data/mooncat-closure-build05/nuttx/nuttx.elf
+7699888	ba139fd53e519d96b170c762d5f53d137d593e21d740bf6774545e2a7f84e75b	/data/mooncat-closure-build05/nuttx/vela.bin
+2266	187d59110fc247f8ba84d0ac6c46d03bfd0a2c5dc41927e983e46a2bca40f44b	/data/mooncat-closure-build05/vendor/allwinnertech/boards/r528/r528s3-gemini-s1/src/etc/init.d/rcS
+656	0f73a95c1bc28d6db12adcc4757acb536be776f600056c0de267940c406f0bb3	/data/mooncat-closure-build05/nuttx/arch/arm/src/board/etctmp/etc/init.d/rcS
+71915520	1a8daef8ec7432e86c92c5405124b6f616dc78432278b3af54e00957885df966	/data/mooncat-closure-pack06/output/Gemini-S1-MoonCat-Remote-UI-candidate-06.img

@@ -1,0 +1,992 @@
+
+/data/mooncat-closure-build05/nuttx/nuttx.elf:     file format elf32-littlearm
+
+
+Disassembly of section .text:
+
+416164a4 <handle_nl_fast_path.lto_priv.0>:
+416164a4:	e92d 4ff0 	stmdb	sp!, {r4, r5, r6, r7, r8, r9, sl, fp, lr}
+416164a8:	4605      	mov	r5, r0
+416164aa:	ed2d 8b02 	vpush	{d8}
+416164ae:	4b70      	ldr	r3, [pc, #448]	@ (41616670 <handle_nl_fast_path.lto_priv.0+0x1cc>)
+416164b0:	f5ad 5dc9 	sub.w	sp, sp, #6432	@ 0x1920
+416164b4:	b085      	sub	sp, #20
+416164b6:	f50d 51c9 	add.w	r1, sp, #6432	@ 0x1920
+416164ba:	310c      	adds	r1, #12
+416164bc:	681b      	ldr	r3, [r3, #0]
+416164be:	600b      	str	r3, [r1, #0]
+416164c0:	f04f 0300 	mov.w	r3, #0
+416164c4:	b968      	cbnz	r0, 416164e2 <handle_nl_fast_path.lto_priv.0+0x3e>
+416164c6:	2400      	movs	r4, #0
+416164c8:	4b69      	ldr	r3, [pc, #420]	@ (41616670 <handle_nl_fast_path.lto_priv.0+0x1cc>)
+416164ca:	f50d 51c9 	add.w	r1, sp, #6432	@ 0x1920
+416164ce:	310c      	adds	r1, #12
+416164d0:	681a      	ldr	r2, [r3, #0]
+416164d2:	680b      	ldr	r3, [r1, #0]
+416164d4:	405a      	eors	r2, r3
+416164d6:	f04f 0300 	mov.w	r3, #0
+416164da:	f000 852d 	beq.w	41616f38 <handle_nl_fast_path.lto_priv.0+0xa94>
+416164de:	f21e fc07 	bl	41834cf0 <__stack_chk_fail>
+416164e2:	4964      	ldr	r1, [pc, #400]	@ (41616674 <handle_nl_fast_path.lto_priv.0+0x1d0>)
+416164e4:	f7fc fc40 	bl	41612d68 <contains_any>
+416164e8:	2800      	cmp	r0, #0
+416164ea:	d1ec      	bne.n	416164c6 <handle_nl_fast_path.lto_priv.0+0x22>
+416164ec:	4962      	ldr	r1, [pc, #392]	@ (41616678 <handle_nl_fast_path.lto_priv.0+0x1d4>)
+416164ee:	4628      	mov	r0, r5
+416164f0:	f647 ff70 	bl	4145e3d4 <strcasecmp>
+416164f4:	b1d0      	cbz	r0, 4161652c <handle_nl_fast_path.lto_priv.0+0x88>
+416164f6:	4961      	ldr	r1, [pc, #388]	@ (4161667c <handle_nl_fast_path.lto_priv.0+0x1d8>)
+416164f8:	4628      	mov	r0, r5
+416164fa:	f647 ff6b 	bl	4145e3d4 <strcasecmp>
+416164fe:	b1a8      	cbz	r0, 4161652c <handle_nl_fast_path.lto_priv.0+0x88>
+41616500:	495f      	ldr	r1, [pc, #380]	@ (41616680 <handle_nl_fast_path.lto_priv.0+0x1dc>)
+41616502:	4628      	mov	r0, r5
+41616504:	f21e ea2a 	blx	4183495c <strcmp>
+41616508:	b180      	cbz	r0, 4161652c <handle_nl_fast_path.lto_priv.0+0x88>
+4161650a:	495e      	ldr	r1, [pc, #376]	@ (41616684 <handle_nl_fast_path.lto_priv.0+0x1e0>)
+4161650c:	4628      	mov	r0, r5
+4161650e:	f21e ea26 	blx	4183495c <strcmp>
+41616512:	b158      	cbz	r0, 4161652c <handle_nl_fast_path.lto_priv.0+0x88>
+41616514:	495c      	ldr	r1, [pc, #368]	@ (41616688 <handle_nl_fast_path.lto_priv.0+0x1e4>)
+41616516:	4628      	mov	r0, r5
+41616518:	f02f fb96 	bl	41645c48 <strcasestr>
+4161651c:	2800      	cmp	r0, #0
+4161651e:	d1d2      	bne.n	416164c6 <handle_nl_fast_path.lto_priv.0+0x22>
+41616520:	495a      	ldr	r1, [pc, #360]	@ (4161668c <handle_nl_fast_path.lto_priv.0+0x1e8>)
+41616522:	4628      	mov	r0, r5
+41616524:	f648 fb42 	bl	4145ebac <strstr>
+41616528:	2800      	cmp	r0, #0
+4161652a:	d1cc      	bne.n	416164c6 <handle_nl_fast_path.lto_priv.0+0x22>
+4161652c:	f8df 8190 	ldr.w	r8, [pc, #400]	@ 416166c0 <handle_nl_fast_path.lto_priv.0+0x21c>
+41616530:	2600      	movs	r6, #0
+41616532:	e023      	b.n	4161657c <handle_nl_fast_path.lto_priv.0+0xd8>
+41616534:	4621      	mov	r1, r4
+41616536:	4628      	mov	r0, r5
+41616538:	f7fc fc16 	bl	41612d68 <contains_any>
+4161653c:	b1e8      	cbz	r0, 4161657a <handle_nl_fast_path.lto_priv.0+0xd6>
+4161653e:	68fe      	ldr	r6, [r7, #12]
+41616540:	2001      	movs	r0, #1
+41616542:	4631      	mov	r1, r6
+41616544:	f652 fcf0 	bl	41468f28 <calloc>
+41616548:	4604      	mov	r4, r0
+4161654a:	2800      	cmp	r0, #0
+4161654c:	d0bc      	beq.n	416164c8 <handle_nl_fast_path.lto_priv.0+0x24>
+4161654e:	687d      	ldr	r5, [r7, #4]
+41616550:	4633      	mov	r3, r6
+41616552:	68b9      	ldr	r1, [r7, #8]
+41616554:	4602      	mov	r2, r0
+41616556:	4628      	mov	r0, r5
+41616558:	f7e6 f96a 	bl	415fc830 <tool_registry_execute>
+4161655c:	4a4c      	ldr	r2, [pc, #304]	@ (41616690 <handle_nl_fast_path.lto_priv.0+0x1ec>)
+4161655e:	2006      	movs	r0, #6
+41616560:	494c      	ldr	r1, [pc, #304]	@ (41616694 <handle_nl_fast_path.lto_priv.0+0x1f0>)
+41616562:	6813      	ldr	r3, [r2, #0]
+41616564:	3301      	adds	r3, #1
+41616566:	6013      	str	r3, [r2, #0]
+41616568:	4a4b      	ldr	r2, [pc, #300]	@ (41616698 <handle_nl_fast_path.lto_priv.0+0x1f4>)
+4161656a:	6812      	ldr	r2, [r2, #0]
+4161656c:	e9cd 3200 	strd	r3, r2, [sp]
+41616570:	4a4a      	ldr	r2, [pc, #296]	@ (4161669c <handle_nl_fast_path.lto_priv.0+0x1f8>)
+41616572:	462b      	mov	r3, r5
+41616574:	f648 fe3c 	bl	4145f1f0 <syslog>
+41616578:	e7a6      	b.n	416164c8 <handle_nl_fast_path.lto_priv.0+0x24>
+4161657a:	3601      	adds	r6, #1
+4161657c:	0133      	lsls	r3, r6, #4
+4161657e:	eb08 1706 	add.w	r7, r8, r6, lsl #4
+41616582:	f858 4003 	ldr.w	r4, [r8, r3]
+41616586:	2c00      	cmp	r4, #0
+41616588:	d1d4      	bne.n	41616534 <handle_nl_fast_path.lto_priv.0+0x90>
+4161658a:	4945      	ldr	r1, [pc, #276]	@ (416166a0 <handle_nl_fast_path.lto_priv.0+0x1fc>)
+4161658c:	4628      	mov	r0, r5
+4161658e:	f7fc fbeb 	bl	41612d68 <contains_any>
+41616592:	4606      	mov	r6, r0
+41616594:	b190      	cbz	r0, 416165bc <handle_nl_fast_path.lto_priv.0+0x118>
+41616596:	f44f 6100 	mov.w	r1, #2048	@ 0x800
+4161659a:	f60d 102c 	addw	r0, sp, #2348	@ 0x92c
+4161659e:	f7e6 fa87 	bl	415fcab0 <skill_loader_build_summary>
+416165a2:	4a3b      	ldr	r2, [pc, #236]	@ (41616690 <handle_nl_fast_path.lto_priv.0+0x1ec>)
+416165a4:	6813      	ldr	r3, [r2, #0]
+416165a6:	3301      	adds	r3, #1
+416165a8:	6013      	str	r3, [r2, #0]
+416165aa:	b128      	cbz	r0, 416165b8 <handle_nl_fast_path.lto_priv.0+0x114>
+416165ac:	f60d 102c 	addw	r0, sp, #2348	@ 0x92c
+416165b0:	f645 fcb4 	bl	4145bf1c <strdup>
+416165b4:	4604      	mov	r4, r0
+416165b6:	e787      	b.n	416164c8 <handle_nl_fast_path.lto_priv.0+0x24>
+416165b8:	483a      	ldr	r0, [pc, #232]	@ (416166a4 <handle_nl_fast_path.lto_priv.0+0x200>)
+416165ba:	e7f9      	b.n	416165b0 <handle_nl_fast_path.lto_priv.0+0x10c>
+416165bc:	493a      	ldr	r1, [pc, #232]	@ (416166a8 <handle_nl_fast_path.lto_priv.0+0x204>)
+416165be:	4628      	mov	r0, r5
+416165c0:	f7fc fbd2 	bl	41612d68 <contains_any>
+416165c4:	2800      	cmp	r0, #0
+416165c6:	d07d      	beq.n	416166c4 <handle_nl_fast_path.lto_priv.0+0x220>
+416165c8:	4938      	ldr	r1, [pc, #224]	@ (416166ac <handle_nl_fast_path.lto_priv.0+0x208>)
+416165ca:	f20d 542c 	addw	r4, sp, #1324	@ 0x52c
+416165ce:	223f      	movs	r2, #63	@ 0x3f
+416165d0:	f20d 502c 	addw	r0, sp, #1324	@ 0x52c
+416165d4:	f648 fbe4 	bl	4145eda0 <strncpy>
+416165d8:	4935      	ldr	r1, [pc, #212]	@ (416166b0 <handle_nl_fast_path.lto_priv.0+0x20c>)
+416165da:	4628      	mov	r0, r5
+416165dc:	f884 603f 	strb.w	r6, [r4, #63]	@ 0x3f
+416165e0:	f648 fae4 	bl	4145ebac <strstr>
+416165e4:	b1d8      	cbz	r0, 4161661e <handle_nl_fast_path.lto_priv.0+0x17a>
+416165e6:	4285      	cmp	r5, r0
+416165e8:	d219      	bcs.n	4161661e <handle_nl_fast_path.lto_priv.0+0x17a>
+416165ea:	1b43      	subs	r3, r0, r5
+416165ec:	2b3e      	cmp	r3, #62	@ 0x3e
+416165ee:	dc16      	bgt.n	4161661e <handle_nl_fast_path.lto_priv.0+0x17a>
+416165f0:	4633      	mov	r3, r6
+416165f2:	42a8      	cmp	r0, r5
+416165f4:	d011      	beq.n	4161661a <handle_nl_fast_path.lto_priv.0+0x176>
+416165f6:	2b3e      	cmp	r3, #62	@ 0x3e
+416165f8:	d104      	bne.n	41616604 <handle_nl_fast_path.lto_priv.0+0x160>
+416165fa:	f20d 522c 	addw	r2, sp, #1324	@ 0x52c
+416165fe:	2100      	movs	r1, #0
+41616600:	54d1      	strb	r1, [r2, r3]
+41616602:	e00c      	b.n	4161661e <handle_nl_fast_path.lto_priv.0+0x17a>
+41616604:	f815 2b01 	ldrb.w	r2, [r5], #1
+41616608:	f002 01fd 	and.w	r1, r2, #253	@ 0xfd
+4161660c:	2920      	cmp	r1, #32
+4161660e:	d0f0      	beq.n	416165f2 <handle_nl_fast_path.lto_priv.0+0x14e>
+41616610:	2a5c      	cmp	r2, #92	@ 0x5c
+41616612:	bf1c      	itt	ne
+41616614:	54e2      	strbne	r2, [r4, r3]
+41616616:	3301      	addne	r3, #1
+41616618:	e7eb      	b.n	416165f2 <handle_nl_fast_path.lto_priv.0+0x14e>
+4161661a:	2b00      	cmp	r3, #0
+4161661c:	dced      	bgt.n	416165fa <handle_nl_fast_path.lto_priv.0+0x156>
+4161661e:	4a25      	ldr	r2, [pc, #148]	@ (416166b4 <handle_nl_fast_path.lto_priv.0+0x210>)
+41616620:	f60d 132c 	addw	r3, sp, #2348	@ 0x92c
+41616624:	9303      	str	r3, [sp, #12]
+41616626:	f44f 7180 	mov.w	r1, #256	@ 0x100
+4161662a:	9803      	ldr	r0, [sp, #12]
+4161662c:	f20d 532c 	addw	r3, sp, #1324	@ 0x52c
+41616630:	f647 fc34 	bl	4145de9c <snprintf>
+41616634:	f44f 5180 	mov.w	r1, #4096	@ 0x1000
+41616638:	2001      	movs	r0, #1
+4161663a:	f652 fc75 	bl	41468f28 <calloc>
+4161663e:	4604      	mov	r4, r0
+41616640:	2800      	cmp	r0, #0
+41616642:	f43f af41 	beq.w	416164c8 <handle_nl_fast_path.lto_priv.0+0x24>
+41616646:	9903      	ldr	r1, [sp, #12]
+41616648:	4602      	mov	r2, r0
+4161664a:	481b      	ldr	r0, [pc, #108]	@ (416166b8 <handle_nl_fast_path.lto_priv.0+0x214>)
+4161664c:	f44f 5380 	mov.w	r3, #4096	@ 0x1000
+41616650:	f7e6 f8ee 	bl	415fc830 <tool_registry_execute>
+41616654:	4a0e      	ldr	r2, [pc, #56]	@ (41616690 <handle_nl_fast_path.lto_priv.0+0x1ec>)
+41616656:	4919      	ldr	r1, [pc, #100]	@ (416166bc <handle_nl_fast_path.lto_priv.0+0x218>)
+41616658:	6813      	ldr	r3, [r2, #0]
+4161665a:	3301      	adds	r3, #1
+4161665c:	6013      	str	r3, [r2, #0]
+4161665e:	4a0e      	ldr	r2, [pc, #56]	@ (41616698 <handle_nl_fast_path.lto_priv.0+0x1f4>)
+41616660:	6812      	ldr	r2, [r2, #0]
+41616662:	9200      	str	r2, [sp, #0]
+41616664:	4a0d      	ldr	r2, [pc, #52]	@ (4161669c <handle_nl_fast_path.lto_priv.0+0x1f8>)
+41616666:	2006      	movs	r0, #6
+41616668:	f648 fdc2 	bl	4145f1f0 <syslog>
+4161666c:	e72c      	b.n	416164c8 <handle_nl_fast_path.lto_priv.0+0x24>
+4161666e:	bf00      	nop
+41616670:	41b134d8 	.word	0x41b134d8
+41616674:	41b51048 	.word	0x41b51048
+41616678:	41affc93 	.word	0x41affc93
+4161667c:	41affc9e 	.word	0x41affc9e
+41616680:	41affcaa 	.word	0x41affcaa
+41616684:	41affcb7 	.word	0x41affcb7
+41616688:	41affc98 	.word	0x41affc98
+4161668c:	41affcc0 	.word	0x41affcc0
+41616690:	420cdb04 	.word	0x420cdb04
+41616694:	41affcc7 	.word	0x41affcc7
+41616698:	420cdb00 	.word	0x420cdb00
+4161669c:	41ac0dad 	.word	0x41ac0dad
+416166a0:	41b5108c 	.word	0x41b5108c
+416166a4:	41affcef 	.word	0x41affcef
+416166a8:	41b5107c 	.word	0x41b5107c
+416166ac:	41affd0b 	.word	0x41affd0b
+416166b0:	41b04469 	.word	0x41b04469
+416166b4:	41affd13 	.word	0x41affd13
+416166b8:	41af6728 	.word	0x41af6728
+416166bc:	41affd25 	.word	0x41affd25
+416166c0:	41a523a8 	.word	0x41a523a8
+416166c4:	497a      	ldr	r1, [pc, #488]	@ (416168b0 <handle_nl_fast_path.lto_priv.0+0x40c>)
+416166c6:	4628      	mov	r0, r5
+416166c8:	f7fc fb4e 	bl	41612d68 <contains_any>
+416166cc:	b170      	cbz	r0, 416166ec <handle_nl_fast_path.lto_priv.0+0x248>
+416166ce:	4979      	ldr	r1, [pc, #484]	@ (416168b4 <handle_nl_fast_path.lto_priv.0+0x410>)
+416166d0:	4628      	mov	r0, r5
+416166d2:	f648 fa6b 	bl	4145ebac <strstr>
+416166d6:	4606      	mov	r6, r0
+416166d8:	2800      	cmp	r0, #0
+416166da:	f040 80f9 	bne.w	416168d0 <handle_nl_fast_path.lto_priv.0+0x42c>
+416166de:	4976      	ldr	r1, [pc, #472]	@ (416168b8 <handle_nl_fast_path.lto_priv.0+0x414>)
+416166e0:	4628      	mov	r0, r5
+416166e2:	f02f fab1 	bl	41645c48 <strcasestr>
+416166e6:	2800      	cmp	r0, #0
+416166e8:	f040 81a4 	bne.w	41616a34 <handle_nl_fast_path.lto_priv.0+0x590>
+416166ec:	f014 fc1c 	bl	4162af28 <_ZN12_GLOBAL__N_122initialize_interpreterEv.lto_priv.0>
+416166f0:	4606      	mov	r6, r0
+416166f2:	2800      	cmp	r0, #0
+416166f4:	f47f aee8 	bne.w	416164c8 <handle_nl_fast_path.lto_priv.0+0x24>
+416166f8:	4b70      	ldr	r3, [pc, #448]	@ (416168bc <handle_nl_fast_path.lto_priv.0+0x418>)
+416166fa:	681f      	ldr	r7, [r3, #0]
+416166fc:	6838      	ldr	r0, [r7, #0]
+416166fe:	f059 fa9d 	bl	4166fc3c <_ZNK6tflite16MicroInterpreter11inputs_sizeEv.isra.0>
+41616702:	2800      	cmp	r0, #0
+41616704:	f000 81c2 	beq.w	41616a8c <handle_nl_fast_path.lto_priv.0+0x5e8>
+41616708:	f8d7 3098 	ldr.w	r3, [r7, #152]	@ 0x98
+4161670c:	f8d3 8000 	ldr.w	r8, [r3]
+41616710:	f8df 91b8 	ldr.w	r9, [pc, #440]	@ 416168cc <handle_nl_fast_path.lto_priv.0+0x428>
+41616714:	4628      	mov	r0, r5
+41616716:	f04f 0a01 	mov.w	sl, #1
+4161671a:	f21e fa51 	bl	41834bc0 <strlen>
+4161671e:	182b      	adds	r3, r5, r0
+41616720:	f44f 6200 	mov.w	r2, #2048	@ 0x800
+41616724:	4866      	ldr	r0, [pc, #408]	@ (416168c0 <handle_nl_fast_path.lto_priv.0+0x41c>)
+41616726:	2100      	movs	r1, #0
+41616728:	9305      	str	r3, [sp, #20]
+4161672a:	f5e9 fd1d 	bl	41400168 <memset>
+4161672e:	2000      	movs	r0, #0
+41616730:	462a      	mov	r2, r5
+41616732:	9003      	str	r0, [sp, #12]
+41616734:	4686      	mov	lr, r0
+41616736:	4683      	mov	fp, r0
+41616738:	7811      	ldrb	r1, [r2, #0]
+4161673a:	b119      	cbz	r1, 41616744 <handle_nl_fast_path.lto_priv.0+0x2a0>
+4161673c:	f5be 6f80 	cmp.w	lr, #1024	@ 0x400
+41616740:	f040 81a6 	bne.w	41616a90 <handle_nl_fast_path.lto_priv.0+0x5ec>
+41616744:	ed98 8a03 	vldr	s16, [r8, #12]
+41616748:	ed9f 0a5e 	vldr	s0, [pc, #376]	@ 416168c4 <handle_nl_fast_path.lto_priv.0+0x420>
+4161674c:	f06f 097f 	mvn.w	r9, #127	@ 0x7f
+41616750:	ee80 0a08 	vdiv.f32	s0, s0, s16
+41616754:	f650 fe5c 	bl	41467410 <lroundf>
+41616758:	f8d8 a010 	ldr.w	sl, [r8, #16]
+4161675c:	eeb7 0a00 	vmov.f32	s0, #112	@ 0x3f800000  1.0
+41616760:	eb00 070a 	add.w	r7, r0, sl
+41616764:	2f7f      	cmp	r7, #127	@ 0x7f
+41616766:	bfa8      	it	ge
+41616768:	277f      	movge	r7, #127	@ 0x7f
+4161676a:	454f      	cmp	r7, r9
+4161676c:	bfb8      	it	lt
+4161676e:	464f      	movlt	r7, r9
+41616770:	b27f      	sxtb	r7, r7
+41616772:	ee80 0a08 	vdiv.f32	s0, s0, s16
+41616776:	f650 fe4b 	bl	41467410 <lroundf>
+4161677a:	4450      	add	r0, sl
+4161677c:	2300      	movs	r3, #0
+4161677e:	4950      	ldr	r1, [pc, #320]	@ (416168c0 <handle_nl_fast_path.lto_priv.0+0x41c>)
+41616780:	287f      	cmp	r0, #127	@ 0x7f
+41616782:	bfa8      	it	ge
+41616784:	207f      	movge	r0, #127	@ 0x7f
+41616786:	4548      	cmp	r0, r9
+41616788:	bfb8      	it	lt
+4161678a:	4648      	movlt	r0, r9
+4161678c:	b240      	sxtb	r0, r0
+4161678e:	f811 2b01 	ldrb.w	r2, [r1], #1
+41616792:	2a00      	cmp	r2, #0
+41616794:	f8d8 2004 	ldr.w	r2, [r8, #4]
+41616798:	bf0c      	ite	eq
+4161679a:	46bc      	moveq	ip, r7
+4161679c:	4684      	movne	ip, r0
+4161679e:	f802 c003 	strb.w	ip, [r2, r3]
+416167a2:	3301      	adds	r3, #1
+416167a4:	f5b3 6f00 	cmp.w	r3, #2048	@ 0x800
+416167a8:	d1f1      	bne.n	4161678e <handle_nl_fast_path.lto_priv.0+0x2ea>
+416167aa:	f8df 8110 	ldr.w	r8, [pc, #272]	@ 416168bc <handle_nl_fast_path.lto_priv.0+0x418>
+416167ae:	f8d8 7000 	ldr.w	r7, [r8]
+416167b2:	f897 3091 	ldrb.w	r3, [r7, #145]	@ 0x91
+416167b6:	2b00      	cmp	r3, #0
+416167b8:	f47f ae86 	bne.w	416164c8 <handle_nl_fast_path.lto_priv.0+0x24>
+416167bc:	f897 3090 	ldrb.w	r3, [r7, #144]	@ 0x90
+416167c0:	2b00      	cmp	r3, #0
+416167c2:	f000 823c 	beq.w	41616c3e <handle_nl_fast_path.lto_priv.0+0x79a>
+416167c6:	2100      	movs	r1, #0
+416167c8:	f107 0070 	add.w	r0, r7, #112	@ 0x70
+416167cc:	f020 f9f2 	bl	41636bb4 <_ZN6tflite21MicroInterpreterGraph14InvokeSubgraphEi>
+416167d0:	2800      	cmp	r0, #0
+416167d2:	f47f ae79 	bne.w	416164c8 <handle_nl_fast_path.lto_priv.0+0x24>
+416167d6:	f8d8 7000 	ldr.w	r7, [r8]
+416167da:	6838      	ldr	r0, [r7, #0]
+416167dc:	f059 fa12 	bl	4166fc04 <_ZNK6tflite16MicroInterpreter12outputs_sizeEv.isra.0>
+416167e0:	2800      	cmp	r0, #0
+416167e2:	f000 83a7 	beq.w	41616f34 <handle_nl_fast_path.lto_priv.0+0xa90>
+416167e6:	f8d7 309c 	ldr.w	r3, [r7, #156]	@ 0x9c
+416167ea:	681b      	ldr	r3, [r3, #0]
+416167ec:	6859      	ldr	r1, [r3, #4]
+416167ee:	ed93 6a03 	vldr	s12, [r3, #12]
+416167f2:	6918      	ldr	r0, [r3, #16]
+416167f4:	f991 3000 	ldrsb.w	r3, [r1]
+416167f8:	1a1b      	subs	r3, r3, r0
+416167fa:	ee07 3a90 	vmov	s15, r3
+416167fe:	f991 3001 	ldrsb.w	r3, [r1, #1]
+41616802:	1a1b      	subs	r3, r3, r0
+41616804:	eef8 7ae7 	vcvt.f32.s32	s15, s15
+41616808:	ee07 3a10 	vmov	s14, r3
+4161680c:	ee67 7a86 	vmul.f32	s15, s15, s12
+41616810:	eeb8 7ac7 	vcvt.f32.s32	s14, s14
+41616814:	ee27 7a06 	vmul.f32	s14, s14, s12
+41616818:	eef4 7ac7 	vcmpe.f32	s15, s14
+4161681c:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
+41616820:	f100 821a 	bmi.w	41616c58 <handle_nl_fast_path.lto_priv.0+0x7b4>
+41616824:	ee17 3a10 	vmov	r3, s14
+41616828:	eeb0 7a67 	vmov.f32	s14, s15
+4161682c:	ee07 3a90 	vmov	s15, r3
+41616830:	2202      	movs	r2, #2
+41616832:	568b      	ldrsb	r3, [r1, r2]
+41616834:	1a1b      	subs	r3, r3, r0
+41616836:	ee06 3a90 	vmov	s13, r3
+4161683a:	eef8 6ae6 	vcvt.f32.s32	s13, s13
+4161683e:	ee66 6a86 	vmul.f32	s13, s13, s12
+41616842:	eeb4 7ae6 	vcmpe.f32	s14, s13
+41616846:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
+4161684a:	f100 81ff 	bmi.w	41616c4c <handle_nl_fast_path.lto_priv.0+0x7a8>
+4161684e:	eef4 6a67 	vcmp.f32	s13, s15
+41616852:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
+41616856:	bfc8      	it	gt
+41616858:	eef0 7a66 	vmovgt.f32	s15, s13
+4161685c:	3201      	adds	r2, #1
+4161685e:	2a05      	cmp	r2, #5
+41616860:	d1e7      	bne.n	41616832 <handle_nl_fast_path.lto_priv.0+0x38e>
+41616862:	ee77 7a67 	vsub.f32	s15, s14, s15
+41616866:	b2f6      	uxtb	r6, r6
+41616868:	2e04      	cmp	r6, #4
+4161686a:	d00f      	beq.n	4161688c <handle_nl_fast_path.lto_priv.0+0x3e8>
+4161686c:	eef6 6a00 	vmov.f32	s13, #96	@ 0x3f000000  0.5
+41616870:	eeb4 7ae6 	vcmpe.f32	s14, s13
+41616874:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
+41616878:	f100 81f0 	bmi.w	41616c5c <handle_nl_fast_path.lto_priv.0+0x7b8>
+4161687c:	eddf 6a12 	vldr	s13, [pc, #72]	@ 416168c8 <handle_nl_fast_path.lto_priv.0+0x424>
+41616880:	eef4 7a66 	vcmp.f32	s15, s13
+41616884:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
+41616888:	bf48      	it	mi
+4161688a:	2604      	movmi	r6, #4
+4161688c:	ed8d 7a09 	vstr	s14, [sp, #36]	@ 0x24
+41616890:	2e04      	cmp	r6, #4
+41616892:	edcd 7a0a 	vstr	s15, [sp, #40]	@ 0x28
+41616896:	ab08      	add	r3, sp, #32
+41616898:	701e      	strb	r6, [r3, #0]
+4161689a:	f43f ae15 	beq.w	416164c8 <handle_nl_fast_path.lto_priv.0+0x24>
+4161689e:	2e03      	cmp	r6, #3
+416168a0:	f63f ae12 	bhi.w	416164c8 <handle_nl_fast_path.lto_priv.0+0x24>
+416168a4:	e8df f016 	tbh	[pc, r6, lsl #1]
+416168a8:	01e101dc 	.word	0x01e101dc
+416168ac:	033201e3 	.word	0x033201e3
+416168b0:	41b5106c 	.word	0x41b5106c
+416168b4:	41b04a87 	.word	0x41b04a87
+416168b8:	41affd56 	.word	0x41affd56
+416168bc:	420cdafc 	.word	0x420cdafc
+416168c0:	420cd2fa 	.word	0x420cd2fa
+416168c4:	00000000 	.word	0x00000000
+416168c8:	3d4ccccd 	.word	0x3d4ccccd
+416168cc:	01000193 	.word	0x01000193
+416168d0:	48b1      	ldr	r0, [pc, #708]	@ (41616b98 <handle_nl_fast_path.lto_priv.0+0x6f4>)
+416168d2:	f21e f975 	bl	41834bc0 <strlen>
+416168d6:	4406      	add	r6, r0
+416168d8:	7833      	ldrb	r3, [r6, #0]
+416168da:	4632      	mov	r2, r6
+416168dc:	3601      	adds	r6, #1
+416168de:	2b20      	cmp	r3, #32
+416168e0:	d0fa      	beq.n	416168d8 <handle_nl_fast_path.lto_priv.0+0x434>
+416168e2:	2b00      	cmp	r3, #0
+416168e4:	f43f aefb 	beq.w	416166de <handle_nl_fast_path.lto_priv.0+0x23a>
+416168e8:	2300      	movs	r3, #0
+416168ea:	5cd1      	ldrb	r1, [r2, r3]
+416168ec:	b131      	cbz	r1, 416168fc <handle_nl_fast_path.lto_priv.0+0x458>
+416168ee:	2922      	cmp	r1, #34	@ 0x22
+416168f0:	d004      	beq.n	416168fc <handle_nl_fast_path.lto_priv.0+0x458>
+416168f2:	295c      	cmp	r1, #92	@ 0x5c
+416168f4:	d002      	beq.n	416168fc <handle_nl_fast_path.lto_priv.0+0x458>
+416168f6:	2b64      	cmp	r3, #100	@ 0x64
+416168f8:	f040 80a6 	bne.w	41616a48 <handle_nl_fast_path.lto_priv.0+0x5a4>
+416168fc:	9200      	str	r2, [sp, #0]
+416168fe:	f44f 7180 	mov.w	r1, #256	@ 0x100
+41616902:	4aa6      	ldr	r2, [pc, #664]	@ (41616b9c <handle_nl_fast_path.lto_priv.0+0x6f8>)
+41616904:	a80b      	add	r0, sp, #44	@ 0x2c
+41616906:	f647 fac9 	bl	4145de9c <snprintf>
+4161690a:	f44f 5280 	mov.w	r2, #4096	@ 0x1000
+4161690e:	2100      	movs	r1, #0
+41616910:	f60d 102c 	addw	r0, sp, #2348	@ 0x92c
+41616914:	f5e9 fc28 	bl	41400168 <memset>
+41616918:	48a1      	ldr	r0, [pc, #644]	@ (41616ba0 <handle_nl_fast_path.lto_priv.0+0x6fc>)
+4161691a:	f44f 5380 	mov.w	r3, #4096	@ 0x1000
+4161691e:	f60d 122c 	addw	r2, sp, #2348	@ 0x92c
+41616922:	a90b      	add	r1, sp, #44	@ 0x2c
+41616924:	f7e5 ff84 	bl	415fc830 <tool_registry_execute>
+41616928:	f60d 102c 	addw	r0, sp, #2348	@ 0x92c
+4161692c:	f665 fad6 	bl	4147bedc <cJSON_Parse>
+41616930:	4606      	mov	r6, r0
+41616932:	2800      	cmp	r0, #0
+41616934:	f000 809b 	beq.w	41616a6e <handle_nl_fast_path.lto_priv.0+0x5ca>
+41616938:	499a      	ldr	r1, [pc, #616]	@ (41616ba4 <handle_nl_fast_path.lto_priv.0+0x700>)
+4161693a:	f664 fb03 	bl	4147af44 <cJSON_GetObjectItem>
+4161693e:	2800      	cmp	r0, #0
+41616940:	f000 8095 	beq.w	41616a6e <handle_nl_fast_path.lto_priv.0+0x5ca>
+41616944:	2100      	movs	r1, #0
+41616946:	f664 fa89 	bl	4147ae5c <get_array_item.lto_priv.0>
+4161694a:	4604      	mov	r4, r0
+4161694c:	2800      	cmp	r0, #0
+4161694e:	f000 808e 	beq.w	41616a6e <handle_nl_fast_path.lto_priv.0+0x5ca>
+41616952:	4995      	ldr	r1, [pc, #596]	@ (41616ba8 <handle_nl_fast_path.lto_priv.0+0x704>)
+41616954:	f664 faf6 	bl	4147af44 <cJSON_GetObjectItem>
+41616958:	4605      	mov	r5, r0
+4161695a:	2800      	cmp	r0, #0
+4161695c:	f000 8087 	beq.w	41616a6e <handle_nl_fast_path.lto_priv.0+0x5ca>
+41616960:	f664 fcd0 	bl	4147b304 <cJSON_IsString>
+41616964:	2800      	cmp	r0, #0
+41616966:	f000 8082 	beq.w	41616a6e <handle_nl_fast_path.lto_priv.0+0x5ca>
+4161696a:	692b      	ldr	r3, [r5, #16]
+4161696c:	781a      	ldrb	r2, [r3, #0]
+4161696e:	2a00      	cmp	r2, #0
+41616970:	d07d      	beq.n	41616a6e <handle_nl_fast_path.lto_priv.0+0x5ca>
+41616972:	4a8e      	ldr	r2, [pc, #568]	@ (41616bac <handle_nl_fast_path.lto_priv.0+0x708>)
+41616974:	f44f 7100 	mov.w	r1, #512	@ 0x200
+41616978:	af4b      	add	r7, sp, #300	@ 0x12c
+4161697a:	f20d 502c 	addw	r0, sp, #1324	@ 0x52c
+4161697e:	f647 fa8d 	bl	4145de9c <snprintf>
+41616982:	f44f 7280 	mov.w	r2, #256	@ 0x100
+41616986:	2100      	movs	r1, #0
+41616988:	4638      	mov	r0, r7
+4161698a:	f5e9 fbed 	bl	41400168 <memset>
+4161698e:	4888      	ldr	r0, [pc, #544]	@ (41616bb0 <handle_nl_fast_path.lto_priv.0+0x70c>)
+41616990:	f44f 7380 	mov.w	r3, #256	@ 0x100
+41616994:	463a      	mov	r2, r7
+41616996:	f20d 512c 	addw	r1, sp, #1324	@ 0x52c
+4161699a:	f7e5 ff49 	bl	415fc830 <tool_registry_execute>
+4161699e:	4985      	ldr	r1, [pc, #532]	@ (41616bb4 <handle_nl_fast_path.lto_priv.0+0x710>)
+416169a0:	4620      	mov	r0, r4
+416169a2:	f664 facf 	bl	4147af44 <cJSON_GetObjectItem>
+416169a6:	4984      	ldr	r1, [pc, #528]	@ (41616bb8 <handle_nl_fast_path.lto_priv.0+0x714>)
+416169a8:	4605      	mov	r5, r0
+416169aa:	4620      	mov	r0, r4
+416169ac:	f664 faca 	bl	4147af44 <cJSON_GetObjectItem>
+416169b0:	4604      	mov	r4, r0
+416169b2:	2d00      	cmp	r5, #0
+416169b4:	d04a      	beq.n	41616a4c <handle_nl_fast_path.lto_priv.0+0x5a8>
+416169b6:	4628      	mov	r0, r5
+416169b8:	f664 fca4 	bl	4147b304 <cJSON_IsString>
+416169bc:	2800      	cmp	r0, #0
+416169be:	d045      	beq.n	41616a4c <handle_nl_fast_path.lto_priv.0+0x5a8>
+416169c0:	692d      	ldr	r5, [r5, #16]
+416169c2:	2c00      	cmp	r4, #0
+416169c4:	d044      	beq.n	41616a50 <handle_nl_fast_path.lto_priv.0+0x5ac>
+416169c6:	4620      	mov	r0, r4
+416169c8:	f664 fc9c 	bl	4147b304 <cJSON_IsString>
+416169cc:	2800      	cmp	r0, #0
+416169ce:	d03f      	beq.n	41616a50 <handle_nl_fast_path.lto_priv.0+0x5ac>
+416169d0:	f8d4 8010 	ldr.w	r8, [r4, #16]
+416169d4:	4979      	ldr	r1, [pc, #484]	@ (41616bbc <handle_nl_fast_path.lto_priv.0+0x718>)
+416169d6:	4638      	mov	r0, r7
+416169d8:	f648 f8e8 	bl	4145ebac <strstr>
+416169dc:	2800      	cmp	r0, #0
+416169de:	d13a      	bne.n	41616a56 <handle_nl_fast_path.lto_priv.0+0x5b2>
+416169e0:	f89d 912c 	ldrb.w	r9, [sp, #300]	@ 0x12c
+416169e4:	ab4b      	add	r3, sp, #300	@ 0x12c
+416169e6:	f1b9 0900 	subs.w	r9, r9, #0
+416169ea:	bf18      	it	ne
+416169ec:	f04f 0901 	movne.w	r9, #1
+416169f0:	f44f 7100 	mov.w	r1, #512	@ 0x200
+416169f4:	2001      	movs	r0, #1
+416169f6:	f652 fa97 	bl	41468f28 <calloc>
+416169fa:	4604      	mov	r4, r0
+416169fc:	b150      	cbz	r0, 41616a14 <handle_nl_fast_path.lto_priv.0+0x570>
+416169fe:	f1b9 0f00 	cmp.w	r9, #0
+41616a02:	d02b      	beq.n	41616a5c <handle_nl_fast_path.lto_priv.0+0x5b8>
+41616a04:	4a6e      	ldr	r2, [pc, #440]	@ (41616bc0 <handle_nl_fast_path.lto_priv.0+0x71c>)
+41616a06:	462b      	mov	r3, r5
+41616a08:	f8cd 8000 	str.w	r8, [sp]
+41616a0c:	f44f 7100 	mov.w	r1, #512	@ 0x200
+41616a10:	f647 fa44 	bl	4145de9c <snprintf>
+41616a14:	4630      	mov	r0, r6
+41616a16:	f664 f999 	bl	4147ad4c <cJSON_Delete>
+41616a1a:	2c00      	cmp	r4, #0
+41616a1c:	f43f ad54 	beq.w	416164c8 <handle_nl_fast_path.lto_priv.0+0x24>
+41616a20:	4a68      	ldr	r2, [pc, #416]	@ (41616bc4 <handle_nl_fast_path.lto_priv.0+0x720>)
+41616a22:	4969      	ldr	r1, [pc, #420]	@ (41616bc8 <handle_nl_fast_path.lto_priv.0+0x724>)
+41616a24:	6813      	ldr	r3, [r2, #0]
+41616a26:	3301      	adds	r3, #1
+41616a28:	6013      	str	r3, [r2, #0]
+41616a2a:	4a68      	ldr	r2, [pc, #416]	@ (41616bcc <handle_nl_fast_path.lto_priv.0+0x728>)
+41616a2c:	6812      	ldr	r2, [r2, #0]
+41616a2e:	9200      	str	r2, [sp, #0]
+41616a30:	4a67      	ldr	r2, [pc, #412]	@ (41616bd0 <handle_nl_fast_path.lto_priv.0+0x72c>)
+41616a32:	e618      	b.n	41616666 <handle_nl_fast_path.lto_priv.0+0x1c2>
+41616a34:	3005      	adds	r0, #5
+41616a36:	7803      	ldrb	r3, [r0, #0]
+41616a38:	4602      	mov	r2, r0
+41616a3a:	3001      	adds	r0, #1
+41616a3c:	2b20      	cmp	r3, #32
+41616a3e:	d0fa      	beq.n	41616a36 <handle_nl_fast_path.lto_priv.0+0x592>
+41616a40:	2b00      	cmp	r3, #0
+41616a42:	f43f ae53 	beq.w	416166ec <handle_nl_fast_path.lto_priv.0+0x248>
+41616a46:	e74f      	b.n	416168e8 <handle_nl_fast_path.lto_priv.0+0x444>
+41616a48:	3301      	adds	r3, #1
+41616a4a:	e74e      	b.n	416168ea <handle_nl_fast_path.lto_priv.0+0x446>
+41616a4c:	4d61      	ldr	r5, [pc, #388]	@ (41616bd4 <handle_nl_fast_path.lto_priv.0+0x730>)
+41616a4e:	e7b8      	b.n	416169c2 <handle_nl_fast_path.lto_priv.0+0x51e>
+41616a50:	f8df 8180 	ldr.w	r8, [pc, #384]	@ 41616bd4 <handle_nl_fast_path.lto_priv.0+0x730>
+41616a54:	e7be      	b.n	416169d4 <handle_nl_fast_path.lto_priv.0+0x530>
+41616a56:	f04f 0900 	mov.w	r9, #0
+41616a5a:	e7c9      	b.n	416169f0 <handle_nl_fast_path.lto_priv.0+0x54c>
+41616a5c:	4a5e      	ldr	r2, [pc, #376]	@ (41616bd8 <handle_nl_fast_path.lto_priv.0+0x734>)
+41616a5e:	462b      	mov	r3, r5
+41616a60:	f44f 7100 	mov.w	r1, #512	@ 0x200
+41616a64:	e9cd 8700 	strd	r8, r7, [sp]
+41616a68:	f647 fa18 	bl	4145de9c <snprintf>
+41616a6c:	e7d2      	b.n	41616a14 <handle_nl_fast_path.lto_priv.0+0x570>
+41616a6e:	f44f 5180 	mov.w	r1, #4096	@ 0x1000
+41616a72:	2001      	movs	r0, #1
+41616a74:	f652 fa58 	bl	41468f28 <calloc>
+41616a78:	4604      	mov	r4, r0
+41616a7a:	2800      	cmp	r0, #0
+41616a7c:	d0ca      	beq.n	41616a14 <handle_nl_fast_path.lto_priv.0+0x570>
+41616a7e:	f640 72ff 	movw	r2, #4095	@ 0xfff
+41616a82:	f60d 112c 	addw	r1, sp, #2348	@ 0x92c
+41616a86:	f648 f98b 	bl	4145eda0 <strncpy>
+41616a8a:	e7c3      	b.n	41616a14 <handle_nl_fast_path.lto_priv.0+0x570>
+41616a8c:	46b0      	mov	r8, r6
+41616a8e:	e63f      	b.n	41616710 <handle_nl_fast_path.lto_priv.0+0x26c>
+41616a90:	060b      	lsls	r3, r1, #24
+41616a92:	d409      	bmi.n	41616aa8 <handle_nl_fast_path.lto_priv.0+0x604>
+41616a94:	3201      	adds	r2, #1
+41616a96:	460b      	mov	r3, r1
+41616a98:	f1a3 0141 	sub.w	r1, r3, #65	@ 0x41
+41616a9c:	2919      	cmp	r1, #25
+41616a9e:	f200 809d 	bhi.w	41616bdc <handle_nl_fast_path.lto_priv.0+0x738>
+41616aa2:	3320      	adds	r3, #32
+41616aa4:	2000      	movs	r0, #0
+41616aa6:	e0ab      	b.n	41616c00 <handle_nl_fast_path.lto_priv.0+0x75c>
+41616aa8:	9b05      	ldr	r3, [sp, #20]
+41616aaa:	1a9b      	subs	r3, r3, r2
+41616aac:	2b01      	cmp	r3, #1
+41616aae:	d96e      	bls.n	41616b8e <handle_nl_fast_path.lto_priv.0+0x6ea>
+41616ab0:	f001 07e0 	and.w	r7, r1, #224	@ 0xe0
+41616ab4:	2fc0      	cmp	r7, #192	@ 0xc0
+41616ab6:	d111      	bne.n	41616adc <handle_nl_fast_path.lto_priv.0+0x638>
+41616ab8:	7857      	ldrb	r7, [r2, #1]
+41616aba:	f007 03c0 	and.w	r3, r7, #192	@ 0xc0
+41616abe:	2b80      	cmp	r3, #128	@ 0x80
+41616ac0:	d165      	bne.n	41616b8e <handle_nl_fast_path.lto_priv.0+0x6ea>
+41616ac2:	018b      	lsls	r3, r1, #6
+41616ac4:	f007 073f 	and.w	r7, r7, #63	@ 0x3f
+41616ac8:	f403 63f8 	and.w	r3, r3, #1984	@ 0x7c0
+41616acc:	f64f 71fd 	movw	r1, #65533	@ 0xfffd
+41616ad0:	433b      	orrs	r3, r7
+41616ad2:	3202      	adds	r2, #2
+41616ad4:	2b7f      	cmp	r3, #127	@ 0x7f
+41616ad6:	bf98      	it	ls
+41616ad8:	460b      	movls	r3, r1
+41616ada:	e7dd      	b.n	41616a98 <handle_nl_fast_path.lto_priv.0+0x5f4>
+41616adc:	2b02      	cmp	r3, #2
+41616ade:	d056      	beq.n	41616b8e <handle_nl_fast_path.lto_priv.0+0x6ea>
+41616ae0:	f001 07f0 	and.w	r7, r1, #240	@ 0xf0
+41616ae4:	2fe0      	cmp	r7, #224	@ 0xe0
+41616ae6:	d120      	bne.n	41616b2a <handle_nl_fast_path.lto_priv.0+0x686>
+41616ae8:	7853      	ldrb	r3, [r2, #1]
+41616aea:	f003 07c0 	and.w	r7, r3, #192	@ 0xc0
+41616aee:	2f80      	cmp	r7, #128	@ 0x80
+41616af0:	d14d      	bne.n	41616b8e <handle_nl_fast_path.lto_priv.0+0x6ea>
+41616af2:	7897      	ldrb	r7, [r2, #2]
+41616af4:	f007 0cc0 	and.w	ip, r7, #192	@ 0xc0
+41616af8:	f1bc 0f80 	cmp.w	ip, #128	@ 0x80
+41616afc:	d147      	bne.n	41616b8e <handle_nl_fast_path.lto_priv.0+0x6ea>
+41616afe:	0309      	lsls	r1, r1, #12
+41616b00:	f007 073f 	and.w	r7, r7, #63	@ 0x3f
+41616b04:	019b      	lsls	r3, r3, #6
+41616b06:	b289      	uxth	r1, r1
+41616b08:	f403 637c 	and.w	r3, r3, #4032	@ 0xfc0
+41616b0c:	3203      	adds	r2, #3
+41616b0e:	430b      	orrs	r3, r1
+41616b10:	433b      	orrs	r3, r7
+41616b12:	f5b3 6f00 	cmp.w	r3, #2048	@ 0x800
+41616b16:	d33b      	bcc.n	41616b90 <handle_nl_fast_path.lto_priv.0+0x6ec>
+41616b18:	f5a3 4758 	sub.w	r7, r3, #55296	@ 0xd800
+41616b1c:	f64f 71fd 	movw	r1, #65533	@ 0xfffd
+41616b20:	f5b7 6f00 	cmp.w	r7, #2048	@ 0x800
+41616b24:	bf38      	it	cc
+41616b26:	460b      	movcc	r3, r1
+41616b28:	e7b6      	b.n	41616a98 <handle_nl_fast_path.lto_priv.0+0x5f4>
+41616b2a:	2b03      	cmp	r3, #3
+41616b2c:	d02f      	beq.n	41616b8e <handle_nl_fast_path.lto_priv.0+0x6ea>
+41616b2e:	f001 03f8 	and.w	r3, r1, #248	@ 0xf8
+41616b32:	2bf0      	cmp	r3, #240	@ 0xf0
+41616b34:	d12b      	bne.n	41616b8e <handle_nl_fast_path.lto_priv.0+0x6ea>
+41616b36:	7857      	ldrb	r7, [r2, #1]
+41616b38:	f007 03c0 	and.w	r3, r7, #192	@ 0xc0
+41616b3c:	2b80      	cmp	r3, #128	@ 0x80
+41616b3e:	d126      	bne.n	41616b8e <handle_nl_fast_path.lto_priv.0+0x6ea>
+41616b40:	f892 c002 	ldrb.w	ip, [r2, #2]
+41616b44:	f00c 03c0 	and.w	r3, ip, #192	@ 0xc0
+41616b48:	2b80      	cmp	r3, #128	@ 0x80
+41616b4a:	d120      	bne.n	41616b8e <handle_nl_fast_path.lto_priv.0+0x6ea>
+41616b4c:	78d3      	ldrb	r3, [r2, #3]
+41616b4e:	9304      	str	r3, [sp, #16]
+41616b50:	f003 03c0 	and.w	r3, r3, #192	@ 0xc0
+41616b54:	2b80      	cmp	r3, #128	@ 0x80
+41616b56:	d11a      	bne.n	41616b8e <handle_nl_fast_path.lto_priv.0+0x6ea>
+41616b58:	0489      	lsls	r1, r1, #18
+41616b5a:	3204      	adds	r2, #4
+41616b5c:	033f      	lsls	r7, r7, #12
+41616b5e:	f401 11e0 	and.w	r1, r1, #1835008	@ 0x1c0000
+41616b62:	9b04      	ldr	r3, [sp, #16]
+41616b64:	f407 377c 	and.w	r7, r7, #258048	@ 0x3f000
+41616b68:	430f      	orrs	r7, r1
+41616b6a:	f64f 71fd 	movw	r1, #65533	@ 0xfffd
+41616b6e:	ea4f 1c8c 	mov.w	ip, ip, lsl #6
+41616b72:	f003 033f 	and.w	r3, r3, #63	@ 0x3f
+41616b76:	433b      	orrs	r3, r7
+41616b78:	f40c 6c7c 	and.w	ip, ip, #4032	@ 0xfc0
+41616b7c:	ea43 030c 	orr.w	r3, r3, ip
+41616b80:	f5a3 3780 	sub.w	r7, r3, #65536	@ 0x10000
+41616b84:	f5b7 1f80 	cmp.w	r7, #1048576	@ 0x100000
+41616b88:	bf28      	it	cs
+41616b8a:	460b      	movcs	r3, r1
+41616b8c:	e784      	b.n	41616a98 <handle_nl_fast_path.lto_priv.0+0x5f4>
+41616b8e:	3201      	adds	r2, #1
+41616b90:	f64f 73fd 	movw	r3, #65533	@ 0xfffd
+41616b94:	e780      	b.n	41616a98 <handle_nl_fast_path.lto_priv.0+0x5f4>
+41616b96:	bf00      	nop
+41616b98:	41b04a87 	.word	0x41b04a87
+41616b9c:	41affd5c 	.word	0x41affd5c
+41616ba0:	41af4d0e 	.word	0x41af4d0e
+41616ba4:	41af981a 	.word	0x41af981a
+41616ba8:	41b13298 	.word	0x41b13298
+41616bac:	41affd6f 	.word	0x41affd6f
+41616bb0:	41af4a00 	.word	0x41af4a00
+41616bb4:	41ac64ee 	.word	0x41ac64ee
+41616bb8:	41ae8891 	.word	0x41ae8891
+41616bbc:	41aca2ee 	.word	0x41aca2ee
+41616bc0:	41affd7c 	.word	0x41affd7c
+41616bc4:	420cdb04 	.word	0x420cdb04
+41616bc8:	41affdba 	.word	0x41affdba
+41616bcc:	420cdb00 	.word	0x420cdb00
+41616bd0:	41ac0dad 	.word	0x41ac0dad
+41616bd4:	41affc8c 	.word	0x41affc8c
+41616bd8:	41affd92 	.word	0x41affd92
+41616bdc:	2b20      	cmp	r3, #32
+41616bde:	d92c      	bls.n	41616c3a <handle_nl_fast_path.lto_priv.0+0x796>
+41616be0:	f1a3 0130 	sub.w	r1, r3, #48	@ 0x30
+41616be4:	2909      	cmp	r1, #9
+41616be6:	d905      	bls.n	41616bf4 <handle_nl_fast_path.lto_priv.0+0x750>
+41616be8:	f5a3 417f 	sub.w	r1, r3, #65280	@ 0xff00
+41616bec:	3910      	subs	r1, #16
+41616bee:	2909      	cmp	r1, #9
+41616bf0:	f63f af58 	bhi.w	41616aa4 <handle_nl_fast_path.lto_priv.0+0x600>
+41616bf4:	2800      	cmp	r0, #0
+41616bf6:	f47f ad9f 	bne.w	41616738 <handle_nl_fast_path.lto_priv.0+0x294>
+41616bfa:	2001      	movs	r0, #1
+41616bfc:	f44f 1388 	mov.w	r3, #1114112	@ 0x110000
+41616c00:	49ab      	ldr	r1, [pc, #684]	@ (41616eb0 <handle_nl_fast_path.lto_priv.0+0xa0c>)
+41616c02:	4fac      	ldr	r7, [pc, #688]	@ (41616eb4 <handle_nl_fast_path.lto_priv.0+0xa10>)
+41616c04:	4059      	eors	r1, r3
+41616c06:	fb09 f101 	mul.w	r1, r9, r1
+41616c0a:	f3c1 010a 	ubfx	r1, r1, #0, #11
+41616c0e:	f807 a001 	strb.w	sl, [r7, r1]
+41616c12:	9903      	ldr	r1, [sp, #12]
+41616c14:	b159      	cbz	r1, 41616c2e <handle_nl_fast_path.lto_priv.0+0x78a>
+41616c16:	49a8      	ldr	r1, [pc, #672]	@ (41616eb8 <handle_nl_fast_path.lto_priv.0+0xa14>)
+41616c18:	ea8b 0101 	eor.w	r1, fp, r1
+41616c1c:	fb09 f101 	mul.w	r1, r9, r1
+41616c20:	4059      	eors	r1, r3
+41616c22:	fb09 f101 	mul.w	r1, r9, r1
+41616c26:	f3c1 010a 	ubfx	r1, r1, #0, #11
+41616c2a:	f807 a001 	strb.w	sl, [r7, r1]
+41616c2e:	469b      	mov	fp, r3
+41616c30:	2301      	movs	r3, #1
+41616c32:	9303      	str	r3, [sp, #12]
+41616c34:	f10e 0e01 	add.w	lr, lr, #1
+41616c38:	e57e      	b.n	41616738 <handle_nl_fast_path.lto_priv.0+0x294>
+41616c3a:	2000      	movs	r0, #0
+41616c3c:	e57c      	b.n	41616738 <handle_nl_fast_path.lto_priv.0+0x294>
+41616c3e:	4638      	mov	r0, r7
+41616c40:	f020 fbae 	bl	416373a0 <_ZN6tflite16MicroInterpreter15AllocateTensorsEv>
+41616c44:	2800      	cmp	r0, #0
+41616c46:	f43f adbe 	beq.w	416167c6 <handle_nl_fast_path.lto_priv.0+0x322>
+41616c4a:	e43d      	b.n	416164c8 <handle_nl_fast_path.lto_priv.0+0x24>
+41616c4c:	eef0 7a47 	vmov.f32	s15, s14
+41616c50:	4616      	mov	r6, r2
+41616c52:	eeb0 7a66 	vmov.f32	s14, s13
+41616c56:	e601      	b.n	4161685c <handle_nl_fast_path.lto_priv.0+0x3b8>
+41616c58:	2601      	movs	r6, #1
+41616c5a:	e5e9      	b.n	41616830 <handle_nl_fast_path.lto_priv.0+0x38c>
+41616c5c:	2604      	movs	r6, #4
+41616c5e:	e615      	b.n	4161688c <handle_nl_fast_path.lto_priv.0+0x3e8>
+41616c60:	4996      	ldr	r1, [pc, #600]	@ (41616ebc <handle_nl_fast_path.lto_priv.0+0xa18>)
+41616c62:	a808      	add	r0, sp, #32
+41616c64:	f002 fdb4 	bl	416197d0 <mooncat_execute_coach.lto_priv.0>
+41616c68:	e4a4      	b.n	416165b4 <handle_nl_fast_path.lto_priv.0+0x110>
+41616c6a:	4995      	ldr	r1, [pc, #596]	@ (41616ec0 <handle_nl_fast_path.lto_priv.0+0xa1c>)
+41616c6c:	e7f9      	b.n	41616c62 <handle_nl_fast_path.lto_priv.0+0x7be>
+41616c6e:	f44f 7280 	mov.w	r2, #256	@ 0x100
+41616c72:	2100      	movs	r1, #0
+41616c74:	a80b      	add	r0, sp, #44	@ 0x2c
+41616c76:	f5e9 fa77 	bl	41400168 <memset>
+41616c7a:	f44f 6200 	mov.w	r2, #2048	@ 0x800
+41616c7e:	2100      	movs	r1, #0
+41616c80:	f60d 102c 	addw	r0, sp, #2348	@ 0x92c
+41616c84:	f5e9 fa70 	bl	41400168 <memset>
+41616c88:	f44f 6280 	mov.w	r2, #1024	@ 0x400
+41616c8c:	2100      	movs	r1, #0
+41616c8e:	f20d 502c 	addw	r0, sp, #1324	@ 0x52c
+41616c92:	f5e9 fa69 	bl	41400168 <memset>
+41616c96:	498b      	ldr	r1, [pc, #556]	@ (41616ec4 <handle_nl_fast_path.lto_priv.0+0xa20>)
+41616c98:	4628      	mov	r0, r5
+41616c9a:	f647 ff87 	bl	4145ebac <strstr>
+41616c9e:	4606      	mov	r6, r0
+41616ca0:	2800      	cmp	r0, #0
+41616ca2:	f000 8091 	beq.w	41616dc8 <handle_nl_fast_path.lto_priv.0+0x924>
+41616ca6:	4887      	ldr	r0, [pc, #540]	@ (41616ec4 <handle_nl_fast_path.lto_priv.0+0xa20>)
+41616ca8:	af07      	add	r7, sp, #28
+41616caa:	2400      	movs	r4, #0
+41616cac:	f21d ff88 	bl	41834bc0 <strlen>
+41616cb0:	603c      	str	r4, [r7, #0]
+41616cb2:	4406      	add	r6, r0
+41616cb4:	f5ea ffee 	bl	41401c94 <__errno>
+41616cb8:	6004      	str	r4, [r0, #0]
+41616cba:	4639      	mov	r1, r7
+41616cbc:	220a      	movs	r2, #10
+41616cbe:	4630      	mov	r0, r6
+41616cc0:	f649 f98a 	bl	4145ffd8 <strtoul>
+41616cc4:	683f      	ldr	r7, [r7, #0]
+41616cc6:	4604      	mov	r4, r0
+41616cc8:	42be      	cmp	r6, r7
+41616cca:	d07d      	beq.n	41616dc8 <handle_nl_fast_path.lto_priv.0+0x924>
+41616ccc:	f5ea ffe2 	bl	41401c94 <__errno>
+41616cd0:	6803      	ldr	r3, [r0, #0]
+41616cd2:	2b22      	cmp	r3, #34	@ 0x22
+41616cd4:	d078      	beq.n	41616dc8 <handle_nl_fast_path.lto_priv.0+0x924>
+41616cd6:	4b7c      	ldr	r3, [pc, #496]	@ (41616ec8 <handle_nl_fast_path.lto_priv.0+0xa24>)
+41616cd8:	f1a4 020a 	sub.w	r2, r4, #10
+41616cdc:	429a      	cmp	r2, r3
+41616cde:	d873      	bhi.n	41616dc8 <handle_nl_fast_path.lto_priv.0+0x924>
+41616ce0:	7838      	ldrb	r0, [r7, #0]
+41616ce2:	b128      	cbz	r0, 41616cf0 <handle_nl_fast_path.lto_priv.0+0x84c>
+41616ce4:	2822      	cmp	r0, #34	@ 0x22
+41616ce6:	d003      	beq.n	41616cf0 <handle_nl_fast_path.lto_priv.0+0x84c>
+41616ce8:	f645 fb50 	bl	4145c38c <isspace>
+41616cec:	2800      	cmp	r0, #0
+41616cee:	d06b      	beq.n	41616dc8 <handle_nl_fast_path.lto_priv.0+0x924>
+41616cf0:	4976      	ldr	r1, [pc, #472]	@ (41616ecc <handle_nl_fast_path.lto_priv.0+0xa28>)
+41616cf2:	f44f 7380 	mov.w	r3, #256	@ 0x100
+41616cf6:	4876      	ldr	r0, [pc, #472]	@ (41616ed0 <handle_nl_fast_path.lto_priv.0+0xa2c>)
+41616cf8:	aa0b      	add	r2, sp, #44	@ 0x2c
+41616cfa:	f7e5 fd99 	bl	415fc830 <tool_registry_execute>
+41616cfe:	4605      	mov	r5, r0
+41616d00:	2800      	cmp	r0, #0
+41616d02:	d063      	beq.n	41616dcc <handle_nl_fast_path.lto_priv.0+0x928>
+41616d04:	4973      	ldr	r1, [pc, #460]	@ (41616ed4 <handle_nl_fast_path.lto_priv.0+0xa30>)
+41616d06:	e054      	b.n	41616db2 <handle_nl_fast_path.lto_priv.0+0x90e>
+41616d08:	3b30      	subs	r3, #48	@ 0x30
+41616d0a:	f10d 081c 	add.w	r8, sp, #28
+41616d0e:	2b09      	cmp	r3, #9
+41616d10:	f04f 0600 	mov.w	r6, #0
+41616d14:	f8c8 6000 	str.w	r6, [r8]
+41616d18:	d846      	bhi.n	41616da8 <handle_nl_fast_path.lto_priv.0+0x904>
+41616d1a:	f5ea ffbb 	bl	41401c94 <__errno>
+41616d1e:	6006      	str	r6, [r0, #0]
+41616d20:	220a      	movs	r2, #10
+41616d22:	4641      	mov	r1, r8
+41616d24:	4628      	mov	r0, r5
+41616d26:	f649 f957 	bl	4145ffd8 <strtoul>
+41616d2a:	4604      	mov	r4, r0
+41616d2c:	f5ea ffb2 	bl	41401c94 <__errno>
+41616d30:	6803      	ldr	r3, [r0, #0]
+41616d32:	2b22      	cmp	r3, #34	@ 0x22
+41616d34:	f8d8 3000 	ldr.w	r3, [r8]
+41616d38:	d033      	beq.n	41616da2 <handle_nl_fast_path.lto_priv.0+0x8fe>
+41616d3a:	4632      	mov	r2, r6
+41616d3c:	461e      	mov	r6, r3
+41616d3e:	f813 1b01 	ldrb.w	r1, [r3], #1
+41616d42:	2920      	cmp	r1, #32
+41616d44:	d03a      	beq.n	41616dbc <handle_nl_fast_path.lto_priv.0+0x918>
+41616d46:	b10a      	cbz	r2, 41616d4c <handle_nl_fast_path.lto_priv.0+0x8a8>
+41616d48:	9607      	str	r6, [sp, #28]
+41616d4a:	ab07      	add	r3, sp, #28
+41616d4c:	4638      	mov	r0, r7
+41616d4e:	f21d ff37 	bl	41834bc0 <strlen>
+41616d52:	4602      	mov	r2, r0
+41616d54:	4639      	mov	r1, r7
+41616d56:	4630      	mov	r0, r6
+41616d58:	f648 f8d8 	bl	4145ef0c <strncmp>
+41616d5c:	b380      	cbz	r0, 41616dc0 <handle_nl_fast_path.lto_priv.0+0x91c>
+41616d5e:	485e      	ldr	r0, [pc, #376]	@ (41616ed8 <handle_nl_fast_path.lto_priv.0+0xa34>)
+41616d60:	f21d ff2e 	bl	41834bc0 <strlen>
+41616d64:	495c      	ldr	r1, [pc, #368]	@ (41616ed8 <handle_nl_fast_path.lto_priv.0+0xa34>)
+41616d66:	4602      	mov	r2, r0
+41616d68:	4630      	mov	r0, r6
+41616d6a:	f648 f8cf 	bl	4145ef0c <strncmp>
+41616d6e:	b348      	cbz	r0, 41616dc4 <handle_nl_fast_path.lto_priv.0+0x920>
+41616d70:	485a      	ldr	r0, [pc, #360]	@ (41616edc <handle_nl_fast_path.lto_priv.0+0xa38>)
+41616d72:	f21d ff25 	bl	41834bc0 <strlen>
+41616d76:	4959      	ldr	r1, [pc, #356]	@ (41616edc <handle_nl_fast_path.lto_priv.0+0xa38>)
+41616d78:	4602      	mov	r2, r0
+41616d7a:	4630      	mov	r0, r6
+41616d7c:	f648 f8c6 	bl	4145ef0c <strncmp>
+41616d80:	b950      	cbnz	r0, 41616d98 <handle_nl_fast_path.lto_priv.0+0x8f4>
+41616d82:	f44f 6361 	mov.w	r3, #3600	@ 0xe10
+41616d86:	fba3 1204 	umull	r1, r2, r3, r4
+41616d8a:	b92a      	cbnz	r2, 41616d98 <handle_nl_fast_path.lto_priv.0+0x8f4>
+41616d8c:	435c      	muls	r4, r3
+41616d8e:	4b4e      	ldr	r3, [pc, #312]	@ (41616ec8 <handle_nl_fast_path.lto_priv.0+0xa24>)
+41616d90:	f1a4 020a 	sub.w	r2, r4, #10
+41616d94:	429a      	cmp	r2, r3
+41616d96:	d9ab      	bls.n	41616cf0 <handle_nl_fast_path.lto_priv.0+0x84c>
+41616d98:	42ae      	cmp	r6, r5
+41616d9a:	bf88      	it	hi
+41616d9c:	f106 35ff 	addhi.w	r5, r6, #4294967295	@ 0xffffffff
+41616da0:	e002      	b.n	41616da8 <handle_nl_fast_path.lto_priv.0+0x904>
+41616da2:	429d      	cmp	r5, r3
+41616da4:	d200      	bcs.n	41616da8 <handle_nl_fast_path.lto_priv.0+0x904>
+41616da6:	1e5d      	subs	r5, r3, #1
+41616da8:	3501      	adds	r5, #1
+41616daa:	782b      	ldrb	r3, [r5, #0]
+41616dac:	2b00      	cmp	r3, #0
+41616dae:	d1ab      	bne.n	41616d08 <handle_nl_fast_path.lto_priv.0+0x864>
+41616db0:	494b      	ldr	r1, [pc, #300]	@ (41616ee0 <handle_nl_fast_path.lto_priv.0+0xa3c>)
+41616db2:	a808      	add	r0, sp, #32
+41616db4:	f002 fcc8 	bl	41619748 <mooncat_router_reply.lto_priv.0>
+41616db8:	f7ff bbfc 	b.w	416165b4 <handle_nl_fast_path.lto_priv.0+0x110>
+41616dbc:	2201      	movs	r2, #1
+41616dbe:	e7bd      	b.n	41616d3c <handle_nl_fast_path.lto_priv.0+0x898>
+41616dc0:	2301      	movs	r3, #1
+41616dc2:	e7e0      	b.n	41616d86 <handle_nl_fast_path.lto_priv.0+0x8e2>
+41616dc4:	233c      	movs	r3, #60	@ 0x3c
+41616dc6:	e7de      	b.n	41616d86 <handle_nl_fast_path.lto_priv.0+0x8e2>
+41616dc8:	4f46      	ldr	r7, [pc, #280]	@ (41616ee4 <handle_nl_fast_path.lto_priv.0+0xa40>)
+41616dca:	e7ee      	b.n	41616daa <handle_nl_fast_path.lto_priv.0+0x906>
+41616dcc:	4946      	ldr	r1, [pc, #280]	@ (41616ee8 <handle_nl_fast_path.lto_priv.0+0xa44>)
+41616dce:	a80b      	add	r0, sp, #44	@ 0x2c
+41616dd0:	f647 feec 	bl	4145ebac <strstr>
+41616dd4:	9507      	str	r5, [sp, #28]
+41616dd6:	ab07      	add	r3, sp, #28
+41616dd8:	4605      	mov	r5, r0
+41616dda:	b328      	cbz	r0, 41616e28 <handle_nl_fast_path.lto_priv.0+0x984>
+41616ddc:	4842      	ldr	r0, [pc, #264]	@ (41616ee8 <handle_nl_fast_path.lto_priv.0+0xa44>)
+41616dde:	f21d feef 	bl	41834bc0 <strlen>
+41616de2:	4428      	add	r0, r5
+41616de4:	4606      	mov	r6, r0
+41616de6:	f810 3b01 	ldrb.w	r3, [r0], #1
+41616dea:	2b20      	cmp	r3, #32
+41616dec:	d0fa      	beq.n	41616de4 <handle_nl_fast_path.lto_priv.0+0x940>
+41616dee:	3b30      	subs	r3, #48	@ 0x30
+41616df0:	2b09      	cmp	r3, #9
+41616df2:	d819      	bhi.n	41616e28 <handle_nl_fast_path.lto_priv.0+0x984>
+41616df4:	f10d 081c 	add.w	r8, sp, #28
+41616df8:	f5ea ff4c 	bl	41401c94 <__errno>
+41616dfc:	2300      	movs	r3, #0
+41616dfe:	220a      	movs	r2, #10
+41616e00:	6003      	str	r3, [r0, #0]
+41616e02:	a907      	add	r1, sp, #28
+41616e04:	4630      	mov	r0, r6
+41616e06:	f651 fccd 	bl	414687a4 <strtoll>
+41616e0a:	f8d8 3000 	ldr.w	r3, [r8]
+41616e0e:	4607      	mov	r7, r0
+41616e10:	460d      	mov	r5, r1
+41616e12:	429e      	cmp	r6, r3
+41616e14:	d008      	beq.n	41616e28 <handle_nl_fast_path.lto_priv.0+0x984>
+41616e16:	f5ea ff3d 	bl	41401c94 <__errno>
+41616e1a:	6803      	ldr	r3, [r0, #0]
+41616e1c:	2b22      	cmp	r3, #34	@ 0x22
+41616e1e:	d003      	beq.n	41616e28 <handle_nl_fast_path.lto_priv.0+0x984>
+41616e20:	2f01      	cmp	r7, #1
+41616e22:	f175 0300 	sbcs.w	r3, r5, #0
+41616e26:	da04      	bge.n	41616e32 <handle_nl_fast_path.lto_priv.0+0x98e>
+41616e28:	4930      	ldr	r1, [pc, #192]	@ (41616eec <handle_nl_fast_path.lto_priv.0+0xa48>)
+41616e2a:	e7c2      	b.n	41616db2 <handle_nl_fast_path.lto_priv.0+0x90e>
+41616e2c:	3601      	adds	r6, #1
+41616e2e:	f8c8 6000 	str.w	r6, [r8]
+41616e32:	f8d8 6000 	ldr.w	r6, [r8]
+41616e36:	f896 9000 	ldrb.w	r9, [r6]
+41616e3a:	4648      	mov	r0, r9
+41616e3c:	f645 faa6 	bl	4145c38c <isspace>
+41616e40:	2800      	cmp	r0, #0
+41616e42:	d1f3      	bne.n	41616e2c <handle_nl_fast_path.lto_priv.0+0x988>
+41616e44:	f1b9 0f00 	cmp.w	r9, #0
+41616e48:	d1ee      	bne.n	41616e28 <handle_nl_fast_path.lto_priv.0+0x984>
+41616e4a:	43e3      	mvns	r3, r4
+41616e4c:	42bb      	cmp	r3, r7
+41616e4e:	f06f 4300 	mvn.w	r3, #2147483648	@ 0x80000000
+41616e52:	41ab      	sbcs	r3, r5
+41616e54:	dbe8      	blt.n	41616e28 <handle_nl_fast_path.lto_priv.0+0x984>
+41616e56:	491d      	ldr	r1, [pc, #116]	@ (41616ecc <handle_nl_fast_path.lto_priv.0+0xa28>)
+41616e58:	f60d 132c 	addw	r3, sp, #2348	@ 0x92c
+41616e5c:	9303      	str	r3, [sp, #12]
+41616e5e:	f44f 6300 	mov.w	r3, #2048	@ 0x800
+41616e62:	9a03      	ldr	r2, [sp, #12]
+41616e64:	4822      	ldr	r0, [pc, #136]	@ (41616ef0 <handle_nl_fast_path.lto_priv.0+0xa4c>)
+41616e66:	f7e5 fce3 	bl	415fc830 <tool_registry_execute>
+41616e6a:	b108      	cbz	r0, 41616e70 <handle_nl_fast_path.lto_priv.0+0x9cc>
+41616e6c:	4921      	ldr	r1, [pc, #132]	@ (41616ef4 <handle_nl_fast_path.lto_priv.0+0xa50>)
+41616e6e:	e7a0      	b.n	41616db2 <handle_nl_fast_path.lto_priv.0+0x90e>
+41616e70:	4921      	ldr	r1, [pc, #132]	@ (41616ef8 <handle_nl_fast_path.lto_priv.0+0xa54>)
+41616e72:	9803      	ldr	r0, [sp, #12]
+41616e74:	f647 fe9a 	bl	4145ebac <strstr>
+41616e78:	b108      	cbz	r0, 41616e7e <handle_nl_fast_path.lto_priv.0+0x9da>
+41616e7a:	4920      	ldr	r1, [pc, #128]	@ (41616efc <handle_nl_fast_path.lto_priv.0+0xa58>)
+41616e7c:	e799      	b.n	41616db2 <handle_nl_fast_path.lto_priv.0+0x90e>
+41616e7e:	19e4      	adds	r4, r4, r7
+41616e80:	f44f 6180 	mov.w	r1, #1024	@ 0x400
+41616e84:	f145 0500 	adc.w	r5, r5, #0
+41616e88:	a84b      	add	r0, sp, #300	@ 0x12c
+41616e8a:	4a1d      	ldr	r2, [pc, #116]	@ (41616f00 <handle_nl_fast_path.lto_priv.0+0xa5c>)
+41616e8c:	e9cd 4500 	strd	r4, r5, [sp]
+41616e90:	f647 f804 	bl	4145de9c <snprintf>
+41616e94:	481b      	ldr	r0, [pc, #108]	@ (41616f04 <handle_nl_fast_path.lto_priv.0+0xa60>)
+41616e96:	f44f 6380 	mov.w	r3, #1024	@ 0x400
+41616e9a:	f20d 522c 	addw	r2, sp, #1324	@ 0x52c
+41616e9e:	a94b      	add	r1, sp, #300	@ 0x12c
+41616ea0:	f7e5 fcc6 	bl	415fc830 <tool_registry_execute>
+41616ea4:	b108      	cbz	r0, 41616eaa <handle_nl_fast_path.lto_priv.0+0xa06>
+41616ea6:	4918      	ldr	r1, [pc, #96]	@ (41616f08 <handle_nl_fast_path.lto_priv.0+0xa64>)
+41616ea8:	e783      	b.n	41616db2 <handle_nl_fast_path.lto_priv.0+0x90e>
+41616eaa:	f20d 512c 	addw	r1, sp, #1324	@ 0x52c
+41616eae:	e780      	b.n	41616db2 <handle_nl_fast_path.lto_priv.0+0x90e>
+41616eb0:	140c74bc 	.word	0x140c74bc
+41616eb4:	420cd2fa 	.word	0x420cd2fa
+41616eb8:	270c92a5 	.word	0x270c92a5
+41616ebc:	41affdec 	.word	0x41affdec
+41616ec0:	41b03ac2 	.word	0x41b03ac2
+41616ec4:	41affdf4 	.word	0x41affdf4
+41616ec8:	00015176 	.word	0x00015176
+41616ecc:	41ac64d0 	.word	0x41ac64d0
+41616ed0:	41af66ef 	.word	0x41af66ef
+41616ed4:	41affe53 	.word	0x41affe53
+41616ed8:	41affe0c 	.word	0x41affe0c
+41616edc:	41affe13 	.word	0x41affe13
+41616ee0:	41affe1a 	.word	0x41affe1a
+41616ee4:	41affe08 	.word	0x41affe08
+41616ee8:	41affe81 	.word	0x41affe81
+41616eec:	41affe8d 	.word	0x41affe8d
+41616ef0:	41af5f6e 	.word	0x41af5f6e
+41616ef4:	41affebb 	.word	0x41affebb
+41616ef8:	41affee1 	.word	0x41affee1
+41616efc:	41affef5 	.word	0x41affef5
+41616f00:	41afff26 	.word	0x41afff26
+41616f04:	41af5f96 	.word	0x41af5f96
+41616f08:	41b000c8 	.word	0x41b000c8
+41616f0c:	f60d 142c 	addw	r4, sp, #2348	@ 0x92c
+41616f10:	f44f 6200 	mov.w	r2, #2048	@ 0x800
+41616f14:	2100      	movs	r1, #0
+41616f16:	4620      	mov	r0, r4
+41616f18:	f5e9 f926 	bl	41400168 <memset>
+41616f1c:	490a      	ldr	r1, [pc, #40]	@ (41616f48 <handle_nl_fast_path.lto_priv.0+0xaa4>)
+41616f1e:	f44f 6300 	mov.w	r3, #2048	@ 0x800
+41616f22:	480a      	ldr	r0, [pc, #40]	@ (41616f4c <handle_nl_fast_path.lto_priv.0+0xaa8>)
+41616f24:	4622      	mov	r2, r4
+41616f26:	f7e5 fc83 	bl	415fc830 <tool_registry_execute>
+41616f2a:	b108      	cbz	r0, 41616f30 <handle_nl_fast_path.lto_priv.0+0xa8c>
+41616f2c:	4908      	ldr	r1, [pc, #32]	@ (41616f50 <handle_nl_fast_path.lto_priv.0+0xaac>)
+41616f2e:	e740      	b.n	41616db2 <handle_nl_fast_path.lto_priv.0+0x90e>
+41616f30:	4621      	mov	r1, r4
+41616f32:	e73e      	b.n	41616db2 <handle_nl_fast_path.lto_priv.0+0x90e>
+41616f34:	6843      	ldr	r3, [r0, #4]
+41616f36:	deff      	udf	#255	@ 0xff
+41616f38:	4620      	mov	r0, r4
+41616f3a:	f50d 5dc9 	add.w	sp, sp, #6432	@ 0x1920
+41616f3e:	b005      	add	sp, #20
+41616f40:	ecbd 8b02 	vpop	{d8}
+41616f44:	e8bd 8ff0 	ldmia.w	sp!, {r4, r5, r6, r7, r8, r9, sl, fp, pc}
+41616f48:	41ac64d0 	.word	0x41ac64d0
+41616f4c:	41af5f6e 	.word	0x41af5f6e
+41616f50:	41b000ed 	.word	0x41b000ed
+
+Disassembly of section .init:
+
+Disassembly of section .fini:

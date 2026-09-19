@@ -1,0 +1,33 @@
+[70/01/ 1 08:00:01] [CPU1] [49] [nsh] [llm] LLM proxy initialized (model: deepseek-v4-flash, host: api.deepseek.com)
+[70/01/ 1 08:00:01] [CPU1] [49] [nsh] [llm_router] Loaded backend 0: api.deepseek.com (model: deepseek-v4-flash, tier: 1)
+[70/01/ 1 08:00:01] [CPU1] [49] [nsh] [tools] Registered tool: read_file
+[70/01/ 1 08:00:01] [CPU1] [49] [nsh] [tools] Registered tool: mooncat_coach_tick
+[26/09/19 10:49:23] [CPU0] [63] [nsh] [llm] LLM config updated atomically: api.deepseek.com/chat/completions (model: deepseek-v4-flash)
+[26/09/19 10:49:23] [CPU0] [63] [nsh] [llm] OpenAI API with tools (model: deepseek-v4-flash, 16300 bytes)
+[26/09/19 10:49:23] [CPU1] [63] [nsh] [vela_tls] Handshake start: Host=api.deepseek.com, UNIX=1789786163
+[26/09/19 10:49:23] [CPU1] [63] [nsh] [llm] Response: 13 bytes text, 0 tool calls, finish=end_turn
+[26/09/19 10:49:35] [CPU1] [103] [nsh] [ws] WS msg from sprint-skill-01: 请先读取 /data/agent/skills/mooncat-
+[26/09/19 10:49:35] [CPU1] [63] [nsh] [agent] Processing message from websocket:sprint-skill-01
+[26/09/19 10:49:35] [CPU0] [63] [nsh] [llm] LLM config updated atomically: api.deepseek.com/chat/completions (model: deepseek-v4-flash)
+[26/09/19 10:49:35] [CPU0] [63] [nsh] [trace:6aadf83f35c3b13a] BEGIN chat=sprint-skill-01 chan=websocket
+[26/09/19 10:49:35] [CPU1] [53] [nsh] [agent] Dispatching response → websocket:sprint-skill-01
+[26/09/19 10:49:35] [CPU1] [63] [nsh] [llm] OpenAI API with tools (model: deepseek-v4-flash, 16606 bytes)
+[26/09/19 10:49:35] [CPU1] [63] [nsh] [vela_tls] Reusing pooled connection to api.deepseek.com:443
+[26/09/19 10:49:36] [CPU1] [63] [nsh] [llm] Response: 0 bytes text, 1 tool calls, finish=tool_calls
+[26/09/19 10:49:36] [CPU1] [63] [nsh] [trace:6aadf83f35c3b13a] iter=0 tool=read_file latency=1113ms llm=ok backend=0
+[26/09/19 10:49:36] [CPU1] [63] [nsh] [agent] Tool call: read_file args={"path": "/data/agent/skills/mooncat-active-coach.md"}
+[26/09/19 10:49:36] [CPU0] [63] [nsh] [tools] Executing tool: read_file
+[26/09/19 10:49:36] [CPU0] [63] [nsh] [tool_files] read_file: /data/agent/skills/mooncat-active-coach.md (873 bytes)
+[26/09/19 10:49:36] [CPU0] [63] [nsh] [agent] Tool read_file result: 873 bytes
+[26/09/19 10:49:36] [CPU0] [63] [nsh] [llm] OpenAI API with tools (model: deepseek-v4-flash, 17844 bytes)
+[26/09/19 10:49:36] [CPU1] [63] [nsh] [vela_tls] Reusing pooled connection to api.deepseek.com:443
+[26/09/19 10:49:38] [CPU0] [63] [nsh] [llm] Response: 0 bytes text, 1 tool calls, finish=tool_calls
+[26/09/19 10:49:38] [CPU0] [63] [nsh] [trace:6aadf83f35c3b13a] iter=1 tool=mooncat_coach_tick latency=1481ms llm=ok backend=0
+[26/09/19 10:49:38] [CPU0] [63] [nsh] [agent] Tool call: mooncat_coach_tick args={"mode": "preview", "source": "simulated", "valid": true, "workout_active": false, "do_not_disturb": false, "inactivity_minutes": 10, "sleep_debt_minutes": 150, "stress_score": 20, "battery_percent": 80}
+[26/09/19 10:49:38] [CPU0] [63] [nsh] [tools] Executing tool: mooncat_coach_tick
+[26/09/19 10:49:38] [CPU0] [63] [nsh] [agent] Tool mooncat_coach_tick result: 426 bytes
+[26/09/19 10:49:38] [CPU0] [63] [nsh] [llm] OpenAI API with tools (model: deepseek-v4-flash, 18896 bytes)
+[26/09/19 10:49:38] [CPU1] [63] [nsh] [vela_tls] Reusing pooled connection to api.deepseek.com:443
+[26/09/19 10:49:39] [CPU1] [63] [nsh] [llm] Response: 861 bytes text, 0 tool calls, finish=end_turn
+[26/09/19 10:49:39] [CPU0] [53] [nsh] [agent] Dispatching response → websocket:sprint-skill-01
+[26/09/19 10:49:39] [CPU1] [103] [nsh] [ws] Client disconnected: sprint-skill-01

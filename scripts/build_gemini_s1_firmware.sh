@@ -24,7 +24,7 @@ target_root=$(CDPATH= cd -- "$target_root" && pwd)
 board_config="vendor/allwinnertech/boards/r528/r528s3-gemini-s1/configs/nsh_minidisplay"
 final_config="$target_root/nuttx/.config"
 
-"$script_dir/apply_overlay.sh" --apply "$target_root"
+bash "$script_dir/apply_overlay.sh" --apply "$target_root"
 
 # build.sh/configure.sh -e compares the requested defconfig with the previous
 # nuttx/defconfig and performs the required distclean before copying it into
@@ -54,9 +54,10 @@ require_config 'CONFIG_QUICKAPP_VAPP=y'
 require_config '# CONFIG_LUNCHER_MINI_APP is not set'
 require_config 'CONFIG_EXAMPLES_AI_AGENT_VELA=y'
 require_config 'CONFIG_FEATURE_SYSTEM_VELACLAW=y'
+require_config 'CONFIG_LV_USE_SNAPSHOT=y'
 
 # build.sh finishes with savedefconfig and copies its minimized result back to
 # the board directory.  Restore the canonical, auditable overlay after the
 # final .config and binary have already passed their gates.
-"$script_dir/apply_overlay.sh" --apply "$target_root"
+bash "$script_dir/apply_overlay.sh" --apply "$target_root"
 echo "Gemini S1 contest firmware built from nsh_minidisplay and verified: $target_root"

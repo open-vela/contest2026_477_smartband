@@ -1,0 +1,41 @@
+Scope: fresh archives of FOUR overlay targets; reused TFLM directory. NOT a complete firmware rebuild.
+RUN apply_overlay --check
+overlay target layout verified: /home/ubuntu/mooncat-sprint-20260919/clean-evidence-3KXs1G (packages_ai_agent_overlay.patch: ready)
+overlay target layout verified: /home/ubuntu/mooncat-sprint-20260919/clean-evidence-3KXs1G (packages_ai_agent_http_chunked.patch: ready)
+overlay target layout verified: /home/ubuntu/mooncat-sprint-20260919/clean-evidence-3KXs1G (packages_ai_agent_skill_route.patch: ready)
+RUN apply_overlay --apply
+contest config applied: /home/ubuntu/mooncat-sprint-20260919/clean-evidence-3KXs1G/vendor/allwinnertech/boards/r528/r528s3-gemini-s1/configs/nsh_minidisplay/defconfig
+contest config verified: /home/ubuntu/mooncat-sprint-20260919/clean-evidence-3KXs1G/vendor/allwinnertech/boards/r528/r528s3-gemini-s1/configs/nsh_minidisplay/defconfig
+overlay content verified: /home/ubuntu/mooncat-sprint-20260919/clean-evidence-3KXs1G
+overlay applied without deleting unrelated target files: /home/ubuntu/mooncat-sprint-20260919/clean-evidence-3KXs1G
+RUN apply_overlay --apply
+contest config applied: /home/ubuntu/mooncat-sprint-20260919/clean-evidence-3KXs1G/vendor/allwinnertech/boards/r528/r528s3-gemini-s1/configs/nsh_minidisplay/defconfig
+contest config verified: /home/ubuntu/mooncat-sprint-20260919/clean-evidence-3KXs1G/vendor/allwinnertech/boards/r528/r528s3-gemini-s1/configs/nsh_minidisplay/defconfig
+overlay content verified: /home/ubuntu/mooncat-sprint-20260919/clean-evidence-3KXs1G
+overlay applied without deleting unrelated target files: /home/ubuntu/mooncat-sprint-20260919/clean-evidence-3KXs1G
+RUN apply_overlay --verify
+contest config verified: /home/ubuntu/mooncat-sprint-20260919/clean-evidence-3KXs1G/vendor/allwinnertech/boards/r528/r528s3-gemini-s1/configs/nsh_minidisplay/defconfig
+overlay content verified: /home/ubuntu/mooncat-sprint-20260919/clean-evidence-3KXs1G
+RUN apply_local_router_overlay --check
+local-router target verified: /home/ubuntu/mooncat-sprint-20260919/clean-evidence-3KXs1G (patch: ready)
+RUN apply_local_router_overlay --apply
+contest config applied: /home/ubuntu/mooncat-sprint-20260919/clean-evidence-3KXs1G/vendor/allwinnertech/boards/r528/r528s3-gemini-s1/configs/nsh_minidisplay/defconfig
+contest config verified: /home/ubuntu/mooncat-sprint-20260919/clean-evidence-3KXs1G/vendor/allwinnertech/boards/r528/r528s3-gemini-s1/configs/nsh_minidisplay/defconfig
+local-router order verified: guard -> existing fast paths -> model -> LLM
+local-router overlay content verified: /home/ubuntu/mooncat-sprint-20260919/clean-evidence-3KXs1G
+local-router overlay applied without network access or cleanup: /home/ubuntu/mooncat-sprint-20260919/clean-evidence-3KXs1G
+RUN apply_local_router_overlay --apply
+contest config already applied: /home/ubuntu/mooncat-sprint-20260919/clean-evidence-3KXs1G/vendor/allwinnertech/boards/r528/r528s3-gemini-s1/configs/nsh_minidisplay/defconfig
+contest config verified: /home/ubuntu/mooncat-sprint-20260919/clean-evidence-3KXs1G/vendor/allwinnertech/boards/r528/r528s3-gemini-s1/configs/nsh_minidisplay/defconfig
+local-router order verified: guard -> existing fast paths -> model -> LLM
+local-router overlay content verified: /home/ubuntu/mooncat-sprint-20260919/clean-evidence-3KXs1G
+local-router overlay applied without network access or cleanup: /home/ubuntu/mooncat-sprint-20260919/clean-evidence-3KXs1G
+RUN apply_local_router_overlay --verify
+contest config verified: /home/ubuntu/mooncat-sprint-20260919/clean-evidence-3KXs1G/vendor/allwinnertech/boards/r528/r528s3-gemini-s1/configs/nsh_minidisplay/defconfig
+local-router order verified: guard -> existing fast paths -> model -> LLM
+local-router overlay content verified: /home/ubuntu/mooncat-sprint-20260919/clean-evidence-3KXs1G
+PASS 32 actual TLS reader cases; complete chunks never read for connection close
+after exit= 0
+PASS: 25 actual-source dispatch cases; supplied observations cause zero local tool/router calls
+Shell syntax: 4 PASS
+Four-target fresh integration and repeat application: PASS

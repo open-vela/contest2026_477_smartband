@@ -39,7 +39,8 @@ def test_contest_fragment_is_small_and_explicit() -> None:
     assert 'CONFIG_OPENVELA_UI_HTTP_TIMESYNC=y' in settings
     for channel in ("LVGL_UI", "FEISHU", "WEIXIN", "MQTT", "NODE", "MCP"):
         assert f"# CONFIG_AI_AGENT_{channel} is not set" in settings
-    assert len(settings) <= 37
+    assert 'CONFIG_LV_USE_SNAPSHOT=y' in settings
+    assert len(settings) <= 38
 
 
 def test_merge_preserves_58fps_product_config_and_is_idempotent() -> None:

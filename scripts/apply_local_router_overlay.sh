@@ -105,11 +105,11 @@ check_layout() {
 }
 
 patch_is_applied() {
-  git -C "$agent_target" apply --reverse --check "$router_patch" >/dev/null 2>&1
+  git -C "$agent_target" apply --ignore-space-change --reverse --check "$router_patch" >/dev/null 2>&1
 }
 
 patch_is_ready() {
-  git -C "$agent_target" apply --check "$router_patch" >/dev/null 2>&1
+  git -C "$agent_target" apply --ignore-space-change --check "$router_patch" >/dev/null 2>&1
 }
 
 check_layout
@@ -147,12 +147,12 @@ for filename in "${router_files[@]}"; do
 done
 
 if ! patch_is_applied; then
-  git -C "$agent_target" apply --check "$router_patch"
-  git -C "$agent_target" apply "$router_patch"
+  git -C "$agent_target" apply --ignore-space-change --check "$router_patch"
+  git -C "$agent_target" apply --ignore-space-change "$router_patch"
 fi
 
 python3 "$script_dir/merge_defconfig.py" apply \
   "$defconfig_target" "$router_fragment"
 
-"$0" --verify "$target_root"
+bash "$0" --verify "$target_root"
 echo "local-router overlay applied without network access or cleanup: $target_root"

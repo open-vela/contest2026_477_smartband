@@ -1,0 +1,3 @@
+FAIL result=200 extra_reads=1 fragment=1 body_len=5
+Baseline reproduced unwanted read after complete response
+PASS 32 actual TLS reader cases; complete chunks never read for connection close

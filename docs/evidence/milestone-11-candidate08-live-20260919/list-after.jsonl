@@ -1,0 +1,2 @@
+{"elapsed_seconds": 0.047, "kind": "input", "payload": "列出定时任务\n"}
+{"elapsed_seconds": 0.047, "kind": "output", "payload": {"type": "response", "content": "[LOCAL AI 100% coach_list] No cron jobs scheduled.", "chat_id": "sprint-list-after"}}

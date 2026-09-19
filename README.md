@@ -29,7 +29,7 @@ LVGL 产品界面、`ai_agent`、自定义 Skill/Tool、cron 主动任务和 Qui
 3. **可审计固件构建**：overlay、板级配置、构建和 IMAGEWTY 打包证据均保留输入、
    失败历史与最终门槛，避免把“能编译”混同于“已上板运行”。
 4. **显示基线继承**：Native UI 源码继承已实机测量的 sparse refresh 与 stride 修复；
-   最新本地路由候选仍保持 pre-flash 状态，未声称沿用历史约 58 FPS 的实机结果。
+   candidate-08 已实机验证远程截图、虚拟滑动、DeepSeek 对话、自定义 Skill 使用及定时提醒卡闭环；未沿用历史约 58 FPS 作为本次测量结果。
 
 ## 四、目录结构
 
@@ -59,6 +59,8 @@ cd contest2026_477_smartband
 ### 2. 仓内测试
 
 ```sh
+# Linux: Python 3.10+、C 编译器、Node.js 18+
+python -m pip install pytest numpy
 python -X utf8 -m pytest -q
 bash -n scripts/apply_overlay.sh
 bash -n scripts/apply_local_router_overlay.sh
@@ -71,10 +73,10 @@ bash -n scripts/build_gemini_s1_local_router.sh
 以下命令在参赛仓目录内执行，`..` 是 `repo sync` 生成的 openvela 工作区根目录：
 
 ```sh
-./scripts/apply_overlay.sh --check ..
-./scripts/apply_overlay.sh --apply ..
-./scripts/apply_local_router_overlay.sh --check ..
-./scripts/build_gemini_s1_local_router.sh .. 16
+bash scripts/apply_overlay.sh --check ..
+bash scripts/apply_overlay.sh --apply ..
+bash scripts/apply_local_router_overlay.sh --check ..
+bash scripts/build_gemini_s1_local_router.sh .. 16
 ```
 
 `--check` 只检查目标布局和 patch 可应用性；`--apply` 只覆盖 allowlist 文件并合并
@@ -89,22 +91,38 @@ QuickApp 的验证与构建方式见 `quickapp/README.md`。完整源码闭包�
 
 | 项目 | 状态 | 证据 |
 | --- | --- | --- |
-| Python/C 主机回归 | PASS | `22 passed, 1 skipped` |
+| Linux 主机回归（2026-09-19） | 25 PASS / 0 SKIP | [本日验证记录](docs/evidence/milestone-12-submission-validation-20260919/)；HTTP 32 项与 Skill 25 项另行通过 |
+| 四个公共仓目标的全新 overlay 集成 | PASS | 同上；check、apply、重复 apply、verify；不等于完整固件重编 |
 | QuickApp 静态验证与隔离构建 | PASS | `docs/evidence/milestone-5-proactive-cron-demo-20260830-01/` |
 | INT8 模型与主机路由行为 | PASS | `docs/evidence/milestone-6-local-router-20260830-01/model-validation.txt` |
 | openvela Build04 与 `vela.bin` 静态门槛 | PASS | `docs/evidence/milestone-6-local-router-20260830-01/remote-build-logs/` |
 | candidate-04 IMAGEWTY 静态审计 | PASS | `16/16`，见 `remote-pack-logs/` |
-| 最新本地路由固件实机启动、延迟与 arena 峰值 | NOT_TESTED | pre-flash 边界 |
-| 最新 Tool→Native UI、实体触摸与传感器输入 | NOT_TESTED | 未把模拟输入当实测 |
-| PhoenixSuit/FEL/boot0/分区写入 | NOT_PERFORMED | 本次提交未执行硬件写入 |
+| candidate-06 启动、截图、虚拟触摸及定时 Tool→Native UI | PASS | `docs/evidence/milestone-9-live-remote-ui-20260909/` |
+| 最新本地模型内核延迟与 arena 峰值 | NOT_TESTED | 响应耗时不等于模型内核测量 |
+| 实体手指触摸与真实传感器输入 | NOT_TESTED | 虚拟输入和模拟观察不作为实体证据 |
+| candidate-08 DeepSeek / 自定义 Skill / 定时提醒 | PASS | `docs/evidence/milestone-11-candidate08-live-20260919/`；0.907 秒短对话、4.422 秒 Skill 预览，均为单次实测 |
+| candidate-08 连接稳定性 | 有限制 | 初次 ADB offline，冷插后经 SSH 完成验收；不作为长期稳定性结论 |
+| 运动页 / 天气服务 / 本轮断网 | 未关闭 | 历史运动失联与天气联网失败保留；本轮未验收 |
+| candidate-08 烧录 | 用户已执行 | 用户报告烧录，系统启动及上述功能验收通过；未读回全盘，未写 boot0 |
 
 ## 七、AI Coding 使用说明
 
 Codex 用于需求拆解、源码审计、最小功能实现、测试设计、远端构建失败定位、镜像静态
 审计和证据文档整理。仓库保留真实失败与修复链，不只保留成功结论。可复用的端侧 Skill
-见 `skills/mooncat-active-coach.md`；选定会话由组委会工具导出到 `logs/QinXi-ai/`，
-自动脱敏后通过官方 `validate-log.py` 校验，未手工修改 JSONL 事件。
+见 `skills/mooncat-active-coach.md`；选定会话通过官方采集器及原生 Codex 适配流程导出到 `logs/QinXi-ai/`，
+自动脱敏后通过官方 `validate-log.py` 校验：2 个文件、1588 条事件，未手工修改 JSONL 事件。详见 [日志说明](logs/README.md)。
 
-## 八、许可证
+## 八、交付材料与演示入口
+
+- 9 月 19 日实机验收版作品介绍：[PDF](docs/delivery/月薪喵作品介绍-20260919.pdf)、[DOCX](docs/delivery/月薪喵作品介绍-20260919.docx)。
+- [2 分 50 秒实机证据演示视频](docs/delivery/月薪喵-candidate08-实机证据演示-20260919.mp4)：字幕版，使用本轮板端 LVGL 截图原时间间隔采样回放与真实请求/工具日志，非摄像机实拍。
+- [现场操作与 4 分 30 秒录制脚本](docs/delivery/demo-runbook.md)：Native UI 独占屏幕，先演示定时任务，随后展示预览和列表。
+- [公共仓改动与复现状态](docs/delivery/public-repo-changes.md)：配套 PR 与干净构建是独立交付门槛。
+- [可复用显示故障定位开发 Skill](developer-skills/gemini-lvgl-display-owner/SKILL.md)，与设备运行时 Skill 分开提供。
+- [板端截屏与虚拟触摸](docs/delivery/remote-ui-inspection.md)：使用现有 SSH；candidate-06 已验证截图/虚拟点击和滑动，candidate-08 已复验截图和滑动。
+
+本次交付按官方 GitHub 流程将源码、独立介绍文档、演示视频和开发日志一并纳入专属仓 PR #1，合入状态以 [PR #1](https://github.com/open-vela/contest2026_477_smartband/pull/1) 为准。详见 [逐项交付清单](docs/delivery/submission-checklist-20260919.md)。candidate-08 同次启动核心链路已通过；完整官方源码工作区从零同步重编仍为 NOT_TESTED，已完成的四目标集成验证不能替代该项。
+
+## 九、许可证
 
 本作品按大赛要求采用 [Apache License 2.0](LICENSE)。

@@ -1,0 +1,3 @@
+[   0.00s] INPUT 立即主动提醒我休息
+[   0.00s] OUTPUT {"type":"response","content":"[LOCAL AI 100% coach_now] {\"ok\":true,\"status\":\"noop\",\"source\":\"simulated\",\"evidence_boundary\":\"demo_only_not_physical_sensor\",\"mode\":\"execute\",\"action\":\"stretch\",\"priority\":\"gentle\",\"reason_id\":\"cooldown_active\",\"policy_reason_id\":\"inactive_45m\",\"duration_seconds\":60,\"cooldown_seconds\":2700,\"cooldown_remaining_seconds\":2570,\"delivered\":false,\"channel\":\"mooncat\",\"notification\":\"[DEMO] Inactive for 75 minutes. Stretch for 60 seconds.\"}","chat_id":"mooncat-closure"}
+[  12.22s] Trial observation ended; startup Agent was not restarted

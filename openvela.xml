@@ -13,7 +13,7 @@
   <project path="apps/crypto/tinycrypt/tinycrypt" name="apps_crypto_tinycrypt"/>
   <project path="apps/examples/unpv13e/unpv13e" name="apps_examples_unpv13e"/>
   <project path="apps/graphics/libyuv/libyuv" name="apps_graphics_libyuv"/>
-  <project path="apps/graphics/lvgl/lvgl" name="apps_graphics_lvgl"/>
+  <project path="apps/graphics/lvgl/lvgl" name="apps_graphics_lvgl" revision="0f2a49f588505a00e8b46e25a34581c87291a62a"/>
   <project path="apps/interpreters/lua/lua" name="apps_interpreters_lua"/>
   <project path="apps/interpreters/quickjs/quickjs" name="apps_interpreters_quickjs"/>
   <project path="apps/interpreters/wamr/wamr" name="apps_interpreters_wamr"/>
@@ -205,13 +205,14 @@
   <project path="nuttx/openamp/open-amp" name="nuttx_openamp_open-amp"/>
   <project path="packages" name="packages"/>
   <project path="packages/apps" name="packages_apps"/>
-  <project path="packages/ai_agent" name="packages_ai_agent"/>
-  <project path="packages/demos" name="packages_demos"/>
+  <!-- Candidate-08 baseline. The overlay supplies the verified framing/Skill fixes. -->
+  <project path="packages/ai_agent" name="packages_ai_agent" revision="31faed70f683a6f5e690437c5507891360f0814a"/>
+  <project path="packages/demos" name="packages_demos" revision="08b94dd9cdf6e5bf7aad855c6ba43afd75bc5d2d"/>
   <project path="packages/fe/examples" name="packages_fe_examples"/>
   <project path="prebuilts/clang-wasm/linux-x86_64" name="prebuilts_clang_linux_wasm" clone-depth="1"/>
   <project path="tests" name="tests"/>
   <project path="vendor" name="vendor"/>
-  <project path="vendor/allwinnertech" name="vendor_allwinnertech"/>
+  <project path="vendor/allwinnertech" name="vendor_allwinnertech" revision="1676386193f0e710121e710935f1757c0f34b662"/>
   <project path="vendor/artinchip" name="vendor_artinchip"/>
   <project path="vendor/beken" name="vendor_beken"/>
   <project path="vendor/bes" name="vendor_bes"/>

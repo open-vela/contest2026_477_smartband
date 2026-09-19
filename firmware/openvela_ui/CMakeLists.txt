@@ -9,7 +9,7 @@ if(CONFIG_LVX_USE_DEMO_OPENVELA_UI)
   set(MODULE ${CONFIG_LVX_USE_DEMO_OPENVELA_UI})
   set(MAINSRC openvela_ui_main_mooncat.c)
   set(UI_SRCS openvela_ui.c openvela_ui_weather.c openvela_ui_sport.c
-              openvela_ui_sync.c openvela_ui_agent_bridge.c)
+              openvela_ui_sync.c openvela_ui_agent_bridge.c openvela_ui_remote.c)
   set(UI_INCDIRS)
 
   if(CONFIG_EXAMPLES_AI_AGENT_VELA)

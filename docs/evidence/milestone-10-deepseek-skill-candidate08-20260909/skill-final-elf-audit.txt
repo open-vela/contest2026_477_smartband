@@ -1,0 +1,4 @@
+PASS: final NL entry checks the eight exact Skill/observation markers before tool dispatch
+PASS: matching guard branches to the NULL reply path
+PASS: one current agent_loop archive member; actual build source equals tested source
+BOUNDARY: final ELF and host dispatch tests; device Skill execution NOT_TESTED
