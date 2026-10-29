@@ -7,6 +7,7 @@
 
 #include "openvela_ui.h"
 #include "openvela_ui_agent_bridge.h"
+#include "openvela_ui_coach.h"
 #include "openvela_ui_remote.h"
 #include "openvela_ui_sync.h"
 #include "openvela_ui_timesync.h"
@@ -61,6 +62,7 @@ int main(int argc, FAR char *argv[])
 
     openvela_ui_create();
     openvela_ui_agent_bridge_start();
+    openvela_ui_coach_start();
     if (openvela_ui_remote_start() != 0) {
         LV_LOG_ERROR("MoonCat remote inspection initialization failed");
     }
@@ -69,6 +71,7 @@ int main(int argc, FAR char *argv[])
     run_ui_loop(&ui_loop, &result);
 
     openvela_ui_sync_stop();
+    openvela_ui_coach_stop();
     openvela_ui_agent_bridge_stop();
     openvela_ui_remote_stop();
     lv_nuttx_deinit(&result);

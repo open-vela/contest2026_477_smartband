@@ -13,6 +13,7 @@
 #include <unistd.h>
 
 #include "openvela_ui_sport.h"
+#include "openvela_ui_coach.h"
 
 #ifndef CONFIG_OPENVELA_UI_DATA_ROOT
 #  define CONFIG_OPENVELA_UI_DATA_ROOT "/data/openvela_ui"
@@ -2438,6 +2439,10 @@ static void sport_stop_page_animations(openvela_ui_sport_t *sport)
 static void sport_emit_event(openvela_ui_sport_t *sport,
                              openvela_ui_sport_event_t event)
 {
+    if (event == OPENVELA_UI_SPORT_EVENT_SPECIAL_STARTED)
+        openvela_ui_coach_workout(1);
+    else if (event == OPENVELA_UI_SPORT_EVENT_SPECIAL_ENDED)
+        openvela_ui_coach_workout(0);
     openvela_ui_sport_event_cb_t callback = sport->event_cb;
     void *user_data = sport->event_user_data;
 

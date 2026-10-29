@@ -1,0 +1,42 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -25,3 +25,6 @@
+     src/core/arena_alloc.c
++    src/tools/mooncat_app_state.c
++    src/tools/mooncat_app_service.c
++    src/tools/tool_mooncat_app.c
+     src/llm/llm_proxy.c
+     src/llm/llm_parse.c
+diff --git a/Makefile b/Makefile
+--- a/Makefile
++++ b/Makefile
+@@ -169,3 +169,6 @@
+ CSRCS += src/ui/qrcode_display.c
++CSRCS += src/tools/mooncat_app_state.c
++CSRCS += src/tools/mooncat_app_service.c
++CSRCS += src/tools/tool_mooncat_app.c
+ 
+ ifeq ($(CONFIG_AI_AGENT_LVGL_UI),y)
+diff --git a/src/tools/tool_registry.c b/src/tools/tool_registry.c
+--- a/src/tools/tool_registry.c
++++ b/src/tools/tool_registry.c
+@@ -182,2 +182,18 @@
++    REGISTER_TOOL(
++        "mooncat_app_control",
++        "Manage local recovery tasks and explicit app events; no sensor readings. "
++        "Use list before feedback to get id and revision. schedule requires a "
++        "stable positive request_id, delay 1..86400 seconds, duration 5..3600. "
++        "Feedback is persisted; queued and shown differ. complete is user confirmation.",
++        TOOL_SCHEMA_BEGIN()
++            TOOL_PARAM_ENUM("op", "Operation", "\"list\",\"schedule\",\"focus_on\",\"focus_off\",\"dnd_on\",\"dnd_off\",\"workout_on\",\"workout_off\",\"resume_today\",\"start\",\"snooze\",\"pause_today\",\"complete\",\"cancel\",\"remind\"") ","
++            TOOL_PARAM_NUM("request_id", "Stable positive id for retry deduplication") ","
++            TOOL_PARAM_NUM("delay", "Seconds until reminder or snooze") ","
++            TOOL_PARAM_NUM("duration", "Recovery duration in seconds") ","
++            TOOL_PARAM_NUM("id", "Task id from list") ","
++            TOOL_PARAM_NUM("revision", "Current task revision from list")
++            TOOL_SCHEMA_END_REQUIRED("\"op\""),
++        tool_mooncat_app_execute);
++
+     /* Web / info tools */
+     REGISTER_TOOL(

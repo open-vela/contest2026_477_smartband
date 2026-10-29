@@ -39,6 +39,8 @@ ui_files=(
   openvela_ui.h
   openvela_ui_agent_bridge.c
   openvela_ui_agent_bridge.h
+  openvela_ui_coach.c
+  openvela_ui_coach.h
   openvela_ui_remote.c
   openvela_ui_remote.h
   openvela_ui_main.c
@@ -57,11 +59,16 @@ agent_files=(
   mooncat_skill_builtin.h
   tool_mooncat_coach.c
   tool_mooncat_coach.h
+  mooncat_app_service.c
+  mooncat_app_service.h
+  tool_mooncat_app.c
 )
 
 common_files=(
   mooncat_coach_policy.c
   mooncat_coach_policy.h
+  mooncat_app_state.c
+  mooncat_app_state.h
 )
 
 board_base="$repo_root/firmware/board/nsh_minidisplay.defconfig"
@@ -69,6 +76,7 @@ board_fragment="$repo_root/firmware/board/nsh_minidisplay-ai-contest.fragment"
 board_rcs_source="$repo_root/firmware/board/rcS"
 baseline_manifest="$repo_root/docs/evidence/baseline-source-sha256.txt"
 agent_patch="$repo_root/agent/packages_ai_agent_overlay.patch"
+finals_patch="$repo_root/agent/packages_ai_agent_finals.patch"
 transport_patch="$repo_root/agent/packages_ai_agent_http_chunked.patch"
 skill_route_patch="$repo_root/agent/packages_ai_agent_skill_route.patch"
 skill_source="$repo_root/skills/mooncat-active-coach.md"
@@ -119,6 +127,7 @@ check_layout() {
   require_file "$baseline_manifest"
   require_file "$script_dir/merge_defconfig.py"
   require_file "$agent_patch"
+  require_file "$finals_patch"
   require_file "$transport_patch"
   require_file "$skill_route_patch"
   require_file "$skill_source"
@@ -132,7 +141,7 @@ patch_is_applied() {
 check_layout
 
 if [ "$mode" = "--check" ]; then
-  for checked_patch in "$agent_patch" "$transport_patch" "$skill_route_patch"; do
+  for checked_patch in "$agent_patch" "$transport_patch" "$skill_route_patch" "$finals_patch"; do
   if patch_is_applied "$checked_patch"; then
     patch_state=applied
   elif git -C "$agent_target" apply --ignore-space-change --check "$checked_patch" >/dev/null 2>&1; then
@@ -172,6 +181,10 @@ if [ "$mode" = "--verify" ]; then
     echo "ai_agent Skill context patch is not applied: $agent_target" >&2
     exit 21
   }
+  patch_is_applied "$finals_patch" || {
+    echo "ai_agent finals state patch is not applied: $agent_target" >&2
+    exit 21
+  }
   echo "overlay content verified: $target_root"
   exit 0
 fi
@@ -196,7 +209,7 @@ done
 mkdir -p "$agent_target/agent_skills"
 install -m 0644 "$skill_source" "$skill_target"
 
-for checked_patch in "$agent_patch" "$transport_patch" "$skill_route_patch"; do
+for checked_patch in "$agent_patch" "$transport_patch" "$skill_route_patch" "$finals_patch"; do
 if ! patch_is_applied "$checked_patch"; then
   git -C "$agent_target" apply --ignore-space-change --check "$checked_patch"
   git -C "$agent_target" apply --ignore-space-change "$checked_patch"
