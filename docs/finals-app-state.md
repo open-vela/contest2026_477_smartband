@@ -74,6 +74,18 @@ python scripts/evaluate_finals_router.py --binary /path/to/router-eval/route_eva
 
 默认只运行 `finals_cases_v2.jsonl` 的 dev 分割。v1 保留旧 cron 期望和初次问题记录；v2 描述普通定时/查询迁移到应用任务表后的期望。不要把开发集修复结果称为独立验收。主机耗时字段只作主机诊断，不作为 Gemini S1 数字。
 
+## 复用远端构建树时的链接检查
+
+迁移过目录的增量构建树可能在 `apps/libapps.a` 留下旧绝对路径命名的对象。
+即使日志显示新源码已经编译，链接器仍可能选择先出现的旧对象。本次在模型
+性能日志缺失后，通过 `nuttx/nuttx.map` 确认选中了旧目录的模型对象。
+
+复用既有树时，用工具链 `gcc-ar t` 查看归档成员，并核对 map 中模型、路由、
+Tool 注册和新任务服务的实际来源。只对已确认存在当前替代对象的旧成员做
+定向移除，原成员备份放在本机；随后重新链接并检查固件标记。不要只凭
+源码相同或构建 exit=0 判断新实现已进入固件，也无需为此复制完整构建树。
+该检查只证明构建接入，不替代设备执行测试。
+
 ## 仍需设备验证
 
 模型适配器已增加 `[mooncat_model]` 结构化日志：初始化、特征及量化、Invoke、总耗时分开，另记录 TFLM `arena_used_bytes()` 与配置容量。Invoke 计时不包含日志输出；arena 字段不是系统堆峰值。使用 `scripts/collect_model_profile.py` 从实际设备日志抽取 CSV；没有样本时只输出表头并报告 NOT_MEASURED。
