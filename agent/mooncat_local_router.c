@@ -185,6 +185,7 @@ static unsigned int mooncat_parse_delay_seconds(const char *text)
         unsigned long value;
 
         errno = 0;
+        if (!isdigit((unsigned char)*digits)) return 0;
         value = strtoul(digits, &end, 10);
         if (end != digits && errno != ERANGE && value >= 10 &&
             value <= 86400 &&
@@ -192,6 +193,7 @@ static unsigned int mooncat_parse_delay_seconds(const char *text)
              isspace((unsigned char)*end))) {
             return (unsigned int)value;
         }
+        return 0;
     }
 
     for (const char *p = text; *p != '\0'; p++) {
@@ -202,12 +204,14 @@ static unsigned int mooncat_parse_delay_seconds(const char *text)
         if (!isdigit((unsigned char)*p)) {
             continue;
         }
+        /* Do not reinterpret the suffix of a decimal or signed duration. */
+        if (p > text && (p[-1] == '.' || p[-1] == '-' || p[-1] == '+')) return 0;
         errno = 0;
         value = strtoul(p, &end, 10);
         if (errno == ERANGE) {
-            p = end > p ? end - 1 : p;
-            continue;
+            return 0;
         }
+        if (*end == '.') return 0;
         while (*end == ' ') {
             end++;
         }
@@ -221,9 +225,13 @@ static unsigned int mooncat_parse_delay_seconds(const char *text)
         if (multiplier != 0 && value <= ULONG_MAX / multiplier) {
             value *= multiplier;
             if (value >= 10 && value <= 86400) {
+                /* Multiple numeric durations require the full agent to clarify. */
+                for (const char *rest=end; *rest; ++rest)
+                    if (isdigit((unsigned char)*rest)) return 0;
                 return (unsigned int)value;
             }
         }
+        if (multiplier) return 0;
         p = end > p ? end - 1 : p;
     }
 
@@ -281,9 +289,14 @@ static char *mooncat_execute_coach(
 }
 
 static char *mooncat_list_jobs(
-    const struct mooncat_router_prediction_s *prediction)
+    const char *text, const struct mooncat_router_prediction_s *prediction)
 {
-    char output[2048] = "";
+    char output[4096] = "";
+    if (!strstr(text,"cron_list")) {
+        if(tool_registry_execute("mooncat_app_control","{\"op\":\"list\"}",output,sizeof(output))!=OK)
+            return mooncat_router_reply(prediction,"应用提醒列表读取失败，未取得当前任务。");
+        return mooncat_router_reply(prediction,output);
+    }
 
     if (tool_registry_execute("cron_list", "{}", output,
                               sizeof(output)) != OK) {
@@ -306,6 +319,16 @@ static char *mooncat_schedule_coach(
     if (delay == 0) {
         return mooncat_router_reply(
             prediction, "缺少 10 秒到 24 小时的延迟，未创建任务。");
+    }
+
+    /* Ordinary requests use live app state at due time. Keep the explicit
+     * QuickApp epoch protocol on its historical simulated cron path. */
+    if (!strstr(text,"CURRENT_EPOCH_PLUS_")) {
+        char app_input[128],app_output[4096]="";
+        snprintf(app_input,sizeof(app_input),"{\"op\":\"remind\",\"delay\":%u,\"duration\":60}",delay);
+        if(tool_registry_execute("mooncat_app_control",app_input,app_output,sizeof(app_output))!=OK)
+            return mooncat_router_reply(prediction,"应用提醒创建失败，未确认安排成功。请查看当前任务状态。");
+        return mooncat_router_reply(prediction,app_output);
     }
 
     if (tool_registry_execute("get_current_time", "{}", time_output,
@@ -345,14 +368,47 @@ static char *mooncat_schedule_coach(
     return mooncat_router_reply(prediction, add_output);
 }
 
+static bool mooncat_restricted_request(const char *text)
+{
+    static const char *markers[] = {
+        "不要安排", "不要创建", "不要设置", "不要提醒", "别提醒", "别创建",
+        "取消", "暂停提醒", "停止提醒", "不想", "不用提醒", "无需提醒",
+        "如果", "除非", "假如", "don't", "do not", "cancel", NULL
+    };
+    for (size_t i=0; markers[i]; ++i) if (strstr(text,markers[i])) return true;
+    return false;
+}
+
 char *mooncat_local_router_handle(const char *text)
 {
     struct mooncat_router_prediction_s prediction;
+    static const struct {const char *text;const char *op;} app_commands[] = {
+        {"开始专注","focus_on"}, {"暂停专注","focus_off"},
+        {"开启勿扰","dnd_on"}, {"关闭勿扰","dnd_off"},
+        {"恢复今天提醒","resume_today"}, {"查看恢复任务","list"}
+    };
+    if (!text) return NULL;
+    for (size_t i=0;i<sizeof(app_commands)/sizeof(app_commands[0]);++i) {
+        if (!strcmp(text,app_commands[i].text)) {
+            char input[64];char *output=calloc(1,4096);
+            if (!output) return NULL;
+            snprintf(input,sizeof(input),"{\"op\":\"%s\"}",app_commands[i].op);
+            if (tool_registry_execute("mooncat_app_control",input,output,4096)!=OK && !output[0])
+                snprintf(output,4096,"{\"ok\":false,\"status\":\"app_tool_failed\"}");
+            return output;
+        }
+    }
+    /* The five-class demo model cannot express app-state operations. */
+    if (strstr(text,"专注") || strstr(text,"勿扰") || strstr(text,"今天暂停") ||
+        strstr(text,"完成休息") || strstr(text,"恢复记录") ||
+        strstr(text,"mooncat_app_control") || strstr(text,"app_event")) return NULL;
 
-    if (!text || mooncat_intent_model_predict(text, &prediction) != OK ||
+    if (mooncat_intent_model_predict(text, &prediction) != OK ||
         prediction.intent == MOONCAT_INTENT_FALLBACK) {
         return NULL;
     }
+    if ((prediction.intent==MOONCAT_INTENT_COACH_NOW || prediction.intent==MOONCAT_INTENT_COACH_SCHEDULE) && mooncat_restricted_request(text))
+        return mooncat_router_reply(&prediction,"请求包含否定或条件，未执行，也未创建提醒。请明确要执行的操作。");
 
     switch (prediction.intent) {
     case MOONCAT_INTENT_COACH_NOW:
@@ -362,7 +418,7 @@ char *mooncat_local_router_handle(const char *text)
     case MOONCAT_INTENT_COACH_SCHEDULE:
         return mooncat_schedule_coach(text, &prediction);
     case MOONCAT_INTENT_COACH_LIST:
-        return mooncat_list_jobs(&prediction);
+        return mooncat_list_jobs(text, &prediction);
     case MOONCAT_INTENT_FALLBACK:
     default:
         return NULL;

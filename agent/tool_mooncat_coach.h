@@ -9,3 +9,5 @@
 
 int tool_mooncat_coach_execute(const char *input_json, char *output,
                                size_t output_size);
+int tool_mooncat_app_execute(const char *input_json, char *output,
+                             size_t output_size);

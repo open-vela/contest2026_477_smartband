@@ -88,6 +88,10 @@ int tool_registry_execute(const char *name, const char *input_json,
                           char *output, size_t output_size)
 {
     capture_call(name, input_json);
+    if (strcmp(name, "mooncat_app_control") == 0) {
+        write_output(output, output_size, "{\"ok\":true,\"source\":\"app_event\"}");
+        return OK;
+    }
     if (strcmp(name, "mooncat_coach_tick") == 0) {
         write_output(output, output_size, g_coach_output);
         return g_coach_status;
@@ -252,7 +256,7 @@ static void test_now_preview_and_list(void)
     reset_tools();
     reply = mooncat_local_router_handle("route:list 列出恢复任务");
     assert(reply != NULL);
-    assert_call(0, "cron_list", "{}");
+    assert_call(0, "mooncat_app_control", "{\"op\":\"list\"}");
     free(reply);
 }
 
@@ -300,7 +304,7 @@ static void test_reject_and_fallback_boundaries(void)
 static void test_schedule_failures_and_duplicate(void)
 {
     char *reply;
-    const char *request = "route:schedule 20秒后提醒我活动";
+    const char *request = "route:schedule CURRENT_EPOCH_PLUS_20";
     char overflow_time[128];
 
     reset_tools();
@@ -357,8 +361,35 @@ static void test_non_schedule_tool_failures(void)
 
     reset_tools();
     g_list_status = ERROR;
-    reply = mooncat_local_router_handle("route:list");
+    reply = mooncat_local_router_handle("route:list cron_list");
     assert_failed_reply(reply, "cron_list 失败");
+}
+
+static void test_app_commands_and_execution_guards(void)
+{
+    const char *invalid[] = {
+        "route:schedule 不要安排20秒后的恢复提醒",
+        "route:schedule 20秒后提醒我休息但不要创建任务",
+        "route:now 如果我没有在运动才提醒我休息",
+        "route:schedule 0.5分钟后提醒我休息",
+        "route:schedule -20秒后提醒我休息",
+        "route:schedule 20秒或者30秒后提醒我",
+        "route:schedule CURRENT_EPOCH_PLUS_-20",
+        "route:schedule 86401秒后提醒我休息"
+    };
+    for(size_t i=0;i<sizeof(invalid)/sizeof(invalid[0]);++i) {
+        reset_tools();char *reply=mooncat_local_router_handle(invalid[i]);
+        assert(reply && g_call_count==0);free(reply);
+    }
+    reset_tools();char *reply=mooncat_local_router_handle("开始专注");
+    assert(reply);assert_call(0,"mooncat_app_control","{\"op\":\"focus_on\"}");free(reply);
+    reset_tools();reply=mooncat_local_router_handle("route:schedule 20秒后提醒我休息");
+    assert(reply && g_call_count==1);
+    assert_call(0,"mooncat_app_control","{\"op\":\"remind\",\"delay\":20,\"duration\":60}");free(reply);
+    reset_tools();reply=mooncat_local_router_handle("route:now 不要开始专注");
+    assert(!reply && g_call_count==0);
+    reset_tools();reply=mooncat_local_router_handle("route:preview 不要提醒只给恢复建议");
+    assert(reply);assert_call(0,"mooncat_coach_tick",COACH_PREVIEW_JSON);free(reply);
 }
 
 int main(int argc, char **argv)
@@ -374,6 +405,7 @@ int main(int argc, char **argv)
     test_reject_and_fallback_boundaries();
     test_schedule_failures_and_duplicate();
     test_non_schedule_tool_failures();
+    test_app_commands_and_execution_guards();
     puts("mooncat_local_router: all host behavior cases passed");
     return 0;
 }

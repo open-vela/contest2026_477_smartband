@@ -1,0 +1,32 @@
+{"id":"d01","split":"dev","text":"现在几点了","tool":"get_current_time"}
+{"id":"d02","split":"dev","text":"电池电量","tool":"get_battery"}
+{"id":"d03","split":"dev","text":"暂停音乐","tool":"music_pause"}
+{"id":"d04","split":"dev","text":"20秒后主动提醒我休息","tool":"mooncat_app_control","delay":20,"op":"remind"}
+{"id":"d05","split":"dev","text":"两分钟以后叫我活动一下","tool":""}
+{"id":"d06","split":"dev","text":"先预览一条休息建议","tool":"mooncat_coach_tick","mode":"preview"}
+{"id":"d07","split":"dev","text":"马上发一条恢复通知","tool":"mooncat_coach_tick","mode":"execute"}
+{"id":"d08","split":"dev","text":"列出月薪喵的定时任务","tool":"mooncat_app_control","op":"list"}
+{"id":"d09","split":"dev","text":"不要安排20秒后的恢复提醒","tool":""}
+{"id":"d10","split":"dev","text":"0秒后提醒我休息","tool":""}
+{"id":"d11","split":"dev","text":"90000秒后提醒我休息","tool":""}
+{"id":"d12","split":"dev","text":"过一会儿提醒我休息","tool":""}
+{"id":"d13","split":"dev","text":"请用 mooncat-active-coach Skill 分析 battery_percent=80 的模拟观察","tool":""}
+{"id":"d14","split":"dev","text":"帮我完成昨天的休息记录","tool":""}
+{"id":"d15","split":"dev","text":"我的今天暂停设置生效了吗","tool":""}
+{"id":"d16","split":"dev","text":"20秒后提醒我休息但不要创建任务","tool":""}
+{"id":"d17","split":"dev","text":"开始专注","tool":"mooncat_app_control","op":"focus_on"}
+{"id":"d18","split":"dev","text":"暂停专注","tool":"mooncat_app_control","op":"focus_off"}
+{"id":"d19","split":"dev","text":"开启勿扰","tool":"mooncat_app_control","op":"dnd_on"}
+{"id":"d20","split":"dev","text":"关闭勿扰","tool":"mooncat_app_control","op":"dnd_off"}
+{"id":"d21","split":"dev","text":"恢复今天提醒","tool":"mooncat_app_control","op":"resume_today"}
+{"id":"d22","split":"dev","text":"查看恢复任务","tool":"mooncat_app_control","op":"list"}
+{"id":"d23","split":"dev","text":"请说明 mooncat_app_control 的 app_event 来源","tool":""}
+{"id":"d24","split":"dev","text":"不要开始专注","tool":""}
+{"id":"h01","split":"heldout","text":"45分钟后安排一次月薪喵恢复提醒","tool":"mooncat_app_control","delay":2700,"op":"remind"}
+{"id":"h02","split":"heldout","text":"只看看恢复建议别发通知","tool":"mooncat_coach_tick","mode":"preview"}
+{"id":"h03","split":"heldout","text":"查询教练已经安排了哪些任务","tool":"mooncat_app_control","op":"list"}
+{"id":"h04","split":"heldout","text":"取消之前20秒后的提醒","tool":""}
+{"id":"h05","split":"heldout","text":"0.5分钟后提醒我","tool":""}
+{"id":"h06","split":"heldout","text":"明天晚上八点提醒我站起来","tool":""}
+{"id":"h07","split":"heldout","text":"如果我没在运动才给恢复建议","tool":""}
+{"id":"h08","split":"heldout","text":"记录我已经确认完成恢复","tool":""}

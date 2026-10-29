@@ -1,11 +1,16 @@
 /* SPDX-License-Identifier: Apache-2.0 */
 
+#include <nuttx/config.h>
 #include "tools/mooncat_local_router.h"
 #include "tools/mooncat_intent_model_data.h"
 
 #include <cmath>
 #include <cstdint>
 #include <new>
+#ifdef CONFIG_EXAMPLES_AI_AGENT_VELA
+#include <syslog.h>
+#include <time.h>
+#endif
 
 #include "tensorflow/lite/micro/micro_interpreter.h"
 #include "tensorflow/lite/micro/micro_mutable_op_resolver.h"
@@ -33,6 +38,16 @@ constexpr size_t kTensorArenaBytes = 32 * 1024;
 alignas(16) uint8_t g_tensor_arena[kTensorArenaBytes];
 uint8_t g_features[MOONCAT_INTENT_MODEL_FEATURE_COUNT];
 tflite::MicroInterpreter *g_interpreter;
+
+#ifdef CONFIG_EXAMPLES_AI_AGENT_VELA
+uint64_t monotonic_us()
+{
+    struct timespec now;
+    if (clock_gettime(CLOCK_MONOTONIC, &now) != 0) return 0;
+    return static_cast<uint64_t>(now.tv_sec) * 1000000U +
+           static_cast<uint64_t>(now.tv_nsec) / 1000U;
+}
+#endif
 
 int quantized_value(float value, const TfLiteTensor *tensor)
 {
@@ -102,11 +117,17 @@ int initialize_interpreter()
 extern "C" int mooncat_intent_model_predict(
     const char *text, struct mooncat_router_prediction_s *prediction)
 {
+#ifdef CONFIG_EXAMPLES_AI_AGENT_VELA
+    const uint64_t started = monotonic_us();
+#endif
     if (!text || !prediction || initialize_interpreter() != kSuccess) {
         return kFailure;
     }
 
     TfLiteTensor *input = g_interpreter->input(0);
+#ifdef CONFIG_EXAMPLES_AI_AGENT_VELA
+    const uint64_t initialized = monotonic_us();
+#endif
     mooncat_router_featurize(text, g_features, sizeof(g_features));
     const int zero = quantized_value(0.0f, input);
     const int one = quantized_value(1.0f, input);
@@ -114,9 +135,15 @@ extern "C" int mooncat_intent_model_predict(
         input->data.int8[i] = static_cast<int8_t>(g_features[i] ? one : zero);
     }
 
+#ifdef CONFIG_EXAMPLES_AI_AGENT_VELA
+    const uint64_t featured = monotonic_us();
+#endif
     if (g_interpreter->Invoke() != kTfLiteOk) {
         return kFailure;
     }
+#ifdef CONFIG_EXAMPLES_AI_AGENT_VELA
+    const uint64_t invoked = monotonic_us();
+#endif
 
     const TfLiteTensor *output = g_interpreter->output(0);
     int top = 0;
@@ -152,5 +179,23 @@ extern "C" int mooncat_intent_model_predict(
         prediction->margin < MOONCAT_INTENT_MODEL_MARGIN_THRESHOLD) {
         prediction->intent = MOONCAT_INTENT_FALLBACK;
     }
+#ifdef CONFIG_EXAMPLES_AI_AGENT_VELA
+    const uint64_t ended = monotonic_us();
+    const bool timing_valid = started > 0 && initialized >= started &&
+        featured >= initialized && invoked >= featured && ended >= invoked;
+    /* Invoke timing excludes logging. arena_used is TFLM allocation usage,
+     * not whole-system heap, stack usage or a measured dynamic heap peak. */
+    syslog(LOG_INFO,
+        "[mooncat_model] timing_valid=%u init_us=%lu feature_us=%lu "
+        "invoke_us=%lu total_us=%lu arena_used=%lu arena_capacity=%lu intent=%u\n",
+        timing_valid ? 1U : 0U,
+        static_cast<unsigned long>(timing_valid ? initialized - started : 0),
+        static_cast<unsigned long>(timing_valid ? featured - initialized : 0),
+        static_cast<unsigned long>(timing_valid ? invoked - featured : 0),
+        static_cast<unsigned long>(timing_valid ? ended - started : 0),
+        static_cast<unsigned long>(g_interpreter->arena_used_bytes()),
+        static_cast<unsigned long>(sizeof(g_tensor_arena)),
+        static_cast<unsigned int>(prediction->intent));
+#endif
     return kSuccess;
 }
