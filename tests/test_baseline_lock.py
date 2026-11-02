@@ -8,7 +8,9 @@ ROOT = Path(__file__).resolve().parents[1]
 
 
 def test_locked_source_hashes() -> None:
-    manifest = ROOT / "docs" / "evidence" / "baseline-source-sha256.txt"
+    # Historical r8 evidence remains immutable; this manifest locks the
+    # current, intentionally modified overlay used by apply_overlay.sh.
+    manifest = ROOT / "firmware" / "overlay-source-sha256.txt"
     for line in manifest.read_text(encoding="utf-8").splitlines():
         if not line.strip():
             continue

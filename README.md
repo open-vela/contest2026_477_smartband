@@ -11,8 +11,13 @@ LVGL 产品界面、`ai_agent`、自定义 Skill/Tool、cron 主动任务和 Qui
 结果描述成新固件的实机传感器、延迟、内存或触摸证据。
 
 决赛开发分支已增加应用状态任务、可操作提醒卡、恢复计时与记录保存，入口见
-[应用状态开发说明](docs/finals-app-state.md)。下方 9 月证据仍对应历史固件；
-新增功能的主机与编译验证不代表已经上板运行。
+[应用状态开发说明](docs/finals-app-state.md)。这些代码已随 11 月 2 日固件上板，
+应用状态交互闭环仍需单独完成实机验收；下方 9 月证据对应历史固件。
+
+2026-11-02 实测六种猫咪动作均达到约 60 visual FPS，见
+[逐动作数据和测量边界](docs/evidence/finals-animation-20261102/README.md)。
+已切换到 OpenixCLI 后台更新，并实机验证自动备份、恢复和逐文件回读，见
+[命令行更新流程](docs/gemini-background-update.md)。页面转场及各内部动画尚未全部达到 60 FPS。
 
 ## 二、选题方向
 

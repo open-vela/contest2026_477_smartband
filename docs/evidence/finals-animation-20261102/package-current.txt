@@ -1,0 +1,27 @@
+/data/mooncat-closure-pack08/i386-runtime/usr/lib/i386-linux-gnu/
+/data/mooncat-closure-pack08/lichee/out/r528s3/gemini-s1_nand/image
+Begin Parse sys_partion.fex
+Add partion nsh.fex NSH_FEX000000000
+Add partion very nsh.fex NSH_FEX000000000
+FilePath: nsh.fex
+FileLength=75be00Add partion res.fex RES_FEX000000000
+Add partion very res.fex RES_FEX000000000
+FilePath: res.fex
+FileLength=871000Add partion usrdata.fex USRDATA_FEX00000
+Add partion very usrdata.fex USRDATA_FEX00000
+FilePath: usrdata.fex
+FileLength=32e5000BuildImg 0
+Dragon execute image.cfg SUCCESS !
+ 
+{
+  "kernel_bytes": 7716352,
+  "image_bytes": 71931904,
+  "payload_count": 22,
+  "changed_payloads": [
+    "nsh.fex",
+    "Vnsh.fex"
+  ],
+  "unchanged_payloads": 20,
+  "original_preserved": true,
+  "image": "/data/mooncat-closure-pack08/lichee/out/r528s3/gemini-s1_nand/image/rtos_nuttx_r528s3-gemini-s1_uart0_128Mnand.img"
+}

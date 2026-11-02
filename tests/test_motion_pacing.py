@@ -17,23 +17,10 @@ def source_text() -> str:
 def test_target_pacing_is_exactly_60_updates_per_second() -> None:
     text = source_text()
     target = int(re.search(r"#define UI_MOTION_TARGET_FPS (\d+)U", text).group(1))
-    base = 1000 // target
-    remainder = 1000 % target
-    accumulator = 0
-    periods = []
-
-    for _ in range(target):
-        period = base
-        accumulator += remainder
-        if accumulator >= target:
-            accumulator -= target
-            period += 1
-        periods.append(period)
-
     assert target == 60
-    assert set(periods) == {16, 17}
-    assert sum(periods) == 1000
-    assert accumulator == 0
+    # Actual timing helper, including delayed wakeups, is compiled in the
+    # animation kernel test. Check that the UI passes its absolute epoch.
+    assert 'now - g_ui.cat_cycle_started, UI_MOTION_TARGET_FPS)' in text
 
 
 def test_interpolation_preserves_action_cycle_durations() -> None:
@@ -51,7 +38,10 @@ def test_interpolation_preserves_action_cycle_durations() -> None:
     ]
     assert "g_ui.cat_cycle_duration = duration;" in text
     assert "elapsed = lv_tick_elaps(g_ui.cat_cycle_started)" in text
-    assert "phase = (uint64_t)elapsed * g_ui.cat_frame_count * 256U /" in text
+    # Arithmetic and repeated-frame timing are compiled and exercised against
+    # the production helper in test_animation_kernel.py.
+    assert "mooncat_animation_sample(g_ui.active_frames, g_ui.cat_frame_count," in text
+    assert "g_ui.cat_cycle_duration, elapsed, &sample)" in text
 
 
 def test_motion_uses_sparse_composite_and_pauses_offscreen() -> None:

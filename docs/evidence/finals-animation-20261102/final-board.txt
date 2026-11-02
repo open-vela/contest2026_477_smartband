@@ -1,0 +1,3 @@
+      total       used       free    maxused    maxfree  nused  nfree name
+  947783876    2912308  935452872   12887224  934514432   3677     38 Umem
+NuttX  0.0.0  Nov  2 2026 08:39:34 arm nsh
