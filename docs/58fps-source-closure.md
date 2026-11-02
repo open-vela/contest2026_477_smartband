@@ -1,5 +1,9 @@
 # 58 FPS Gemini S1 源码闭包
 
+本页记录历史 r8 闭包。2026-11-02 决赛分支在该基线上更新了动画实现，当前 overlay
+使用 `firmware/overlay-source-sha256.txt`，历史锁定证据保持不变；新的实测结果见
+[六动作优化记录](evidence/finals-animation-20261102/README.md)。
+
 ## 结论
 
 本项目的产品固件基线是文件名含 `FPS48`、实机测得约 58 FPS 的 r8 版本。

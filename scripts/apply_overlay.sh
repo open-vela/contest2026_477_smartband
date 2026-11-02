@@ -37,6 +37,7 @@ ui_files=(
   Makefile
   openvela_ui.c
   openvela_ui.h
+  openvela_ui_animation.h
   openvela_ui_agent_bridge.c
   openvela_ui_agent_bridge.h
   openvela_ui_coach.c
@@ -74,7 +75,7 @@ common_files=(
 board_base="$repo_root/firmware/board/nsh_minidisplay.defconfig"
 board_fragment="$repo_root/firmware/board/nsh_minidisplay-ai-contest.fragment"
 board_rcs_source="$repo_root/firmware/board/rcS"
-baseline_manifest="$repo_root/docs/evidence/baseline-source-sha256.txt"
+baseline_manifest="$repo_root/firmware/overlay-source-sha256.txt"
 agent_patch="$repo_root/agent/packages_ai_agent_overlay.patch"
 finals_patch="$repo_root/agent/packages_ai_agent_finals.patch"
 transport_patch="$repo_root/agent/packages_ai_agent_http_chunked.patch"

@@ -1,0 +1,63 @@
+[INFO] Loading firmware: E:\C_Moved_From_C\Users\Lenovo\Desktop\schoolwork\work\openvela-animation-20261102\finals-current.img
+[INFO] Firmware size: 68 MB, 22 files
+[INFO] Selected device: Bus 0, Port 4
+[INFO] Device mode: Fel
+[INFO] FES data loaded (20640 bytes)
+[INFO] Initializing DRAM...
+[DEBG] FES magic: eGON.BT0, run_addr: 0x28000, ret_addr: 0x28340
+[DEBG] Clearing DRAM param area at 0x28340
+[DEBG] Downloading 20640 bytes FES to device (timeout: 3s)...
+[DEBG] Executing FES at 0x28000
+[INFO] Waiting for DRAM initialization...
+[DEBG] DRAM init check #1: init_flag=1296126532, update_flag=1
+[DEBG] DRAM init completed after 1 attempts, 1.0177137s
+[INFO] DRAM initialized successfully
+[DEBG] U-Boot magic: uboot, addr: 0x40a00000
+[DEBG] Setting timeout to 10s for 638976 bytes
+[DEBG] DTB written to 0x40c00000 (66 bytes)
+[DEBG] SysConfig written to 0x40d00000 (26624 bytes)
+[INFO] Downloading U-Boot (638976 bytes)...
+[DEBG] Executing U-Boot at 0x40a00000
+[INFO] U-Boot execution requested
+[INFO] U-Boot transferred (638976 bytes)
+[INFO] Waiting up to 45s for U-Boot to initialize the FES USB device...
+[DEBG] Reconnect attempt 1 (scan failed)
+[DEBG] Reconnect attempt 2 (scan failed)
+[DEBG] Device found at bus 0, port 4
+[INFO] Boot mode: Boot Package File
+[INFO] Storage type: NAND
+[INFO] Flash size: 0 MB
+[INFO] Found 10 partitions in MBR
+[INFO] Skipping partition not in list: bootloader0
+[INFO] Skipping partition not in list: dummy_1
+[INFO] Skipping partition not in list: boot0-direct
+[INFO] Skipping partition not in list: uboot-direct
+[INFO] Skipping partition not in list: reserved_1
+[INFO] Skipping partition not in list: sst
+[INFO] Skipping partition not in list: res
+[INFO] Skipping partition not in list: usrdata
+[INFO] Skipping partition not in list: UDISK
+[DEBG] Checking partition bootloader for UBIFS
+[INFO] No UBIFS partitions found
+[INFO] Downloading MBR (65536 bytes)...
+[OKAY] MBR verified successfully
+[INFO] Flashing 1 partitions...
+[INFO] Turning on flash access...
+[INFO] Flashing partition: bootloader (7716352 bytes at sector 279552)
+[INFO] Verifying partition bootloader...
+[OKAY] Partition bootloader verified
+[INFO] Turning off flash access...
+[OKAY] All partitions flashed (7716352 bytes written)
+[INFO] Downloading Preboot/Boot0/Boot1...
+[DEBG] Looking for Preboot: 1234567890PREB_0
+[DEBG] Preboot not found: 1234567890PREB_0, skipping
+[DEBG] Looking for Boot1: 12345678/BOOTPKG-00000000
+[INFO] Downloading Boot1: 12345678/BOOTPKG-00000000 (655360 bytes)
+[OKAY] Boot1 verified
+[DEBG] Looking for Boot0: BOOT/BOOT0_0000000000
+[INFO] Downloading Boot0: BOOT/BOOT0_0000000000 (45056 bytes)
+[OKAY] Boot0 verified
+[OKAY] Preboot/Boot0/Boot1 downloaded
+[OKAY] Device will reboot
+
+[OKAY] All partitions flashed successfully

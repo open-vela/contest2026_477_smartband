@@ -1,0 +1,30 @@
+  PID GROUP CPU(AFFINITY)   PRI POLICY   TYPE    NPX STATE    EVENT     SIGMASK          COMMAND
+    0     0 000(0x00000003)   0 FIFO     Kthread   - Running            0000000000000000 CPU0 IDLE
+    1     0 001(0x00000003)   0 FIFO     Kthread   - Assigned           0000000000000000 CPU1 IDLE
+    2     0 ---(0x00000003) 254 FIFO     Kthread   - Waiting  Semaphore 0000000000000000 hpwork 0x41b48d40 0x41b48d8c
+    3     0 ---(0x00000003) 100 FIFO     Kthread   - Waiting  Semaphore 0000000000000000 lpwork 0x41b48cc0 0x41b48d0c
+    5     0 ---(0x00000003) 100 FIFO     Kthread   - Waiting  Semaphore 0000000000000000 ltr553_thread
+    6     0 ---(0x00000001) 120 FIFO     Kthread   - Waiting  Semaphore 0000000000000000 nftld 1109352072
+    7     0 ---(0x00000001) 120 FIFO     Kthread   - Waiting  Semaphore 0000000000000000 nand_rcd 1109356456
+    8     0 ---(0x00000001) 120 FIFO     Kthread   - Waiting  MQ empty  0000000000000000 nand_proxy 1109361312
+    9     0 ---(0x00000003) 106 FIFO     Kthread   - Waiting  Semaphore 0000000000000000 realtek_txpool_thread
+   10     0 ---(0x00000003) 100 FIFO     Kthread   - Waiting  Semaphore 0000000000000000 bt_recv
+   11     0 ---(0x00000003) 100 FIFO     Kthread   - Waiting  Semaphore 0000000000000000 bt_fw
+   12     0 ---(0x00000003) 111 FIFO     Kthread   - Waiting  Semaphore 0000000000000000 TIMERWORKER 0x4228bdf0 0x4228be3c
+   13    13 ---(0x00000003) 100 FIFO     Task      - Waiting  Semaphore 0000000000000000 nsh_main
+   20    20 ---(0x00000003) 100 FIFO     Task      - Waiting  Semaphore 0000000000000000 adbd
+   30    30 ---(0x00000003) 100 FIFO     Task      - Waiting  Semaphore 0000000000000000 kvdbd
+   36    36 ---(0x00000003) 100 FIFO     Task      - Waiting  Signal    0000000000000000 NTP_daemon 0.pool.ntp.org;1.pool.ntp.org;2.pool.ntp.org
+   48    48 000(0x00000003) 100 FIFO     Task      - Running            0000000000000000 openvela_ui
+   49    49 ---(0x00000003) 100 FIFO     Task      - Waiting  Signal    0000000000000000 ai_agent
+   53    49 ---(0x00000003)  50 FIFO     pthread   - Waiting  Semaphore 0000000000000000 ai_agent 0x41605e71 0x4233ba28
+   54    49 ---(0x00000003)  50 FIFO     pthread   - Waiting  MQ empty  0000000000000000 ai_agent 0x41605e71 0x4233b970
+   55    49 ---(0x00000003)  40 FIFO     pthread   - Waiting  Semaphore 0000000000000000 ai_agent 0x4160c4b9 0x4233b980
+   56    49 ---(0x00000003)   3 FIFO     pthread   - Waiting  Signal    0000000000000000 ai_agent 0x41612acd 0x4233b990
+   59    48 ---(0x00000003) 100 FIFO     pthread   - Waiting  Semaphore 0000000000000000 openvela_ui 0x4163066d 0
+   60    48 ---(0x00000003) 100 FIFO     pthread   - Waiting  Signal    0000000000000000 openvela_ui 0x41609061 0
+   61    48 ---(0x00000003) 100 FIFO     pthread   - Waiting  Semaphore 0000000000000000 openvela_ui 0x41607f19 0
+   63    49 ---(0x00000003)  60 FIFO     pthread   - Waiting  Semaphore 0000000000000000 ai_agent 0x4160c48d 0x423af4e8
+   79    49 ---(0x00000003)  50 FIFO     pthread   - Waiting  Semaphore 0000000000000000 ai_agent 0x4160d53d 0
+   89     0 ---(0x00000003) 110 FIFO     Kthread   - Waiting  Semaphore 0000000000000000 WIFIWORKER 0x423ae360 0x423ae3ac
+  303   303 001(0x00000003) 100 FIFO     Task      - Running            0000000000000000 sh -c ps

@@ -15,6 +15,7 @@
 #include <unistd.h>
 
 #include "openvela_ui.h"
+#include "openvela_ui_animation.h"
 #include "openvela_ui_sport.h"
 #include "openvela_ui_sync.h"
 #include "openvela_ui_weather.h"
@@ -68,7 +69,6 @@ extern int snd_ctl_set_bynum(const char *name, unsigned int elem_num,
 #define UI_FRAME_PATH_SIZE 128
 #define UI_MOTION_TARGET_FPS 60U
 #define UI_MOTION_FRAME_BASE_MS (1000U / UI_MOTION_TARGET_FPS)
-#define UI_MOTION_FRAME_REMAINDER (1000U % UI_MOTION_TARGET_FPS)
 #define UI_SWIPE_THRESHOLD 52
 #define UI_MAX_THEME_LABELS 32
 #define UI_MAX_THEME_SHAPES 24
@@ -204,6 +204,8 @@ typedef struct {
     uint16_t cat_composite_width;
     uint16_t cat_composite_height;
     uint32_t cat_composite_stride;
+    struct mooncat_frame_cache_s cat_frame_cache;
+    int cat_cache_action;
     bool cat_composite_valid;
     char cat_prepared_current_path[UI_FRAME_PATH_SIZE];
     char cat_prepared_next_path[UI_FRAME_PATH_SIZE];
@@ -290,7 +292,6 @@ typedef struct {
     uint16_t cat_current_frame;
     uint16_t cat_next_frame;
     uint16_t cat_last_blend;
-    uint8_t cat_frame_remainder;
     uint32_t cat_last_motion_tick;
     bool cat_motion_running;
     char preview_path[UI_FRAME_PATH_SIZE];
@@ -854,19 +855,6 @@ static int build_action_frames(int action_index, uint32_t *duration)
     return output;
 }
 
-static uint32_t cat_next_timer_period(void)
-{
-    uint32_t period = UI_MOTION_FRAME_BASE_MS;
-
-    g_ui.cat_frame_remainder += UI_MOTION_FRAME_REMAINDER;
-    if (g_ui.cat_frame_remainder >= UI_MOTION_TARGET_FPS) {
-        g_ui.cat_frame_remainder -= UI_MOTION_TARGET_FPS;
-        period++;
-    }
-
-    return period;
-}
-
 static uint32_t perf_now_us(void)
 {
     struct timespec now;
@@ -916,6 +904,9 @@ static bool cat_prepare_frame(const char *path, lv_color32_t *output)
     bool opened = false;
     int32_t x;
     int32_t y;
+
+    if (mooncat_frame_cache_get(&g_ui.cat_frame_cache, path, output,
+            g_ui.cat_composite_stride * g_ui.cat_composite_height)) return true;
 
     lv_memset(&args, 0, sizeof(args));
     args.no_size_expand = true;
@@ -1008,6 +999,8 @@ static bool cat_prepare_frame(const char *path, lv_color32_t *output)
     lv_image_decoder_close(&decoder);
     g_openvela_ui_perf_stats.prepare_count++;
     g_openvela_ui_perf_stats.prepare_time_us += perf_now_us() - started;
+    mooncat_frame_cache_put(&g_ui.cat_frame_cache, path, output,
+        g_ui.cat_composite_stride * g_ui.cat_composite_height, lv_malloc);
     return true;
 
 failed:
@@ -1062,13 +1055,6 @@ static bool cat_prepare_pair(const char *current_path, const char *next_path)
     return true;
 }
 
-static uint8_t cat_lerp_channel(uint8_t current, uint8_t next,
-                                uint8_t blend)
-{
-    return cat_div255((uint32_t)current * (255U - blend) +
-                      (uint32_t)next * blend);
-}
-
 static void cat_compose_and_invalidate(const char *current_path,
                                        const char *next_path,
                                        lv_opa_t blend)
@@ -1099,28 +1085,16 @@ static void cat_compose_and_invalidate(const char *current_path,
             g_ui.cat_composite_stride);
 
         for (x = 0; x < g_ui.cat_composite_width; x++) {
-            lv_color32_t output;
-            lv_color32_t old = composite_row[x];
+            uint32_t a, b, old, output;
+            /* memcpy preserves strict aliasing; ARM GCC lowers these fixed
+             * four-byte copies to loads/stores. Row strides remain unchanged. */
+            memcpy(&a, &current_row[x], sizeof(a));
+            memcpy(&b, &next_row[x], sizeof(b));
+            memcpy(&old, &composite_row[x], sizeof(old));
+            output = mooncat_blend_argb8888(a, b, blend);
 
-            if (blend == LV_OPA_TRANSP || current == next) {
-                output = current_row[x];
-            } else if (blend == LV_OPA_COVER) {
-                output = next_row[x];
-            } else {
-                output.blue = cat_lerp_channel(current_row[x].blue,
-                                               next_row[x].blue, blend);
-                output.green = cat_lerp_channel(current_row[x].green,
-                                                next_row[x].green, blend);
-                output.red = cat_lerp_channel(current_row[x].red,
-                                              next_row[x].red, blend);
-                output.alpha = cat_lerp_channel(current_row[x].alpha,
-                                                next_row[x].alpha, blend);
-            }
-
-            if (!was_valid || old.blue != output.blue ||
-                old.green != output.green || old.red != output.red ||
-                old.alpha != output.alpha) {
-                composite_row[x] = output;
+            if (!was_valid || old != output) {
+                memcpy(&composite_row[x], &output, sizeof(output));
                 changed++;
                 min_x = LV_MIN(min_x, x);
                 min_y = LV_MIN(min_y, y);
@@ -1165,7 +1139,7 @@ static void cat_compose_and_invalidate(const char *current_path,
 static void cat_render_interpolated_frame(void)
 {
     uint32_t elapsed;
-    uint64_t phase;
+    struct mooncat_animation_sample_s sample;
     uint16_t current;
     uint16_t next;
     lv_opa_t blend;
@@ -1177,11 +1151,11 @@ static void cat_render_interpolated_frame(void)
 
     elapsed = lv_tick_elaps(g_ui.cat_cycle_started) %
               g_ui.cat_cycle_duration;
-    phase = (uint64_t)elapsed * g_ui.cat_frame_count * 256U /
-            g_ui.cat_cycle_duration;
-    current = (uint16_t)((phase >> 8) % g_ui.cat_frame_count);
-    next = (uint16_t)((current + 1U) % g_ui.cat_frame_count);
-    blend = (lv_opa_t)(phase & 0xffU);
+    if (!mooncat_animation_sample(g_ui.active_frames, g_ui.cat_frame_count,
+            g_ui.cat_cycle_duration, elapsed, &sample)) return;
+    current = sample.current;
+    next = sample.next;
+    blend = sample.blend;
 
     if (current == g_ui.cat_current_frame &&
         next == g_ui.cat_next_frame && blend == g_ui.cat_last_blend) {
@@ -1227,7 +1201,10 @@ static void cat_frame_tick(lv_timer_t *timer)
     g_openvela_ui_motion_tick_count++;
     g_openvela_ui_perf_stats.motion_ticks++;
     cat_render_interpolated_frame();
-    lv_timer_set_period(timer, cat_next_timer_period());
+    /* LVGL records last_run immediately before this callback. Use callback
+     * entry time, so rendering time is not added a second time to the period. */
+    lv_timer_set_period(timer, mooncat_animation_delay(
+        now - g_ui.cat_cycle_started, UI_MOTION_TARGET_FPS));
 }
 
 static void pause_cat_animation(void)
@@ -1254,20 +1231,26 @@ static void apply_action(int action_index)
         return;
     }
 
+    if (g_ui.cat_cache_action != action_index) {
+        mooncat_frame_cache_clear(&g_ui.cat_frame_cache, lv_free);
+        g_ui.cat_cache_action = action_index;
+        g_ui.cat_prepared_current_path[0] = '\0';
+        g_ui.cat_prepared_next_path[0] = '\0';
+    }
+
     g_ui.cat_frame_count = (uint16_t)frame_count;
     g_ui.cat_cycle_duration = duration;
     g_ui.cat_cycle_started = lv_tick_get();
     g_ui.cat_current_frame = UINT16_MAX;
     g_ui.cat_next_frame = UINT16_MAX;
     g_ui.cat_last_blend = UINT16_MAX;
-    g_ui.cat_frame_remainder = 0;
     g_ui.cat_last_motion_tick = 0;
     g_ui.cat_motion_running = true;
     cat_render_interpolated_frame();
 
     if (g_ui.cat_frame_timer) {
         lv_timer_set_period(g_ui.cat_frame_timer,
-                            UI_MOTION_FRAME_BASE_MS);
+                            mooncat_animation_delay(0, UI_MOTION_TARGET_FPS));
         lv_timer_reset(g_ui.cat_frame_timer);
         lv_timer_resume(g_ui.cat_frame_timer);
     }
@@ -1276,6 +1259,7 @@ static void apply_action(int action_index)
 static void cat_composite_release(lv_event_t *event)
 {
     LV_UNUSED(event);
+    mooncat_frame_cache_clear(&g_ui.cat_frame_cache, lv_free);
 
     if (g_ui.cat_current_pixels) {
         lv_free(g_ui.cat_current_pixels);
