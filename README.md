@@ -147,6 +147,7 @@ Codex 用于需求拆解、源码审计、最小功能实现、测试设计、�
 
 ## 八、交付材料与演示入口
 
+- **电脑一键自动展示**：双击 [`scripts/Start-MoonCatDemo.cmd`](scripts/Start-MoonCatDemo.cmd)，板子自动展示六个主页面、六种动画、运动/健康子页与提醒反馈闭环；支持停止、循环和停留时间设置。见 [使用说明](docs/delivery/automatic-demo.md)。
 - **11 月 4 日决赛材料**：[交付说明与约 8 分钟演示顺序](docs/delivery/finals-20261104.md)、[23 页可编辑 PPT 发布附件](https://github.com/open-vela/contest2026_477_smartband/releases/tag/finals-20261104)、[当日实机截图](docs/evidence/presentation-20261104/)。
 - 9 月 19 日实机验收版作品介绍：[PDF](docs/delivery/月薪喵作品介绍-20260919.pdf)、[DOCX](docs/delivery/月薪喵作品介绍-20260919.docx)。
 - [2 分 50 秒实机证据演示视频](docs/delivery/月薪喵-candidate08-实机证据演示-20260919.mp4)：字幕版，使用本轮板端 LVGL 截图原时间间隔采样回放与真实请求/工具日志，非摄像机实拍。
