@@ -27,6 +27,10 @@ def main():
         subprocess.run([sys.executable, str(scripts/'mooncat_control.py'),
                         '--transport', 'adb', *link, *map(str, command)], check=True)
 
+    def state():
+        return json.loads(subprocess.check_output([sys.executable,
+            str(scripts/'mooncat_control.py'), '--transport', 'adb', *link, 'state'], text=True))
+
     names = ['cat', 'shy-wave', 'phone-rest', 'balloon-rise', 'laugh', 'toilet-break']
     results = []
     for index, name in enumerate(names):
@@ -36,12 +40,21 @@ def main():
         label = args.label+'-'+name
         control('screenshot', output/(label+'.png'))
         time.sleep(5)
+        before = state()
+        if before['page'] != 0 or before['overlay'] != 0 or before['action'] != index:
+            raise RuntimeError('Requested animation is not active: '+repr(before))
         result = output/(label+'.json')
         subprocess.run([sys.executable, str(scripts/'collect_ui_profile.py'), *link,
                         '--ui-address', args.ui_address, '--lcd-address', args.lcd_address,
                         '--label', label, '--seconds', str(args.seconds),
                         '--output', str(result)], check=True)
-        results.append(json.loads(result.read_text()))
+        after = state()
+        if any(after[key] != before[key] for key in ('page','overlay','action')):
+            raise RuntimeError('Animation scene changed during sampling: '+repr(after))
+        sample = json.loads(result.read_text())
+        sample.update(ui_before=before, ui_after=after)
+        result.write_text(json.dumps(sample, indent=2), encoding='utf-8')
+        results.append(sample)
         (output/(args.label+'-all-actions.json')).write_text(
             json.dumps(results, indent=2), encoding='utf-8')
         print('SAMPLED', name, flush=True)

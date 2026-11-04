@@ -1,0 +1,14 @@
+{
+  "kernel_bytes": 7720592,
+  "changed_payloads": [
+    "nsh.fex",
+    "Vnsh.fex"
+  ],
+  "flash_mode": "partition",
+  "partition": "bootloader",
+  "data_policy": "backup, restore, byte-compare, reboot",
+  "before_firmware": "NuttX  0.0.0  Nov  3 2026 03:37:01 arm nsh",
+  "compared_files": 322,
+  "different_or_missing": [],
+  "after_firmware": "NuttX  0.0.0  Nov  3 2026 03:51:56 arm nsh"
+}

@@ -54,6 +54,8 @@ int tool_mooncat_app_execute(const char *input,char *output,size_t output_size)
     cJSON_AddBoolToObject(result,"ok",status==MC_OK || status==MC_DUPLICATE);
     cJSON_AddStringToObject(result,"status",mc_status_name(status));
     cJSON_AddStringToObject(result,"source","app_event");
+    cJSON_AddStringToObject(result,"timebase","app_monotonic");
+    cJSON_AddNumberToObject(result,"now",snapshot.last_now);
     cJSON_AddStringToObject(result,"evidence_boundary","user_actions_not_sensor_measurements");
     cJSON_AddNumberToObject(result,"focus_seconds",snapshot.focus_seconds);
     cJSON_AddNumberToObject(result,"shown_count",snapshot.shown_count);

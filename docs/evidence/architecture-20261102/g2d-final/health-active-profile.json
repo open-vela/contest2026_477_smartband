@@ -1,0 +1,110 @@
+{
+  "summary": {
+    "seconds": 1.0999999999999943,
+    "motion_fps": 0.0,
+    "visual_fps": 0.0,
+    "render_fps": 37.272727272727465,
+    "flush_calls_per_s": 37.272727272727465,
+    "late_ticks": 0,
+    "missed_ticks": 0,
+    "prepare_mean_us": null,
+    "compose_mean_us": null,
+    "refresh_mean_us": 8170.731707317073,
+    "putarea_mean_us": 4268.292682926829,
+    "flush_pixels_per_s": 309357.27272727434,
+    "dirty_pixels_per_visual": null,
+    "ioctl_errors": 0,
+    "decode_errors": 0
+  },
+  "start": {
+    "ui": {
+      "magic": 1430865462,
+      "motion_ticks": 5680,
+      "visual_frames": 5683,
+      "nochange_ticks": 0,
+      "missed_ticks": 225,
+      "late_ticks": 230,
+      "motion_elapsed_ms": 97730,
+      "prepare_count": 34,
+      "prepare_time_us": 312000,
+      "compose_time_us": 117000,
+      "changed_pixels": 17331928,
+      "dirty_pixels": 37437419,
+      "last_changed_pixels": 473,
+      "last_dirty_pixels": 6132,
+      "decode_errors": 0,
+      "composite_buffer_bytes": 109440
+    },
+    "lcd": {
+      "magic": 1279477302,
+      "render_count": 6037,
+      "refresh_time_us": 41764000,
+      "flush_count": 6373,
+      "flush_pixels": 54879211,
+      "putarea_time_us": 26500000,
+      "last_flush_pixels": 8228,
+      "max_flush_pixels": 38400,
+      "ioctl_errors": 0,
+      "buffer_bytes": 76800,
+      "buffer_rows": 120,
+      "render_mode": 1
+    },
+    "uptime_s": 158.0
+  },
+  "end": {
+    "ui": {
+      "magic": 1430865462,
+      "motion_ticks": 5680,
+      "visual_frames": 5683,
+      "nochange_ticks": 0,
+      "missed_ticks": 225,
+      "late_ticks": 230,
+      "motion_elapsed_ms": 97730,
+      "prepare_count": 34,
+      "prepare_time_us": 312000,
+      "compose_time_us": 117000,
+      "changed_pixels": 17331928,
+      "dirty_pixels": 37437419,
+      "last_changed_pixels": 473,
+      "last_dirty_pixels": 6132,
+      "decode_errors": 0,
+      "composite_buffer_bytes": 109440
+    },
+    "lcd": {
+      "magic": 1279477302,
+      "render_count": 6078,
+      "refresh_time_us": 42099000,
+      "flush_count": 6414,
+      "flush_pixels": 55219504,
+      "putarea_time_us": 26675000,
+      "last_flush_pixels": 9025,
+      "max_flush_pixels": 38400,
+      "ioctl_errors": 0,
+      "buffer_bytes": 76800,
+      "buffer_rows": 120,
+      "render_mode": 1
+    },
+    "uptime_s": 159.1
+  },
+  "ui_before": {
+    "page": 3,
+    "overlay": 4,
+    "action": 0,
+    "scroll_x": 804,
+    "scroll_dir": 3,
+    "sport_page": -1,
+    "workout": false,
+    "health_measuring": true
+  },
+  "ui_after": {
+    "page": 3,
+    "overlay": 4,
+    "action": 0,
+    "scroll_x": 804,
+    "scroll_dir": 3,
+    "sport_page": -1,
+    "workout": false,
+    "health_measuring": true
+  },
+  "evidence": "On-device counters during active measurement, with UI-thread endpoint states"
+}

@@ -1,0 +1,113 @@
+{
+  "label": "g2d-final-shy-wave",
+  "summary": {
+    "seconds": 20.0,
+    "motion_fps": 60.0,
+    "visual_fps": 60.0,
+    "render_fps": 60.0,
+    "flush_calls_per_s": 61.0,
+    "late_ticks": 0,
+    "missed_ticks": 0,
+    "prepare_mean_us": null,
+    "compose_mean_us": 0.0,
+    "refresh_mean_us": 5591.666666666667,
+    "putarea_mean_us": 3599.1803278688526,
+    "flush_pixels_per_s": 435248.35,
+    "dirty_pixels_per_visual": 6907.110833333333,
+    "ioctl_errors": 0,
+    "decode_errors": 0
+  },
+  "start": {
+    "ui": {
+      "magic": 1430865462,
+      "motion_ticks": 10686,
+      "visual_frames": 10693,
+      "nochange_ticks": 0,
+      "missed_ticks": 314,
+      "late_ticks": 326,
+      "motion_elapsed_ms": 182276,
+      "prepare_count": 53,
+      "prepare_time_us": 486000,
+      "compose_time_us": 175000,
+      "changed_pixels": 31838368,
+      "dirty_pixels": 70577117,
+      "last_changed_pixels": 714,
+      "last_dirty_pixels": 6942,
+      "decode_errors": 0,
+      "composite_buffer_bytes": 109440
+    },
+    "lcd": {
+      "magic": 1279477302,
+      "render_count": 11350,
+      "refresh_time_us": 74637000,
+      "flush_count": 11878,
+      "flush_pixels": 97834100,
+      "putarea_time_us": 47310000,
+      "last_flush_pixels": 7110,
+      "max_flush_pixels": 38400,
+      "ioctl_errors": 0,
+      "buffer_bytes": 76800,
+      "buffer_rows": 120,
+      "render_mode": 1
+    },
+    "uptime_s": 260.51
+  },
+  "end": {
+    "ui": {
+      "magic": 1430865462,
+      "motion_ticks": 11886,
+      "visual_frames": 11893,
+      "nochange_ticks": 0,
+      "missed_ticks": 314,
+      "late_ticks": 326,
+      "motion_elapsed_ms": 202276,
+      "prepare_count": 53,
+      "prepare_time_us": 486000,
+      "compose_time_us": 175000,
+      "changed_pixels": 33559884,
+      "dirty_pixels": 78865650,
+      "last_changed_pixels": 1721,
+      "last_dirty_pixels": 7470,
+      "decode_errors": 0,
+      "composite_buffer_bytes": 109440
+    },
+    "lcd": {
+      "magic": 1279477302,
+      "render_count": 12550,
+      "refresh_time_us": 81347000,
+      "flush_count": 13098,
+      "flush_pixels": 106539067,
+      "putarea_time_us": 51701000,
+      "last_flush_pixels": 7644,
+      "max_flush_pixels": 38400,
+      "ioctl_errors": 0,
+      "buffer_bytes": 76800,
+      "buffer_rows": 120,
+      "render_mode": 1
+    },
+    "uptime_s": 280.51
+  },
+  "ui_address": "0x41b55e6c",
+  "lcd_address": "0x41b51f30",
+  "evidence": "On-device counters; not optical panel frame measurement",
+  "ui_before": {
+    "page": 0,
+    "overlay": 0,
+    "action": 1,
+    "scroll_x": 201,
+    "scroll_dir": 3,
+    "sport_page": -1,
+    "workout": false,
+    "health_measuring": false
+  },
+  "ui_after": {
+    "page": 0,
+    "overlay": 0,
+    "action": 1,
+    "scroll_x": 201,
+    "scroll_dir": 3,
+    "sport_page": -1,
+    "workout": false,
+    "health_measuring": false
+  }
+}

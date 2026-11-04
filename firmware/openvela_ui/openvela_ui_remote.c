@@ -7,6 +7,7 @@
 #include <string.h>
 #include <unistd.h>
 #include "openvela_ui_remote.h"
+#include "openvela_ui.h"
 
 #ifndef MOONCAT_CONTROL_DIR
 #define MOONCAT_CONTROL_DIR "/tmp"
@@ -14,7 +15,9 @@
 #define REQUEST MOONCAT_CONTROL_DIR "/mooncat-control.req"
 #define RESPONSE MOONCAT_CONTROL_DIR "/mooncat-control.status"
 #define FRAME MOONCAT_CONTROL_DIR "/mooncat-screen.ppm"
-#define POLL_MS 20
+#define UISTATE MOONCAT_CONTROL_DIR "/mooncat-ui-state.json"
+#define GESTURE_POLL_MS 20
+#define IDLE_POLL_MS 250
 
 static lv_timer_t *g_control_timer;
 static lv_indev_t *g_pointer;
@@ -44,6 +47,17 @@ static int screenshot(void)
     unsigned width = image->header.w;
     unsigned height = image->header.h;
     unsigned stride = image->header.stride;
+    lv_obj_t *layers[] = {lv_layer_top(), lv_layer_sys()};
+    lv_draw_buf_t *overlay[2] = {NULL,NULL};
+    for(unsigned i = 0; i < 2; i++) {
+        if(!lv_obj_get_child_count(layers[i])) continue;
+        overlay[i] = lv_snapshot_take(layers[i], LV_COLOR_FORMAT_ARGB8888);
+        if(!overlay[i] || overlay[i]->header.w != width || overlay[i]->header.h != height) {
+            for(unsigned j = 0; j < 2; j++) if(overlay[j]) lv_draw_buf_destroy(overlay[j]);
+            lv_draw_buf_destroy(image);
+            return -ENOMEM;
+        }
+    }
     unsigned char *row = malloc(width * 3);
     FILE *file = row ? fopen(FRAME ".part", "wb") : NULL;
     int result = -EIO;
@@ -60,6 +74,15 @@ static int screenshot(void)
                 row[x * 3] = (r << 3) | (r >> 2);
                 row[x * 3 + 1] = (g << 2) | (g >> 4);
                 row[x * 3 + 2] = (b << 3) | (b >> 2);
+                for(unsigned i = 0; i < 2; i++) if(overlay[i]) {
+                    uint32_t rgba;
+                    memcpy(&rgba,overlay[i]->data + y * overlay[i]->header.stride + x * 4,4);
+                    unsigned alpha = rgba >> 24;
+                    for(unsigned c = 0; c < 3; c++) {
+                        unsigned value = (rgba >> (16 - c * 8)) & 255;
+                        row[x * 3 + c] = (value * alpha + row[x * 3 + c] * (255 - alpha) + 127) / 255;
+                    }
+                }
             }
             if (fwrite(row, 3, width, file) != width) {
                 result = -EIO;
@@ -70,9 +93,23 @@ static int screenshot(void)
     if (file && fclose(file) != 0) result = -EIO;
     free(row);
     lv_draw_buf_destroy(image);
+    for(unsigned i = 0; i < 2; i++) if(overlay[i]) lv_draw_buf_destroy(overlay[i]);
     if (result == 0 && rename(FRAME ".part", FRAME) != 0) result = -errno;
     if (result != 0) unlink(FRAME ".part");
     return result;
+}
+
+static int write_ui_state(void)
+{
+    char state[256];
+    int result = openvela_ui_status(state, sizeof(state));
+    if (result) return result;
+    FILE *file = fopen(UISTATE ".part", "w");
+    if (!file) return -errno;
+    int written = fprintf(file, "%s\n", state);
+    int closed = fclose(file);
+    if (written < 0 || closed || rename(UISTATE ".part", UISTATE)) return -EIO;
+    return 0;
 }
 
 static void pointer_read(lv_indev_t *indev, lv_indev_data_t *data)
@@ -103,7 +140,10 @@ static void control_tick(lv_timer_t *timer)
             g_gesture = false;
         }
         lv_indev_read(g_pointer);
-        if (!g_gesture) reply(g_request_id, 0);
+        if (!g_gesture) {
+            lv_timer_set_period(g_control_timer, IDLE_POLL_MS);
+            reply(g_request_id, 0);
+        }
     }
 
     FILE *file = fopen(REQUEST, "r");
@@ -118,6 +158,10 @@ static void control_tick(lv_timer_t *timer)
     int fields = sscanf(line, "%lu %15s %d %d %d %d %d %c", &id, command,
                         &x0, &y0, &x1, &y1, &duration, &extra);
     if (g_gesture) { reply(id, -EBUSY); return; }
+    if (fields == 2 && strcmp(command, "state") == 0) {
+        reply(id, write_ui_state());
+        return;
+    }
     if (fields == 2 && strcmp(command, "screenshot") == 0) {
         reply(id, screenshot());
         return;
@@ -138,6 +182,7 @@ static void control_tick(lv_timer_t *timer)
     g_point.x = x0; g_point.y = y0;
     g_state = LV_INDEV_STATE_PRESSED;
     g_gesture = true;
+    lv_timer_set_period(g_control_timer, GESTURE_POLL_MS);
     lv_indev_read(g_pointer);
 }
 
@@ -150,7 +195,7 @@ int openvela_ui_remote_start(void)
     lv_indev_set_read_cb(g_pointer, pointer_read);
     lv_indev_set_mode(g_pointer, LV_INDEV_MODE_EVENT);
     unlink(REQUEST);
-    g_control_timer = lv_timer_create(control_tick, POLL_MS, NULL);
+    g_control_timer = lv_timer_create(control_tick, IDLE_POLL_MS, NULL);
     if (!g_control_timer) {
         lv_indev_delete(g_pointer); g_pointer = NULL;
         return -ENOMEM;

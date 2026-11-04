@@ -1,0 +1,22 @@
+linked object verified: openvela_ui.c.data.mooncat-closure-build05.packages.demos.openvela_ui_1.o
+linked object verified: openvela_ui_coach.c.data.mooncat-closure-build05.packages.demos.openvela_ui_1.o
+linked object verified: openvela_ui_agent_bridge.c.data.mooncat-closure-build05.packages.demos.openvela_ui_1.o
+linked object verified: openvela_ui_remote.c.data.mooncat-closure-build05.packages.demos.openvela_ui_1.o
+linked object verified: openvela_ui_sync.c.data.mooncat-closure-build05.packages.demos.openvela_ui_1.o
+linked object verified: openvela_ui_sport.c.data.mooncat-closure-build05.packages.demos.openvela_ui_1.o
+linked object verified: openvela_ui_main_mooncat.c.data.mooncat-closure-build05.packages.demos.openvela_ui_1.o
+linked object verified: openvela_ui_storage.c.data.mooncat-closure-build05.packages.demos.openvela_ui_1.o
+linked object verified: mooncat_app_service.c.data.mooncat-closure-build05.packages.ai_agent_1.o
+linked object verified: tool_mooncat_app.c.data.mooncat-closure-build05.packages.ai_agent_1.o
+linked object verified: lv_nuttx_lcd.c.data.mooncat-closure-build05.apps.graphics.lvgl_5.o
+linked object verified: lv_draw_g2d_fill.c.data.mooncat-closure-build05.apps.graphics.lvgl_4.o
+linked object verified: lv_draw_g2d_img.c.data.mooncat-closure-build05.apps.graphics.lvgl_4.o
+linked object verified: lv_draw_g2d.c.data.mooncat-closure-build05.apps.graphics.lvgl_4.o
+linked object verified: ili9341.o
+linked object verified: ili9341_lcd_spi.o
+linked object verified: lv_draw_sw.c.data.mooncat-closure-build05.apps.graphics.lvgl_5.o
+linked object verified: lv_draw.c.data.mooncat-closure-build05.apps.graphics.lvgl_4.o
+linked object verified: ramlog.o
+linked object verified: assert.o
+COUNTER_ADDRESSES {"g_openvela_ui_perf_stats": "0x41b55e6c", "g_lv_nuttx_lcd_perf_stats": "0x41b51f30"}
+build_exit: 0; source files verified: 28 kernel bytes: 7720592

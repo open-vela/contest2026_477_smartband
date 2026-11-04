@@ -22,25 +22,33 @@ int mbus_tap_unregister(const char *);
 #include <pthread.h>
 #include <stdlib.h>
 #include <string.h>
+#include <stdint.h>
 typedef struct { int unused; } lv_obj_t;
 typedef struct lv_timer { void (*cb)(struct lv_timer *); } lv_timer_t;
 static pthread_t ui_thread;
 static int wrong_thread, rendered;
+static char seen[16][64];
+static uint32_t ticks;
+static int fail_hide_timer;
+static uint32_t lv_tick_get(void){return ticks;}
+static uint32_t lv_tick_elaps(uint32_t before){return ticks-before;}
 static lv_obj_t object;
 static lv_timer_t *poll_timer;
 static void ui_only(void) { if (!pthread_equal(pthread_self(), ui_thread)) wrong_thread++; }
 static lv_timer_t *lv_timer_create(void (*cb)(lv_timer_t *), int ms, void *data) {
-    (void)data; ui_only(); lv_timer_t *t=malloc(sizeof(*t)); t->cb=cb;
+    (void)data; ui_only(); if(ms==8000 && fail_hide_timer)return NULL;
+    lv_timer_t *t=malloc(sizeof(*t)); t->cb=cb;
     if (ms != 8000) poll_timer=t;
     return t;
 }
 static void lv_timer_delete(lv_timer_t *t) { ui_only(); free(t); }
 static lv_obj_t *lv_screen_active(void) { ui_only(); return &object; }
+static lv_obj_t *lv_layer_top(void) { ui_only(); return &object; }
 static lv_obj_t *lv_obj_create(lv_obj_t *p) { (void)p; ui_only(); return &object; }
 static lv_obj_t *lv_label_create(lv_obj_t *p) { return lv_obj_create(p); }
 static int lv_obj_is_valid(lv_obj_t *p) { ui_only(); return p != NULL; }
 static void lv_label_set_text(lv_obj_t *p,const char *s) {
-    (void)p; ui_only(); if(strcmp(s,"latest notification")==0) rendered++;
+    (void)p; ui_only(); if(strstr(s,"notification")) {strncpy(seen[rendered++],s,63);}
 }
 static int lv_async_call(void (*cb)(void *),void *data) { (void)cb;(void)data;ui_only();return 0; }
 static int lv_async_call_cancel(void (*cb)(void *),void *data) { (void)cb;(void)data;ui_only();return 0; }
@@ -57,6 +65,8 @@ static int lv_async_call_cancel(void (*cb)(void *),void *data) { (void)cb;(void)
 #define lv_obj_set_style_pad_all(...) ui_only()
 #define lv_obj_clear_flag(...) ui_only()
 #define lv_obj_set_width(...) ui_only()
+#define lv_obj_set_height(...) ui_only()
+#define lv_obj_set_style_shadow_width(...) ui_only()
 #define lv_obj_set_style_text_color(...) ui_only()
 #define lv_obj_set_style_text_font(...) ui_only()
 #define lv_label_set_long_mode(...) ui_only()
@@ -92,9 +102,22 @@ int main(void) {
     assert(rendered==0);
     assert(poll_timer != NULL);
     poll_timer->cb(poll_timer);
-    assert(rendered==1);
+    assert(rendered==1 && !strcmp(seen[0],"first notification"));
     poll_timer->cb(poll_timer);
     assert(rendered==1);
+    g_hide_timer->cb(g_hide_timer);poll_timer->cb(poll_timer);
+    assert(rendered==2 && !strcmp(seen[1],"latest notification"));
+    agent_msg_t extra={"overflow notification"};
+    for(int i=0;i<10;i++) tap(&extra,NULL);
+    assert(g_count==8 && g_rejected_notifications==2);
+    poll_timer->cb(poll_timer);assert(rendered==2);
+    for(int i=0;i<8;i++) {g_hide_timer->cb(g_hide_timer);poll_timer->cb(poll_timer);}
+    assert(rendered==10 && g_count==0);
+    g_hide_timer->cb(g_hide_timer);fail_hide_timer=1;
+    tap(&extra,NULL);tap(&extra,NULL);poll_timer->cb(poll_timer);
+    assert(rendered==11 && !g_hide_timer);
+    ticks=7999;poll_timer->cb(poll_timer);assert(rendered==11);
+    ticks=8000;poll_timer->cb(poll_timer);assert(rendered==12);
     openvela_ui_agent_bridge_stop();
     assert(tap==NULL && wrong_thread==0);
     return 0;

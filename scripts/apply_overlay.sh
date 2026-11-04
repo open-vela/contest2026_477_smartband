@@ -27,6 +27,8 @@ ui_target="$target_root/packages/demos/openvela_ui"
 agent_target="$target_root/packages/ai_agent"
 agent_tools_target="$agent_target/src/tools"
 lcd_target="$target_root/apps/graphics/lvgl/lvgl/src/drivers/nuttx/lv_nuttx_lcd.c"
+g2d_target="$target_root/apps/graphics/lvgl/lvgl/src/draw/sunxi_g2d"
+g2d_files=(lv_draw_g2d.c lv_draw_g2d_fill.c lv_draw_g2d_img.c)
 defconfig_target="$target_root/vendor/allwinnertech/boards/r528/r528s3-gemini-s1/configs/nsh_minidisplay/defconfig"
 board_rcs_target="$target_root/vendor/allwinnertech/boards/r528/r528s3-gemini-s1/src/etc/init.d/rcS"
 
@@ -38,6 +40,10 @@ ui_files=(
   openvela_ui.c
   openvela_ui.h
   openvela_ui_animation.h
+  openvela_ui_style.h
+  openvela_ui_health_queue.h
+  openvela_ui_storage.c
+  openvela_ui_storage.h
   openvela_ui_agent_bridge.c
   openvela_ui_agent_bridge.h
   openvela_ui_coach.c
@@ -122,6 +128,10 @@ check_layout() {
     require_file "$repo_root/common/$filename"
   done
   require_file "$repo_root/firmware/lvgl/lv_nuttx_lcd.c"
+  for filename in "${g2d_files[@]}"; do
+    require_file "$g2d_target/$filename"
+    require_file "$repo_root/firmware/lvgl/$filename"
+  done
   require_file "$board_base"
   require_file "$board_fragment"
   require_file "$board_rcs_source"
@@ -140,6 +150,26 @@ patch_is_applied() {
 }
 
 check_layout
+
+# The root contains nested repositories; apply this board patch relative to it.
+driver_patch="$repo_root/firmware/lcd/ili9341-area.patch"
+driver_header="$target_root/nuttx/drivers/lcd/ili9341_area.h"
+require_file "$driver_patch"
+require_file "$repo_root/firmware/lcd/ili9341_area.h"
+driver_applied() { (cd "$target_root" && git apply --ignore-space-change --reverse --check "$driver_patch") >/dev/null 2>&1; }
+if ! driver_applied; then
+  (cd "$target_root" && git apply --check "$driver_patch") || exit 7
+  if [ "$mode" = "--apply" ]; then
+    (cd "$target_root" && git apply "$driver_patch")
+  elif [ "$mode" = "--verify" ]; then
+    echo "ILI9341 area patch is not applied" >&2; exit 21
+  fi
+fi
+if [ "$mode" = "--apply" ]; then
+  install -m 0644 "$repo_root/firmware/lcd/ili9341_area.h" "$driver_header"
+elif [ "$mode" = "--verify" ]; then
+  verify_same "$repo_root/firmware/lcd/ili9341_area.h" "$driver_header"
+fi
 
 if [ "$mode" = "--check" ]; then
   for checked_patch in "$agent_patch" "$transport_patch" "$skill_route_patch" "$finals_patch"; do
@@ -161,6 +191,9 @@ if [ "$mode" = "--verify" ]; then
     verify_same "$repo_root/firmware/openvela_ui/$filename" "$ui_target/$filename"
   done
   verify_same "$repo_root/firmware/lvgl/lv_nuttx_lcd.c" "$lcd_target"
+  for filename in "${g2d_files[@]}"; do
+    verify_same "$repo_root/firmware/lvgl/$filename" "$g2d_target/$filename"
+  done
   for filename in "${agent_files[@]}"; do
     verify_same "$repo_root/agent/$filename" "$agent_tools_target/$filename"
   done
@@ -199,6 +232,9 @@ if [ -d "$repo_root/firmware/openvela_ui/assets" ]; then
   cp -a "$repo_root/firmware/openvela_ui/assets/." "$ui_target/assets/"
 fi
 install -m 0644 "$repo_root/firmware/lvgl/lv_nuttx_lcd.c" "$lcd_target"
+for filename in "${g2d_files[@]}"; do
+  install -m 0644 "$repo_root/firmware/lvgl/$filename" "$g2d_target/$filename"
+done
 
 for filename in "${agent_files[@]}"; do
   install -m 0644 "$repo_root/agent/$filename" "$agent_tools_target/$filename"

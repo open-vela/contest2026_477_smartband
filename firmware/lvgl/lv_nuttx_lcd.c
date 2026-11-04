@@ -41,6 +41,7 @@ typedef struct {
     struct lcddev_area_s area;
     struct lcddev_area_align_s align_info;
     uint32_t render_started_us;
+    void * pixel_buffer[2];
 } lv_nuttx_lcd_t;
 
 typedef struct {
@@ -244,6 +245,7 @@ static lv_display_t * lcd_init(int fd, int hor_res, int ver_res)
     draw_buf = lv_malloc(buf_size);
     if(draw_buf == NULL) {
         LV_LOG_ERROR("display draw_buf malloc failed");
+        lv_display_delete(disp);
         lv_free(lcd);
         return NULL;
     }
@@ -252,6 +254,7 @@ static lv_display_t * lcd_init(int fd, int hor_res, int ver_res)
     draw_buf_2 = lv_malloc(buf_size);
     if(draw_buf_2 == NULL) {
         LV_LOG_ERROR("display draw_buf_2 malloc failed");
+        lv_display_delete(disp);
         lv_free(lcd);
         lv_free(draw_buf);
         return NULL;
@@ -260,10 +263,32 @@ static lv_display_t * lcd_init(int fd, int hor_res, int ver_res)
 
     lcd->fd = fd;
     if(ioctl(fd, LCDDEVIO_GETAREAALIGN, &lcd->align_info) < 0) {
-        perror("Error: ioctl(LCDDEVIO_GETAREAALIGN) failed");
+        /* Unsupported alignment query means pixel alignment, never zero. */
+        lcd->align_info.col_start_align = 1;
+        lcd->align_info.row_start_align = 1;
+        lcd->align_info.width_align = 1;
+        lcd->align_info.height_align = 1;
+    }
+    uint16_t alignments[] = {lcd->align_info.col_start_align,
+                            lcd->align_info.row_start_align,
+                            lcd->align_info.width_align,
+                            lcd->align_info.height_align};
+    for(unsigned i = 0; i < 4; i++) {
+        unsigned limit = (i & 1) ? ver_res : hor_res;
+        unsigned a = alignments[i];
+        if(!a || (a & (a - 1)) || a > limit || limit % a) {
+            LV_LOG_ERROR("invalid LCD area alignment");
+            lv_display_delete(disp);
+            lv_free(draw_buf);
+            lv_free(draw_buf_2);
+            lv_free(lcd);
+            return NULL;
+        }
     }
 
     lcd->disp = disp;
+    lcd->pixel_buffer[0] = draw_buf;
+    lcd->pixel_buffer[1] = draw_buf_2;
     lv_display_set_buffers(lcd->disp, draw_buf, draw_buf_2, buf_size, render_mode);
     lv_display_set_flush_cb(lcd->disp, flush_cb);
     lv_display_add_event_cb(lcd->disp, rounder_cb, LV_EVENT_INVALIDATE_AREA, lcd);
@@ -289,15 +314,11 @@ static void display_release_cb(lv_event_t * e)
         lv_display_set_driver_data(disp, NULL);
         lv_display_set_flush_cb(disp, NULL);
 
-        /* clear display buffer */
-        if(disp->buf_1) {
-            lv_free(disp->buf_1);
-            disp->buf_1 = NULL;
-        }
-        if(disp->buf_2) {
-            lv_free(disp->buf_2);
-            disp->buf_2 = NULL;
-        }
+        /* LVGL's draw-buffer descriptors are embedded in the display.
+         * Only the pixel allocations passed to set_buffers belong to us. */
+        lv_free(dsc->pixel_buffer[0]);
+        lv_free(dsc->pixel_buffer[1]);
+        disp->buf_1 = disp->buf_2 = disp->buf_act = NULL;
 
         /* close device fb */
         if(dsc->fd >= 0) {

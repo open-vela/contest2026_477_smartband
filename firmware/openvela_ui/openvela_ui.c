@@ -284,7 +284,7 @@ typedef struct {
     uint8_t theme_border_count;
     lv_point_t touch_start;
     bool touch_tracking;
-    const void *active_frames[UI_MAX_ACTION_FRAMES];
+    const char *active_frames[UI_MAX_ACTION_FRAMES];
     char frame_paths[UI_MAX_ACTION_FRAMES][UI_FRAME_PATH_SIZE];
     uint32_t cat_cycle_duration;
     uint32_t cat_cycle_started;
@@ -2559,8 +2559,23 @@ static void create_health_page(void)
     render_health_page();
 }
 
+static void health_pulse_scale(void *image, int32_t scale)
+{
+    lv_image_set_scale(image, (uint32_t)scale);
+}
+
+static void stop_health_pulse(void)
+{
+    if (g_ui.health_heart_icon) {
+        lv_anim_delete(g_ui.health_heart_icon, health_pulse_scale);
+        if (lv_obj_is_valid(g_ui.health_heart_icon))
+            lv_image_set_scale(g_ui.health_heart_icon, g_ui.health_heart_scale);
+    }
+}
+
 static void stop_health_measurement(void)
 {
+    stop_health_pulse();
     if (g_ui.health_measure_timer) {
         lv_timer_delete(g_ui.health_measure_timer);
         g_ui.health_measure_timer = NULL;
@@ -2572,6 +2587,8 @@ static void stop_health_measurement(void)
 static void finish_health_measurement(void)
 {
     char value[16];
+
+    stop_health_pulse();
 
     if (g_ui.health_page == UI_HEALTH_HEART_RATE) {
         g_ui.heart_rate = g_ui.target_heart_rate;
@@ -2640,11 +2657,6 @@ static void health_measure_tick(lv_timer_t *timer)
             lv_label_set_text_fmt(g_ui.health_value_label,
                                   "%d", g_ui.heart_rate);
         }
-        if (g_ui.health_heart_icon) {
-            uint32_t scale = g_ui.health_heart_scale *
-                ((g_ui.health_measure_ticks & 1) ? 106 : 96) / 100;
-            lv_image_set_scale(g_ui.health_heart_icon, scale);
-        }
     } else {
         if (g_ui.health_value_label) {
             lv_label_set_text_fmt(g_ui.health_value_label, "%d",
@@ -2700,6 +2712,23 @@ static void start_health_measurement(void)
     }
     g_ui.health_measure_timer = lv_timer_create(health_measure_tick,
                                                  240, NULL);
+    if (!g_ui.health_measure_timer) {
+        g_ui.health_measuring = false;
+        return;
+    }
+    if (g_ui.health_page == UI_HEALTH_HEART_RATE && g_ui.health_heart_icon) {
+        lv_anim_t pulse;
+        lv_anim_init(&pulse);
+        lv_anim_set_var(&pulse, g_ui.health_heart_icon);
+        lv_anim_set_exec_cb(&pulse, health_pulse_scale);
+        lv_anim_set_values(&pulse, g_ui.health_heart_scale * 96 / 100,
+                          g_ui.health_heart_scale * 106 / 100);
+        lv_anim_set_duration(&pulse, 240);
+        lv_anim_set_playback_duration(&pulse, 240);
+        lv_anim_set_repeat_count(&pulse, LV_ANIM_REPEAT_INFINITE);
+        lv_anim_set_path_cb(&pulse, lv_anim_path_ease_in_out);
+        lv_anim_start(&pulse);
+    }
 }
 
 static void change_health_page(int direction)
@@ -3446,6 +3475,7 @@ static void overlay_deleted_cb(lv_anim_t *animation)
     g_ui.overlay = NULL;
     g_ui.overlay_time_label = NULL;
     g_ui.health_view = NULL;
+    g_ui.health_heart_icon = NULL;
     g_ui.music_view = NULL;
     g_ui.weather_view = NULL;
     g_ui.weather_switch_pending = false;
@@ -3949,6 +3979,16 @@ static void home_touch_cb(lv_event_t *event)
     }
 }
 
+static void normalize_tile_async(void *unused)
+{
+    LV_UNUSED(unused);
+    lv_obj_t *active = lv_tileview_get_tile_active(g_ui.tileview);
+    if (active == g_ui.tile[0])
+        lv_tileview_set_tile(g_ui.tileview, g_ui.tile[UI_TILE_LAST_REAL], LV_ANIM_OFF);
+    else if (active == g_ui.tile[UI_TILE_COUNT - 1])
+        lv_tileview_set_tile(g_ui.tileview, g_ui.tile[UI_TILE_FIRST_REAL], LV_ANIM_OFF);
+}
+
 static void tileview_changed_cb(lv_event_t *event)
 {
     lv_obj_t *tileview = lv_event_get_current_target(event);
@@ -3962,17 +4002,31 @@ static void tileview_changed_cb(lv_event_t *event)
     if (tile_index == 0) {
         g_ui.current_page = UI_PAGE_NOTIFICATIONS;
         update_page_dots();
-        lv_tileview_set_tile(tileview, g_ui.tile[UI_TILE_LAST_REAL],
-                             LV_ANIM_OFF);
+        /* LVGL restores the old boundary's direction after this callback.
+         * Normalize on the next UI turn so both directions stay available. */
+        lv_async_call(normalize_tile_async, NULL);
     } else if (tile_index == UI_TILE_COUNT - 1) {
         g_ui.current_page = UI_PAGE_HOME;
         update_page_dots();
-        lv_tileview_set_tile(tileview, g_ui.tile[UI_TILE_FIRST_REAL],
-                             LV_ANIM_OFF);
+        lv_async_call(normalize_tile_async, NULL);
     } else {
         g_ui.current_page = g_tile_page[tile_index];
         update_page_dots();
     }
+}
+
+int openvela_ui_status(char *buffer, size_t capacity)
+{
+    int length = snprintf(buffer, capacity,
+        "{\"page\":%d,\"overlay\":%d,\"action\":%d,\"scroll_x\":%ld,"
+        "\"scroll_dir\":%u,\"sport_page\":%d,\"workout\":%s,\"health_measuring\":%s}",
+        g_ui.current_page, g_ui.overlay_page, g_ui.selected_action,
+        (long)lv_obj_get_scroll_x(g_ui.tileview),
+        (unsigned)lv_obj_get_scroll_dir(g_ui.tileview),
+        g_ui.sport ? (int)openvela_ui_sport_current_page(g_ui.sport) : -1,
+        g_ui.sport && openvela_ui_sport_is_special_active(g_ui.sport) ? "true" : "false",
+        g_ui.health_measuring ? "true" : "false");
+    return length < 0 || (size_t)length >= capacity ? -ENOSPC : 0;
 }
 
 static void init_fonts(void)

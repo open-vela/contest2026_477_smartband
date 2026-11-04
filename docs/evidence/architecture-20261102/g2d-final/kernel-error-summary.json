@@ -1,0 +1,6 @@
+{
+  "data_abort": 0,
+  "assertion_failed": 0,
+  "g2d_failure": 0,
+  "spi_failure": 0
+}

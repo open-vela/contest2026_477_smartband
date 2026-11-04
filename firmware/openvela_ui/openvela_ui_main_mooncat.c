@@ -10,6 +10,7 @@
 #include "openvela_ui_coach.h"
 #include "openvela_ui_remote.h"
 #include "openvela_ui_sync.h"
+#include "openvela_ui_storage.h"
 #include "openvela_ui_timesync.h"
 
 static void run_ui_loop(uv_loop_t *loop, lv_nuttx_result_t *result)
@@ -74,6 +75,7 @@ int main(int argc, FAR char *argv[])
     openvela_ui_coach_stop();
     openvela_ui_agent_bridge_stop();
     openvela_ui_remote_stop();
+    if(openvela_ui_storage_stop()!=0) LV_LOG_ERROR("Sport state could not be saved before exit");
     lv_nuttx_deinit(&result);
     lv_deinit();
     return 0;
