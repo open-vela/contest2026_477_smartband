@@ -1,0 +1,123 @@
+--- a/nuttx/drivers/lcd/ili9341.c
++++ b/nuttx/drivers/lcd/ili9341.c
+@@ -576,44 +576,16 @@
+  *
+  ****************************************************************************/
+ 
++#include "ili9341_area.h"
++
+ static int ili9341_putrun(FAR struct lcd_dev_s *lcd_dev, fb_coord_t row,
+                           fb_coord_t col,
+                           FAR const uint8_t * buffer, size_t npixels)
+ {
+-  FAR struct ili9341_dev_s *dev = (FAR struct ili9341_dev_s *)lcd_dev;
+-  FAR struct ili9341_lcd_s *lcd = dev->lcd;
+-  FAR const uint16_t *src = (FAR const uint16_t *)buffer;
+-
+-  DEBUGASSERT(buffer && ((uintptr_t)buffer & 1) == 0);
+-
+-  /* Check if position outside of area */
+-
+-  if (col + npixels > ili9341_getxres(dev) || row > ili9341_getyres(dev))
+-    {
+-      return -EINVAL;
+-    }
+-
+-  /* Select lcd driver */
+-
+-  lcd->select(lcd);
+-
+-  /* Select column and area similar to the partial raster line */
+-
+-  ili9341_selectarea(lcd, col, row, col + npixels - 1, row);
+-
+-  /* Send memory write cmd */
+-
+-  lcd->sendcmd(lcd, ILI9341_MEMORY_WRITE);
+-
+-  /* Send pixel to gram */
+-
+-  lcd->sendgram(lcd, src, npixels);
+-
+-  /* Deselect the lcd driver */
+-
+-  lcd->deselect(lcd);
+-
+-  return OK;
++  if (!npixels || npixels > ili9341_getxres((struct ili9341_dev_s *)lcd_dev))
++    return -EINVAL;
++  return ili9341_putarea(lcd_dev, row, row, col, col + npixels - 1,
++                         buffer, npixels * 2);
+ }
+ 
+ /****************************************************************************
+@@ -842,6 +814,7 @@
+       FAR struct ili9341_dev_s *priv = (FAR struct ili9341_dev_s *)dev;
+ 
+       pinfo->putrun = ili9341_putrun;
++      pinfo->putarea = ili9341_putarea;
+ #ifndef CONFIG_LCD_NOGETRUN
+       pinfo->getrun = ili9341_getrun;
+ #endif
+--- a/vendor/allwinnertech/chips/r528/drivers/rtos-hal/hal/source/disp2/soc/ili9341_lcd_spi.c
++++ b/vendor/allwinnertech/chips/r528/drivers/rtos-hal/hal/source/disp2/soc/ili9341_lcd_spi.c
+@@ -381,8 +381,16 @@
+ 
+ static int ili9341_sendcmd(struct ili9341_lcd_s *lcd, const uint8_t cmd)
+ {
++#if CONFIG_LCD_ILI9341_HARDWARE_SPI
++    int result;
++    LCD_DC_CMD;
++    result = hal_spi_write(LCD_SPI_PORT, (void *)&cmd, 1);
++    LCD_DC_DATA;
++    return result == 0 ? OK : -EIO;
++#else
+     ili9341_lcd_send_cmd(cmd);
+     return OK;
++#endif
+ }
+ 
+ /****************************************************************************
+@@ -393,8 +401,13 @@
+ 
+ static int ili9341_sendparam(struct ili9341_lcd_s *lcd, const uint8_t param)
+ {
++#if CONFIG_LCD_ILI9341_HARDWARE_SPI
++    LCD_DC_DATA;
++    return hal_spi_write(LCD_SPI_PORT, (void *)&param, 1) == 0 ? OK : -EIO;
++#else
+     ili9341_lcd_send_data(param);
+     return OK;
++#endif
+ }
+ 
+ /****************************************************************************
+@@ -426,7 +439,9 @@
+                             uint32_t nwords)
+ {
+     const uint16_t *src = wd;
+-
++    if (!wd || !g_ili9341_lcd_buffer ||
++        nwords > ALIGN_DMA_BUF_SIZE / sizeof(uint16_t)) return -EINVAL;
++    if (nwords == 0) return OK;
+     LCD_DC_DATA;
+ #if CONFIG_LCD_ILI9341_HARDWARE_SPI
+     /* 优化建议：使用32位访问加速大小端转换 (SIMD-like logic) */
+@@ -470,7 +485,7 @@
+     }
+ 
+     /* 启动 DMA 传输 */
+-    hal_spi_write(LCD_SPI_PORT, (void *)g_ili9341_lcd_buffer, nwords * 2);
++    return hal_spi_write(LCD_SPI_PORT, (void *)g_ili9341_lcd_buffer, nwords * 2) == 0 ? OK : -EIO;
+ #else
+     /* 软件 SPI 优化路径 */
+     /* 注意：片选由上层控制 */
+@@ -544,7 +559,7 @@
+     /* 优化建议：避免重复分配或内存泄漏 */
+     if (g_ili9341_lcd_buffer == NULL)
+     {
+-        g_ili9341_lcd_buffer = (uint16_t *)malloc(240 * 320 * 2);
++        g_ili9341_lcd_buffer = (uint16_t *)malloc(ALIGN_DMA_BUF_SIZE);
+         if (g_ili9341_lcd_buffer == NULL)
+         {
+             lcderr("ERROR: Failed to allocate lcd buffer\n");

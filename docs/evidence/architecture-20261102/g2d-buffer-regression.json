@@ -1,0 +1,26 @@
+{
+  "fill": {
+    "original": {
+      "exit": -6,
+      "stdout": "",
+      "stderr": "probe: REPO/tests/g2d_fill_harness.c:48: hal_dcache_clean_invalidate: Assertion `start>=buffer_start && start+len<=buffer_end' failed.\n"
+    },
+    "fixed": {
+      "exit": 0,
+      "stdout": "G2D bounded writes, format, padded pitch, origin, clip and guards: PASS\n",
+      "stderr": ""
+    }
+  },
+  "image": {
+    "original": {
+      "exit": -6,
+      "stdout": "",
+      "stderr": "probe: REPO/tests/g2d_image_harness.c:78: hal_dcache_clean_invalidate: Assertion `start+len<=hi' failed.\n"
+    },
+    "fixed": {
+      "exit": 0,
+      "stdout": "G2D image pitch, local origins, bounds, clipping and scaling: PASS\n",
+      "stderr": ""
+    }
+  }
+}

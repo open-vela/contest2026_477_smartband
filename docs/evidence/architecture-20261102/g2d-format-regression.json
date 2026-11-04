@@ -1,0 +1,12 @@
+{
+  "original": {
+    "exit": -6,
+    "stdout": "",
+    "stderr": "probe: /mnt/e/C_Moved_From_C/Users/Lenovo/Desktop/schoolwork/contest2026_477_smartband/tests/g2d_fill_harness.c:56: sunxi_g2d_control: Assertion `row>=buffer_start && row+(uintptr_t)im->clip_rect.w*bpp<=buffer_end' failed.\n"
+  },
+  "fixed": {
+    "exit": 0,
+    "stdout": "G2D bounded writes, format, padded pitch, origin, clip and guards: PASS\n",
+    "stderr": ""
+  }
+}

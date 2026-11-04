@@ -1,0 +1,93 @@
+{
+  "label": "sport-heart-final",
+  "summary": {
+    "seconds": 8.029999999999994,
+    "motion_fps": 0.0,
+    "visual_fps": 0.0,
+    "render_fps": 11.45703611457037,
+    "flush_calls_per_s": 11.45703611457037,
+    "late_ticks": 0,
+    "missed_ticks": 0,
+    "prepare_mean_us": null,
+    "compose_mean_us": null,
+    "refresh_mean_us": 16108.695652173914,
+    "putarea_mean_us": 9413.04347826087,
+    "flush_pixels_per_s": 220180.3237858034,
+    "dirty_pixels_per_visual": null,
+    "ioctl_errors": 0,
+    "decode_errors": 0
+  },
+  "start": {
+    "ui": {
+      "magic": 1430865462,
+      "motion_ticks": 1856,
+      "visual_frames": 1857,
+      "nochange_ticks": 0,
+      "missed_ticks": 65,
+      "late_ticks": 67,
+      "motion_elapsed_ms": 31823,
+      "prepare_count": 34,
+      "prepare_time_us": 312000,
+      "compose_time_us": 38000,
+      "changed_pixels": 5665358,
+      "dirty_pixels": 12240248,
+      "last_changed_pixels": 3970,
+      "last_dirty_pixels": 6873,
+      "decode_errors": 0,
+      "composite_buffer_bytes": 109440
+    },
+    "lcd": {
+      "magic": 1279477302,
+      "render_count": 1954,
+      "refresh_time_us": 13199000,
+      "flush_count": 2058,
+      "flush_pixels": 17190273,
+      "putarea_time_us": 8336000,
+      "last_flush_pixels": 30351,
+      "max_flush_pixels": 38400,
+      "ioctl_errors": 0,
+      "buffer_bytes": 76800,
+      "buffer_rows": 120,
+      "render_mode": 1
+    },
+    "uptime_s": 55.52
+  },
+  "end": {
+    "ui": {
+      "magic": 1430865462,
+      "motion_ticks": 1856,
+      "visual_frames": 1857,
+      "nochange_ticks": 0,
+      "missed_ticks": 65,
+      "late_ticks": 67,
+      "motion_elapsed_ms": 31823,
+      "prepare_count": 34,
+      "prepare_time_us": 312000,
+      "compose_time_us": 38000,
+      "changed_pixels": 5665358,
+      "dirty_pixels": 12240248,
+      "last_changed_pixels": 3970,
+      "last_dirty_pixels": 6873,
+      "decode_errors": 0,
+      "composite_buffer_bytes": 109440
+    },
+    "lcd": {
+      "magic": 1279477302,
+      "render_count": 2046,
+      "refresh_time_us": 14681000,
+      "flush_count": 2150,
+      "flush_pixels": 18958321,
+      "putarea_time_us": 9202000,
+      "last_flush_pixels": 29304,
+      "max_flush_pixels": 38400,
+      "ioctl_errors": 0,
+      "buffer_bytes": 76800,
+      "buffer_rows": 120,
+      "render_mode": 1
+    },
+    "uptime_s": 63.55
+  },
+  "ui_address": "0x41b55e6c",
+  "lcd_address": "0x41b51f30",
+  "evidence": "On-device counters; not optical panel frame measurement"
+}

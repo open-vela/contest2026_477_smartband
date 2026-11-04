@@ -1,0 +1,15 @@
+{
+  "private-spi-boot.txt": {
+    "lines_examined": 779,
+    "spi_fault_lines": [
+      "[70/01/ 1 08:00:01] [CPU0] [48] [nsh] spi_dma_tx_config()955 [spi1] tx size over dma align buf size",
+      "[70/01/ 1 08:00:01] [CPU1] [48] [nsh] spi_dma_tx_config()960 [spi1] tx buf or len not align to 64",
+      "[70/01/ 1 08:00:02] [CPU1] [48] [nsh] spi_cpu_complete()1821 [spi1] xfer timeout",
+      "[70/01/ 1 08:00:04] [CPU0] [48] [nsh] spi_cpu_complete()1821 [spi1] xfer timeout"
+    ]
+  },
+  "private-spi-fixed.txt": {
+    "lines_examined": 1315,
+    "spi_fault_lines": []
+  }
+}

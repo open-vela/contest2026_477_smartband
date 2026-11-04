@@ -18,6 +18,7 @@ static lv_obj_t *lv_obj_create(lv_obj_t *p) {check_ui();assert(++test_object_cou
 static lv_obj_t *lv_button_create(lv_obj_t *p) {return lv_obj_create(p);}
 static lv_obj_t *lv_label_create(lv_obj_t *p) {return lv_obj_create(p);}
 static void lv_label_set_text(lv_obj_t *o,const char *text) {check_ui();assert(o && o->valid);snprintf(o->text,sizeof(o->text),"%s",text);}
+static const char *lv_label_get_text(lv_obj_t *o) {check_ui();return o->text;}
 static int lv_obj_is_valid(lv_obj_t *o) {check_ui();return o && o->valid;}
 static void lv_obj_delete(lv_obj_t *o) {check_ui();assert(o && o->valid);o->valid=0;}
 static void *lv_event_get_user_data(lv_event_t *e) {check_ui();return e->user_data;}
@@ -32,3 +33,10 @@ static void lv_obj_add_event_cb(lv_obj_t *o,void (*cb)(lv_event_t *),int code,vo
 #define lv_obj_align(...) check_ui()
 #define lv_obj_set_style_pad_all(...) check_ui()
 #define lv_obj_clear_flag(...) check_ui()
+#define lv_obj_set_style_bg_color(...) check_ui()
+#define lv_obj_set_style_bg_opa(...) check_ui()
+#define lv_obj_set_style_border_color(...) check_ui()
+#define lv_obj_set_style_border_width(...) check_ui()
+#define lv_obj_set_style_radius(...) check_ui()
+#define lv_obj_set_style_text_color(...) check_ui()
+#define lv_obj_set_style_shadow_width(...) check_ui()

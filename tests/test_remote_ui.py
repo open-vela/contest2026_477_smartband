@@ -22,23 +22,33 @@ typedef struct {int x,y;} lv_point_t;
 typedef int lv_indev_state_t;
 typedef struct {lv_point_t point;int state;bool continue_reading;} lv_indev_data_t;
 typedef struct lv_indev {void (*read)(struct lv_indev*,lv_indev_data_t*);} lv_indev_t;
-typedef struct lv_timer {void (*cb)(struct lv_timer*);} lv_timer_t;
+typedef struct lv_timer {void (*cb)(struct lv_timer*);unsigned period;} lv_timer_t;
 typedef struct {struct {unsigned w,h,stride;} header;unsigned char *data;} lv_draw_buf_t;
 typedef int lv_display_t;
+typedef void lv_obj_t;
 static uint32_t ticks;
 static pthread_t owner;
 static lv_indev_data_t last_input;
 static int samples;
+static int overlays;
 static void ui(void){assert(pthread_equal(owner,pthread_self()));}
 #define LV_INDEV_STATE_RELEASED 0
 #define LV_INDEV_STATE_PRESSED 1
 #define LV_INDEV_TYPE_POINTER 1
 #define LV_INDEV_MODE_EVENT 1
 #define LV_COLOR_FORMAT_RGB565 1
+#define LV_COLOR_FORMAT_ARGB8888 2
 static uint32_t lv_tick_get(void){ui();return ticks;}
 static void *lv_screen_active(void){ui();return (void*)1;}
+static void *lv_layer_top(void){ui();return (void*)2;}
+static void *lv_layer_sys(void){ui();return (void*)3;}
+static unsigned lv_obj_get_child_count(void *p){(void)p;ui();return overlays;}
 static lv_draw_buf_t *lv_snapshot_take(void *screen,int cf){
- (void)screen;(void)cf;ui();
+ ui();
+ static uint32_t top[]={0x80ff0000,0x80ff0000,0xdeadbeef,0x80ff0000,0x80ff0000,0xdeadbeef};
+ static uint32_t sys[]={0x800000ff,0x800000ff,0xdeadbeef,0x800000ff,0x800000ff,0xdeadbeef};
+ static lv_draw_buf_t t={{2,2,12},(unsigned char*)top},s={{2,2,12},(unsigned char*)sys};
+ if(cf==LV_COLOR_FORMAT_ARGB8888) return screen==(void*)2?&t:&s;
  static unsigned char pixels[]={0x00,0xf8,0xe0,0x07,0x5a,0x5a,0x1f,0x00,0xff,0xff,0x5a,0x5a};
  static lv_draw_buf_t b={{2,2,6},pixels};return &b;
 }
@@ -54,29 +64,43 @@ static void lv_indev_set_mode(lv_indev_t *p,int m){(void)p;(void)m;ui();}
 static void lv_indev_set_read_cb(lv_indev_t *p,void (*cb)(lv_indev_t*,lv_indev_data_t*)){ui();p->read=cb;}
 static void lv_indev_read(lv_indev_t *p){ui();p->read(p,&last_input);samples++;}
 static lv_timer_t *lv_timer_create(void (*cb)(lv_timer_t*),int period,void *data){
- (void)period;(void)data;ui();lv_timer_t *t=malloc(sizeof(*t));t->cb=cb;return t;
+ (void)data;ui();lv_timer_t *t=malloc(sizeof(*t));t->cb=cb;t->period=period;return t;
 }
+static void lv_timer_set_period(lv_timer_t *t,unsigned period){ui();assert(t);t->period=period;}
 static void lv_timer_delete(lv_timer_t *t){ui();free(t);}
 ''')
     source = pathlib.Path(__file__).resolve().parents[1]/'firmware/openvela_ui/openvela_ui_remote.c'
     harness = tmp_path/'remote_test.c'
     harness.write_text(f'#define MOONCAT_CONTROL_DIR "{tmp_path.as_posix()}"\n#include "{source.as_posix()}"\n'+r'''
+int openvela_ui_status(char *buffer,size_t capacity){ui();snprintf(buffer,capacity,"{\"page\":3,\"overlay\":4}");return 0;}
 static void command(const char *s){FILE *f=fopen(REQUEST,"w");assert(f);fputs(s,f);fclose(f);control_tick(NULL);}
 static void status(unsigned long id,int expected){unsigned long actual,tick;int code;FILE *f=fopen(RESPONSE,"r");assert(f);assert(fscanf(f,"%lu %d %lu",&actual,&code,&tick)==3);fclose(f);assert(actual==id && code==expected);}
 int main(void){
  owner=pthread_self();ticks=1000;assert(openvela_ui_remote_start()==0);
+ /* Exercise idle dispatch for five seconds: 20 probes, formerly 250. */
+ unsigned probes=0;
+ for(unsigned elapsed=0;elapsed<5000;){unsigned dt=g_control_timer->period;elapsed+=dt;ticks+=dt;g_control_timer->cb(g_control_timer);probes++;}
+ assert(probes==20);
  command("1 screenshot");status(1,0);
  FILE *f=fopen(FRAME,"rb");unsigned char content[64];size_t n=fread(content,1,sizeof(content),f);fclose(f);
  const unsigned char expected[]="P6\n2 2\n255\n\xff\0\0\0\xff\0\0\0\xff\xff\xff\xff";
  assert(n==sizeof(expected)-1 && memcmp(content,expected,n)==0);
- command("2 tap 20 30");assert(last_input.state==LV_INDEV_STATE_PRESSED);
- ticks+=100;control_tick(NULL);status(2,0);assert(last_input.state==LV_INDEV_STATE_RELEASED);
+ overlays=1;command("10 screenshot");status(10,0);
+ f=fopen(FRAME,"rb");n=fread(content,1,sizeof(content),f);fclose(f);
+ const unsigned char layered[]="P6\n2 2\n255\n\x7f\0\x80\x40\x3f\x80\x40\0\xbf\x7f\x3f\xbf";
+ assert(n==sizeof(layered)-1 && memcmp(content,layered,n)==0);
+ command("2 tap 20 30");assert(last_input.state==LV_INDEV_STATE_PRESSED && g_control_timer->period==20);
+ ticks+=100;control_tick(NULL);status(2,0);assert(last_input.state==LV_INDEV_STATE_RELEASED && g_control_timer->period==250);
  command("3 swipe 10 20 110 120 200");ticks+=100;control_tick(NULL);
  assert(last_input.point.x==60 && last_input.point.y==70 && last_input.state==LV_INDEV_STATE_PRESSED);
+ command("30 tap 20 30");status(30,-EBUSY);assert(g_control_timer->period==20);
  ticks+=100;control_tick(NULL);status(3,0);assert(last_input.point.x==110 && last_input.state==LV_INDEV_STATE_RELEASED);
  int before=samples;command("4 tap -1 0");status(4,-EINVAL);assert(samples==before);
  command("5 swipe 0 0 319 239 0");status(5,-EINVAL);
  command("6 unknown");status(6,-EINVAL);
+ command("7 state");status(7,0);f=fopen(UISTATE,"r");assert(f);n=fread(content,1,sizeof(content)-1,f);fclose(f);content[n]=0;
+ assert(!strcmp((char*)content,"{\"page\":3,\"overlay\":4}\n"));
+ assert(g_control_timer->period==250);
  openvela_ui_remote_stop();assert(g_pointer==NULL && g_control_timer==NULL);
  return 0;
 }

@@ -1,0 +1,7 @@
+source and linked archive object verified: packages/ai_agent/src/tools/mooncat_app_service.c
+  member: mooncat_app_service.c.data.mooncat-closure-build05.packages.ai_agent_1.o
+source and linked archive object verified: packages/demos/openvela_ui/openvela_ui_remote.c
+  member: openvela_ui_remote.c.data.mooncat-closure-build05.packages.demos.openvela_ui_1.o
+build_exit: 0
+vela.bin bytes: 7716352
+Warnings exist in vendor NAND/other existing code; not a warning-free build.

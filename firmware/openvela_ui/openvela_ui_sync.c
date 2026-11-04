@@ -120,12 +120,18 @@ struct sync_service_s {
     struct sync_health_event_s queue[SYNC_HEALTH_QUEUE_SIZE];
     size_t queue_head;
     size_t queue_count;
+    unsigned rejected,persist_failures,health_backoff;
+    uint64_t health_retry_at;
 };
 
 static struct sync_service_s g_sync = {
     .lock = PTHREAD_MUTEX_INITIALIZER,
-    .condition = PTHREAD_COND_INITIALIZER,
 };
+static bool sync_condition_ready;
+static pthread_once_t sync_curl_once=PTHREAD_ONCE_INIT;
+static int sync_curl_initialized;
+static void sync_init_curl(void)
+{ sync_curl_initialized=curl_global_init(CURL_GLOBAL_DEFAULT)==CURLE_OK; }
 
 static void sync_copy(char *destination, size_t size, const char *source)
 {
@@ -1542,21 +1548,7 @@ static int sync_poll_control(CURL *curl,
     return result;
 }
 
-static size_t sync_drain_health(struct sync_health_event_s *events,
-                                size_t capacity)
-{
-    size_t count = 0;
-
-    pthread_mutex_lock(&g_sync.lock);
-    while (count < capacity && g_sync.queue_count > 0) {
-        events[count++] = g_sync.queue[g_sync.queue_head];
-        g_sync.queue_head = (g_sync.queue_head + 1) %
-                            SYNC_HEALTH_QUEUE_SIZE;
-        g_sync.queue_count--;
-    }
-    pthread_mutex_unlock(&g_sync.lock);
-    return count;
-}
+#include "openvela_ui_health_queue.h"
 
 static bool sync_is_stopping(void)
 {
@@ -1572,9 +1564,9 @@ static void sync_worker_wait(bool wake_for_health)
 {
     struct timespec deadline;
 
-    clock_gettime(CLOCK_REALTIME, &deadline);
-    deadline.tv_sec += SYNC_WORKER_INTERVAL_SECONDS;
+    clock_gettime(CLOCK_MONOTONIC, &deadline);
     pthread_mutex_lock(&g_sync.lock);
+    deadline.tv_sec += g_sync.queue_count ? 1 : SYNC_WORKER_INTERVAL_SECONDS;
     if (!g_sync.stopping &&
         (!wake_for_health || g_sync.queue_count == 0)) {
         pthread_cond_timedwait(&g_sync.condition, &g_sync.lock, &deadline);
@@ -1586,7 +1578,6 @@ static void *sync_worker(void *argument)
 {
     struct sync_config_s config;
     struct sync_state_s state;
-    struct sync_health_event_s events[SYNC_HEALTH_QUEUE_SIZE];
     CURL *curl = NULL;
     time_t next_control = 0;
     time_t next_upload = 0;
@@ -1598,14 +1589,14 @@ static void *sync_worker(void *argument)
     (void)argument;
     sync_load_config(&config);
     if (!config.enabled) {
-        syslog(LOG_INFO, "openvela_ui: Wi-Fi data sync disabled\n");
-        return NULL;
+        syslog(LOG_INFO, "openvela_ui: network sync disabled; local persistence active\n");
     }
     sync_ensure_directories();
     sync_state_load(&state);
-    if (curl_global_init(CURL_GLOBAL_DEFAULT) != CURLE_OK) {
+    pthread_once(&sync_curl_once,sync_init_curl);
+    if (!sync_curl_initialized) {
         syslog(LOG_ERR, "openvela_ui: curl initialization failed\n");
-        return NULL;
+        config.enabled=false;
     }
     syslog(LOG_INFO, "openvela_ui: Wi-Fi data sync started for %s\n",
            config.device_id);
@@ -1613,27 +1604,19 @@ static void *sync_worker(void *argument)
     while (!sync_is_stopping()) {
         char valid_today[SYNC_DAY_SIZE];
         bool defer_upload = false;
-        size_t count;
-        size_t index;
+        struct timespec monotonic;
+        bool health_ready;
         time_t now = time(NULL);
+        clock_gettime(CLOCK_MONOTONIC,&monotonic);
 
         if (!sync_today(valid_today)) {
             sync_worker_wait(false);
             continue;
         }
-        count = sync_drain_health(events, SYNC_HEALTH_QUEUE_SIZE);
-        for (index = 0; index < count; index++) {
-            char measured_day[SYNC_DAY_SIZE];
-
-            if (!sync_day_for_time(events[index].measured_at,
-                                   measured_day)) {
-                events[index].measured_at = now;
-            }
-            if (sync_persist_health(&events[index]) < 0) {
-                syslog(LOG_ERR,
-                       "openvela_ui: failed to persist health sample\n");
-            }
-        }
+        health_ready=sync_flush_health(now,monotonic.tv_sec);
+        if(!config.enabled) {sync_worker_wait(health_ready);continue;}
+        /* Relative network backoff also survives wall-clock corrections. */
+        now=monotonic.tv_sec;
         sync_audit_days(&config, &state);
         if (now >= next_control && !sync_resolver_ready(&config)) {
             next_control = now + SYNC_CONTROL_INTERVAL_SECONDS;
@@ -1714,10 +1697,10 @@ static void *sync_worker(void *argument)
                     retry_seconds * 2 : SYNC_RETRY_MAX_SECONDS;
             }
         }
-        sync_worker_wait(true);
+        sync_worker_wait(health_ready);
     }
     sync_curl_discard(&curl);
-    curl_global_cleanup();
+    /* libcurl globals live for the process; other tasks may still use them. */
     return NULL;
 }
 
@@ -1727,13 +1710,22 @@ int openvela_ui_sync_start(void)
     int result;
 
     pthread_mutex_lock(&g_sync.lock);
+    if(!sync_condition_ready) {
+        pthread_condattr_t condition_attr;
+        result=pthread_condattr_init(&condition_attr);
+        if(!result) {
+            result=pthread_condattr_setclock(&condition_attr,CLOCK_MONOTONIC);
+            if(!result) result=pthread_cond_init(&g_sync.condition,&condition_attr);
+            pthread_condattr_destroy(&condition_attr);
+        }
+        if(result) {pthread_mutex_unlock(&g_sync.lock);return -result;}
+        sync_condition_ready=true;
+    }
     if (g_sync.started) {
         pthread_mutex_unlock(&g_sync.lock);
         return 0;
     }
     g_sync.stopping = false;
-    g_sync.queue_head = 0;
-    g_sync.queue_count = 0;
     g_sync.started = true;
     pthread_mutex_unlock(&g_sync.lock);
 
@@ -1781,32 +1773,6 @@ void openvela_ui_sync_stop(void)
     pthread_mutex_lock(&g_sync.lock);
     g_sync.started = false;
     g_sync.stopping = false;
-    g_sync.queue_head = 0;
-    g_sync.queue_count = 0;
-    pthread_mutex_unlock(&g_sync.lock);
-}
-
-static void sync_queue_health(const struct sync_health_event_s *event)
-{
-    size_t tail;
-
-    pthread_mutex_lock(&g_sync.lock);
-    if (!g_sync.started || g_sync.stopping) {
-        pthread_mutex_unlock(&g_sync.lock);
-        return;
-    }
-    if (g_sync.queue_count == SYNC_HEALTH_QUEUE_SIZE) {
-        g_sync.queue_head = (g_sync.queue_head + 1) %
-                            SYNC_HEALTH_QUEUE_SIZE;
-        g_sync.queue_count--;
-        syslog(LOG_WARNING,
-               "openvela_ui: health sync queue full; dropping oldest sample\n");
-    }
-    tail = (g_sync.queue_head + g_sync.queue_count) %
-           SYNC_HEALTH_QUEUE_SIZE;
-    g_sync.queue[tail] = *event;
-    g_sync.queue_count++;
-    pthread_cond_signal(&g_sync.condition);
     pthread_mutex_unlock(&g_sync.lock);
 }
 

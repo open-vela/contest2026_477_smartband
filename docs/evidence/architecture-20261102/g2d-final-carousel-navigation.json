@@ -1,0 +1,132 @@
+[
+  {
+    "page": 0,
+    "overlay": 0,
+    "action": 0,
+    "scroll_x": 201,
+    "scroll_dir": 3,
+    "sport_page": -1,
+    "workout": false,
+    "health_measuring": false
+  },
+  {
+    "page": 1,
+    "overlay": 0,
+    "action": 0,
+    "scroll_x": 402,
+    "scroll_dir": 3,
+    "sport_page": -1,
+    "workout": false,
+    "health_measuring": false
+  },
+  {
+    "page": 2,
+    "overlay": 0,
+    "action": 0,
+    "scroll_x": 603,
+    "scroll_dir": 3,
+    "sport_page": -1,
+    "workout": false,
+    "health_measuring": false
+  },
+  {
+    "page": 3,
+    "overlay": 0,
+    "action": 0,
+    "scroll_x": 804,
+    "scroll_dir": 3,
+    "sport_page": -1,
+    "workout": false,
+    "health_measuring": false
+  },
+  {
+    "page": 4,
+    "overlay": 0,
+    "action": 0,
+    "scroll_x": 1005,
+    "scroll_dir": 3,
+    "sport_page": -1,
+    "workout": false,
+    "health_measuring": false
+  },
+  {
+    "page": 5,
+    "overlay": 0,
+    "action": 0,
+    "scroll_x": 1206,
+    "scroll_dir": 3,
+    "sport_page": -1,
+    "workout": false,
+    "health_measuring": false
+  },
+  {
+    "page": 0,
+    "overlay": 0,
+    "action": 0,
+    "scroll_x": 201,
+    "scroll_dir": 3,
+    "sport_page": -1,
+    "workout": false,
+    "health_measuring": false
+  },
+  {
+    "page": 1,
+    "overlay": 0,
+    "action": 0,
+    "scroll_x": 402,
+    "scroll_dir": 3,
+    "sport_page": -1,
+    "workout": false,
+    "health_measuring": false
+  },
+  {
+    "page": 2,
+    "overlay": 0,
+    "action": 0,
+    "scroll_x": 603,
+    "scroll_dir": 3,
+    "sport_page": -1,
+    "workout": false,
+    "health_measuring": false
+  },
+  {
+    "page": 3,
+    "overlay": 0,
+    "action": 0,
+    "scroll_x": 804,
+    "scroll_dir": 3,
+    "sport_page": -1,
+    "workout": false,
+    "health_measuring": false
+  },
+  {
+    "page": 4,
+    "overlay": 0,
+    "action": 0,
+    "scroll_x": 1005,
+    "scroll_dir": 3,
+    "sport_page": -1,
+    "workout": false,
+    "health_measuring": false
+  },
+  {
+    "page": 5,
+    "overlay": 0,
+    "action": 0,
+    "scroll_x": 1206,
+    "scroll_dir": 3,
+    "sport_page": -1,
+    "workout": false,
+    "health_measuring": false
+  },
+  {
+    "page": 0,
+    "overlay": 0,
+    "action": 0,
+    "scroll_x": 201,
+    "scroll_dir": 3,
+    "sport_page": -1,
+    "workout": false,
+    "health_measuring": false
+  }
+]

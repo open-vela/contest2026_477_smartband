@@ -37,7 +37,6 @@
 #define SPORT_ENTER_FEEDBACK_MS 260
 #define SPORT_STEP_PERIOD_MS 2600
 #define SPORT_HEART_PERIOD_MS 1800
-#define SPORT_MOTION_PERIOD_MS 500
 #define SPORT_HISTORY_COUNT 7
 #define SPORT_HISTORY_STORED_COUNT (SPORT_HISTORY_COUNT - 1)
 #define SPORT_METRIC_COUNT 3
@@ -192,9 +191,7 @@ struct openvela_ui_sport_s {
     uint32_t random_state;
     uint32_t last_step_tick;
     uint32_t last_heart_tick;
-    uint32_t last_motion_tick;
     uint32_t last_chart_touch_tick;
-    bool motion_phase;
     uint8_t selected_history;
     char data_day[9];
     char last_celebration_day[9];
@@ -202,7 +199,7 @@ struct openvela_ui_sport_s {
 
 static void sport_transition_begin_async(void *data);
 static void sport_event_async(void *data);
-static void sport_apply_motion_frame(openvela_ui_sport_t *sport);
+static void sport_apply_motion_frame(void *data, int32_t phase);
 static void sport_enter_clicked(lv_event_t *event);
 static void sport_exit_clicked(lv_event_t *event);
 static void sport_exit_cancel_clicked(lv_event_t *event);
@@ -890,28 +887,20 @@ static int sport_write_hour_line(FILE *file, const char *prefix,
     return 0;
 }
 
-static void sport_save_state(openvela_ui_sport_t *sport)
+#include "openvela_ui_storage.h"
+static int sport_write_snapshot(void *data)
 {
+    openvela_ui_sport_t *sport=data;
     FILE *file;
     int write_result;
     int close_result;
     int index;
-    char today[9];
-
-    if (!sport || !sport->persist_dirty) {
-        return;
-    }
-
-    if (sport_today_key(today) &&
-        strcmp(today, sport->data_day) == 0) {
-        sport_sync_day_samples(sport);
-    }
 
     mkdir("/data/etc", 0777);
     mkdir("/data/etc/openvela_ui", 0777);
     file = fopen(SPORT_STATE_TMP_PATH, "w");
     if (!file) {
-        return;
+        return -1;
     }
     write_result = fprintf(file,
                            "data_day=%s\nsteps=%lu\nstep_goal=%lu\n"
@@ -947,16 +936,28 @@ static void sport_save_state(openvela_ui_sport_t *sport)
             write_result = -1;
         }
     }
+    if(fflush(file) || fsync(fileno(file))) write_result=-1;
     close_result = fclose(file);
     if (write_result < 0 || close_result != 0) {
         unlink(SPORT_STATE_TMP_PATH);
-        return;
+        return -1;
     }
     if (rename(SPORT_STATE_TMP_PATH, SPORT_STATE_PATH) != 0) {
         unlink(SPORT_STATE_TMP_PATH);
-        return;
+        return -1;
     }
-    sport->persist_dirty = false;
+    return 0;
+}
+static void sport_save_state(openvela_ui_sport_t *sport)
+{
+    char today[9];openvela_ui_sport_t *copy;
+    if(!sport || !sport->persist_dirty) return;
+    if(sport_today_key(today) && !strcmp(today,sport->data_day)) sport_sync_day_samples(sport);
+    copy=malloc(sizeof(*copy));
+    if(!copy) return;
+    *copy=*sport; /* Writer uses only value fields; never follows copied widget pointers. */
+    if(openvela_ui_storage_submit(copy,sport_write_snapshot)==0) sport->persist_dirty=false;
+    else free(copy);
 }
 
 static lv_obj_t *sport_box(openvela_ui_sport_t *sport, lv_obj_t *parent,
@@ -2352,22 +2353,20 @@ static void sport_data_tick(lv_timer_t *timer)
             sport_update_heart(sport);
         }
     }
-    if (sport->visible && !sport->low_power && !sport->transitioning &&
-        !sport->confirm_visible &&
-        lv_tick_elaps(sport->last_motion_tick) >=
-            SPORT_MOTION_PERIOD_MS) {
-        sport->last_motion_tick = now;
-        sport->motion_phase = !sport->motion_phase;
-        sport_apply_motion_frame(sport);
-    }
     if (stats_changed && !sport->low_power) {
         sport_check_celebration(sport);
     }
 }
 
-static void sport_apply_motion_frame(openvela_ui_sport_t *sport)
+static void sport_apply_motion_frame(void *data, int32_t phase)
 {
-    int32_t offset = sport_sx(sport, sport->motion_phase ? 2 : -2);
+    openvela_ui_sport_t *sport = data;
+    int32_t amplitude = sport_sx(sport, 2);
+    int32_t offset = -amplitude + (2 * amplitude * phase + 500) / 1000;
+
+    if (sport->destroying || !sport->visible || sport->low_power ||
+        sport->transitioning || sport->confirm_visible ||
+        sport->celebration_visible) return;
 
     if (sport->page == OPENVELA_UI_SPORT_PAGE_ENTRY &&
         sport->entry_cat_visual &&
@@ -2382,7 +2381,7 @@ static void sport_apply_motion_frame(openvela_ui_sport_t *sport)
     } else if (sport->page == OPENVELA_UI_SPORT_PAGE_HEART_RATE) {
         if (sport->heart_image && lv_obj_is_valid(sport->heart_image)) {
             uint32_t scale = sport->heart_base_scale *
-                (sport->motion_phase ? 105U : 96U) / 100U;
+                (960U + (uint32_t)phase * 90U / 1000U) / 1000U;
 
             lv_image_set_scale(sport->heart_image, scale);
             lv_obj_set_pos(sport->heart_image,
@@ -2400,22 +2399,33 @@ static void sport_apply_motion_frame(openvela_ui_sport_t *sport)
 
 static void sport_start_page_animation(openvela_ui_sport_t *sport)
 {
-    if (!sport->visible || sport->low_power || sport->transitioning ||
+    lv_anim_t animation;
+    lv_anim_delete(sport, sport_apply_motion_frame);
+    if (sport->destroying || !sport->visible || sport->low_power || sport->transitioning ||
         sport->confirm_visible || sport->celebration_visible) {
         return;
     }
 
-    /* Discrete two-frame motion keeps the reference's floating/pulse cue at
-     * 2 FPS.  A normal LVGL infinite animation would redraw at the 16 ms
-     * display period, and this board rotates the complete framebuffer for
-     * every one of those nominally local updates. */
-    sport->motion_phase = false;
-    sport->last_motion_tick = lv_tick_get();
-    sport_apply_motion_frame(sport);
+    if (sport->page != OPENVELA_UI_SPORT_PAGE_ENTRY &&
+        sport->page != OPENVELA_UI_SPORT_PAGE_EXIT &&
+        sport->page != OPENVELA_UI_SPORT_PAGE_HEART_RATE) return;
+
+    /* Follow LVGL's display cadence; integer pixels naturally coalesce on
+     * the small floating cue. Hidden pages own no running animation. */
+    lv_anim_init(&animation);
+    lv_anim_set_var(&animation, sport);
+    lv_anim_set_exec_cb(&animation, sport_apply_motion_frame);
+    lv_anim_set_values(&animation, 0, 1000);
+    lv_anim_set_duration(&animation, 700);
+    lv_anim_set_playback_duration(&animation, 700);
+    lv_anim_set_repeat_count(&animation, LV_ANIM_REPEAT_INFINITE);
+    lv_anim_set_path_cb(&animation, lv_anim_path_ease_in_out);
+    lv_anim_start(&animation);
 }
 
 static void sport_stop_page_animations(openvela_ui_sport_t *sport)
 {
+    lv_anim_delete(sport, sport_apply_motion_frame);
     if (sport->entry_cat_visual &&
         lv_obj_is_valid(sport->entry_cat_visual)) {
         lv_anim_delete(sport->entry_cat_visual, NULL);
@@ -2462,7 +2472,6 @@ static void sport_transition_begin_async(void *data)
     if (!sport || sport->destroying || !sport->transitioning) {
         return;
     }
-
     sport_stop_page_animations(sport);
     sport_hide_chart_bubble(sport);
     old_page = sport_view_object(sport, sport->page, sport->stats_view);
@@ -2906,7 +2915,6 @@ static void sport_enter_clicked(lv_event_t *event)
         sport->page != OPENVELA_UI_SPORT_PAGE_ENTRY || sport->enter_timer) {
         return;
     }
-
     lv_label_set_text(sport->enter_button_label,
                       sport_has_chinese(sport) ? "正在进入" : "STARTING");
     lv_obj_clear_flag(sport->enter_button, LV_OBJ_FLAG_CLICKABLE);

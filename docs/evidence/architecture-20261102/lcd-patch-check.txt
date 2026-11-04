@@ -1,0 +1,1 @@
+PASS: patch applies to preserved vendor originals and reproduces both current drivers.

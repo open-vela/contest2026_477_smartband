@@ -1,0 +1,67 @@
+[
+  {
+    "page": 0,
+    "overlay": 0,
+    "action": 0,
+    "scroll_x": 201,
+    "scroll_dir": 3,
+    "sport_page": -1,
+    "workout": false,
+    "health_measuring": false
+  },
+  {
+    "page": 1,
+    "overlay": 0,
+    "action": 0,
+    "scroll_x": 402,
+    "scroll_dir": 3,
+    "sport_page": -1,
+    "workout": false,
+    "health_measuring": false
+  },
+  {
+    "page": 2,
+    "overlay": 0,
+    "action": 0,
+    "scroll_x": 603,
+    "scroll_dir": 3,
+    "sport_page": -1,
+    "workout": false,
+    "health_measuring": false
+  },
+  {
+    "page": 2,
+    "overlay": 7,
+    "action": 0,
+    "scroll_x": 603,
+    "scroll_dir": 3,
+    "sport_page": 0,
+    "workout": false,
+    "health_measuring": false
+  },
+  {
+    "tap": "PASS request=1677604468 operation=tap ui_tick=26206\n"
+  },
+  {
+    "page": 2,
+    "overlay": 7,
+    "action": 0,
+    "scroll_x": 603,
+    "scroll_dir": 3,
+    "sport_page": 1,
+    "workout": true,
+    "health_measuring": false
+  },
+  {
+    "after_start": {
+      "page": 2,
+      "overlay": 7,
+      "action": 0,
+      "scroll_x": 603,
+      "scroll_dir": 3,
+      "sport_page": 1,
+      "workout": true,
+      "health_measuring": false
+    }
+  }
+]

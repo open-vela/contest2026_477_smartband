@@ -1,6 +1,7 @@
 """Control Native UI through verified SSH or an explicitly selected ADB device."""
 import argparse
 import io
+import json
 import pathlib
 import re
 import subprocess
@@ -20,6 +21,7 @@ def main():
     parser.add_argument('--known-hosts', type=pathlib.Path,
                         default=pathlib.Path.home()/'.ssh/gemini_s1_closure_known_hosts')
     sub = parser.add_subparsers(dest='operation', required=True)
+    sub.add_parser('state')
     screenshot = sub.add_parser('screenshot')
     screenshot.add_argument('output', type=pathlib.Path)
     tap = sub.add_parser('tap')
@@ -66,6 +68,12 @@ def main():
         time.sleep(.1)
     else:
         raise TimeoutError('No matching UI-thread response; firmware may lack this interface')
+    if args.operation == 'state':
+        result = read('cat /tmp/mooncat-ui-state.json')
+        if result.returncode:
+            raise RuntimeError('UI state transfer failed')
+        print(json.dumps(json.loads(result.stdout.decode()), ensure_ascii=False))
+        return
     if args.operation == 'screenshot':
         from PIL import Image
         if args.transport == 'adb':
